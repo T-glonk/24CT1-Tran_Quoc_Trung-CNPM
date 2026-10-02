@@ -36,6 +36,16 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+# IDE & OS
+.idea/
+.vscode/
+.DS_Store
+*.log
+
+# dependencies
+node_modules/
+**/node_modules/
+
 # generated native folders
 /ios
 /android

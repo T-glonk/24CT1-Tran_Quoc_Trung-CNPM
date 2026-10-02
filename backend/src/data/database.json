@@ -1,0 +1,1005 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "appName": "Alobo Badminton Court Booking & Management",
+    "lastSaved": "2026-10-01T16:15:50.099Z",
+    "tablesCount": 7,
+    "recordsCount": {
+      "users": 7,
+      "courts": 17,
+      "clubs": 8,
+      "bookings": 6,
+      "services": 11,
+      "transactions": 6,
+      "logs": 5
+    }
+  },
+  "users": [
+    {
+      "id": "admin1",
+      "name": "Trần Quốc Trung (Super Admin)",
+      "email": "admin@court.vn",
+      "password": "123456",
+      "role": "admin",
+      "phone": "0905 591 379",
+      "status": "active",
+      "joinedDate": "01/01/2026",
+      "totalSpent": 0,
+      "bookingsCount": 0,
+      "tier": "Kim Cương"
+    },
+    {
+      "id": "manager1",
+      "name": "Nguyễn Văn Quản Lý",
+      "email": "manager@court.vn",
+      "password": "123456",
+      "role": "manager",
+      "phone": "0912 345 678",
+      "status": "active",
+      "joinedDate": "15/01/2026",
+      "totalSpent": 0,
+      "bookingsCount": 0,
+      "tier": "Vàng"
+    },
+    {
+      "id": "staff1",
+      "name": "Lê Thu Ngân (Lễ tân)",
+      "email": "staff@court.vn",
+      "password": "123456",
+      "role": "staff",
+      "phone": "0935 111 222",
+      "status": "active",
+      "joinedDate": "01/02/2026",
+      "totalSpent": 0,
+      "bookingsCount": 0,
+      "tier": "Bạc"
+    },
+    {
+      "id": "user1",
+      "name": "Trung Quốc (Khách VIP)",
+      "email": "trung05082005tqt@gmail.com",
+      "password": "123456",
+      "role": "customer",
+      "phone": "0905591379",
+      "status": "active",
+      "joinedDate": "10/02/2026",
+      "totalSpent": 2850000,
+      "bookingsCount": 18,
+      "tier": "Kim Cương"
+    },
+    {
+      "id": "user2",
+      "name": "Hoàng Minh Đức",
+      "email": "duc.hoang@gmail.com",
+      "password": "123456",
+      "role": "customer",
+      "phone": "0905 888 777",
+      "status": "active",
+      "joinedDate": "20/02/2026",
+      "totalSpent": 1420000,
+      "bookingsCount": 9,
+      "tier": "Vàng"
+    },
+    {
+      "id": "user3",
+      "name": "Phạm Thị Mai",
+      "email": "mai.pham@gmail.com",
+      "password": "123456",
+      "role": "customer",
+      "phone": "0914 222 333",
+      "status": "active",
+      "joinedDate": "05/03/2026",
+      "totalSpent": 650000,
+      "bookingsCount": 4,
+      "tier": "Bạc"
+    },
+    {
+      "id": "user4",
+      "name": "Đặng Tuấn Anh",
+      "email": "tuananh@gmail.com",
+      "password": "123456",
+      "role": "customer",
+      "phone": "0978 999 000",
+      "status": "locked",
+      "joinedDate": "12/03/2026",
+      "totalSpent": 160000,
+      "bookingsCount": 1,
+      "tier": "Đồng"
+    }
+  ],
+  "courts": [
+    {
+      "id": "1",
+      "clubId": "c1",
+      "name": "Sân 1 - Cơ sở 1 (Hoa Thiên Lý)",
+      "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+      "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+      "district": "Cẩm Lệ",
+      "price": 80000,
+      "type": "Thảm Yonex Tiêu chuẩn BWF",
+      "status": "available",
+      "currentGuest": null,
+      "currentSlot": null,
+      "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+    },
+    {
+      "id": "2",
+      "clubId": "c1",
+      "name": "Sân 2 - Cơ sở 1 (Hoa Thiên Lý)",
+      "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+      "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+      "district": "Cẩm Lệ",
+      "price": 80000,
+      "type": "Thảm Yonex Tiêu chuẩn BWF",
+      "status": "available",
+      "currentGuest": null,
+      "currentSlot": null,
+      "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+    },
+    {
+      "id": "3",
+      "clubId": "c1",
+      "name": "Sân 3 - Cơ sở 1 (Hoa Thiên Lý)",
+      "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+      "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+      "district": "Cẩm Lệ",
+      "price": 80000,
+      "type": "Thảm Yonex Tiêu chuẩn BWF",
+      "status": "in_use",
+      "currentGuest": "Nguyễn Văn An (0912345678)",
+      "currentSlot": "18:00 - 20:00",
+      "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+    },
+    {
+      "id": "4",
+      "clubId": "c1",
+      "name": "Sân 4 - Cơ sở 1 (Hoa Thiên Lý)",
+      "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+      "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+      "district": "Cẩm Lệ",
+      "price": 80000,
+      "type": "Thảm Yonex Tiêu chuẩn BWF",
+      "status": "available",
+      "currentGuest": null,
+      "currentSlot": null,
+      "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+    },
+    {
+      "id": "5",
+      "clubId": "c1",
+      "name": "Sân 5 - Cơ sở 1 (VIP Thảm Đỏ)",
+      "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+      "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+      "district": "Cẩm Lệ",
+      "price": 120000,
+      "type": "Thảm Victor Pro VIP Khán Đài",
+      "status": "available",
+      "currentGuest": null,
+      "currentSlot": null,
+      "image": "https://images.unsplash.com/photo-1599474924187-334a4ae5bd3c?w=400&q=80"
+    },
+    {
+      "id": "6",
+      "clubId": "c1",
+      "name": "Sân 6 - Cơ sở 1 (Sân Đôi Thi Đấu)",
+      "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+      "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+      "district": "Cẩm Lệ",
+      "price": 90000,
+      "type": "Thảm Yonex Tiêu chuẩn BWF",
+      "status": "in_use",
+      "currentGuest": "Huy (0969678482)",
+      "currentSlot": "17:00 - 19:00",
+      "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+    },
+    {
+      "id": "7",
+      "clubId": "c1",
+      "name": "Sân 7 - Cơ sở 1 (Hoa Thiên Lý)",
+      "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+      "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+      "district": "Cẩm Lệ",
+      "price": 80000,
+      "type": "Thảm Yonex Tiêu chuẩn BWF",
+      "status": "available",
+      "currentGuest": null,
+      "currentSlot": null,
+      "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+    },
+    {
+      "id": "8",
+      "clubId": "c1",
+      "name": "Sân 8 - Cơ sở 1 (Bảo dưỡng)",
+      "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+      "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+      "district": "Cẩm Lệ",
+      "price": 80000,
+      "type": "Thảm Yonex Tiêu chuẩn BWF",
+      "status": "maintenance",
+      "currentGuest": "Bảo trì hệ thống đèn LED",
+      "currentSlot": "Tạm ngừng ca ngày",
+      "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+    },
+    {
+      "id": "9",
+      "clubId": "c2",
+      "name": "Sân 1 - Cơ sở 2 (Kỳ Đồng)",
+      "clubName": "QT Sport - Cơ sở 2: Sân Kỳ Đồng",
+      "location": "93 Kỳ Đồng, Thanh Khê Đông, Thanh Khê, Đà Nẵng",
+      "district": "Thanh Khê",
+      "price": 60000,
+      "type": "Thảm PVC Chống Trơn",
+      "status": "available",
+      "currentGuest": null,
+      "currentSlot": null,
+      "image": "https://images.unsplash.com/photo-1599474924187-334a4ae5bd3c?w=400&q=80"
+    },
+    {
+      "id": "10",
+      "clubId": "c2",
+      "name": "Sân 2 - Cơ sở 2 (Kỳ Đồng)",
+      "clubName": "QT Sport - Cơ sở 2: Sân Kỳ Đồng",
+      "location": "93 Kỳ Đồng, Thanh Khê Đông, Thanh Khê, Đà Nẵng",
+      "district": "Thanh Khê",
+      "price": 60000,
+      "type": "Thảm PVC Chống Trơn",
+      "status": "available",
+      "currentGuest": null,
+      "currentSlot": null,
+      "image": "https://images.unsplash.com/photo-1599474924187-334a4ae5bd3c?w=400&q=80"
+    },
+    {
+      "id": "11",
+      "clubId": "c3",
+      "name": "Sân 1 - Cơ sở 3 (Sơn Trà Pro)",
+      "clubName": "QT Sport - Cơ sở 3: Sân Sơn Trà Pro",
+      "location": "120 Ngô Quyền, An Hải Bắc, Sơn Trà, Đà Nẵng",
+      "district": "Sơn Trà",
+      "price": 90000,
+      "type": "Thảm Yonex Đèn Chống Lóa",
+      "status": "available",
+      "currentGuest": null,
+      "currentSlot": null,
+      "image": "https://images.unsplash.com/photo-1544919982-b61976f0ba43?w=400&q=80"
+    },
+    {
+      "id": "12",
+      "clubId": "c3",
+      "name": "Sân 2 - Cơ sở 3 (Sơn Trà Pro)",
+      "clubName": "QT Sport - Cơ sở 3: Sân Sơn Trà Pro",
+      "location": "120 Ngô Quyền, An Hải Bắc, Sơn Trà, Đà Nẵng",
+      "district": "Sơn Trà",
+      "price": 90000,
+      "type": "Thảm Yonex Đèn Chống Lóa",
+      "status": "in_use",
+      "currentGuest": "Lê Thị Bích (0987654321)",
+      "currentSlot": "19:00 - 21:00",
+      "image": "https://images.unsplash.com/photo-1544919982-b61976f0ba43?w=400&q=80"
+    },
+    {
+      "id": "13",
+      "clubId": "c4",
+      "name": "Sân 1 - Cơ sở 4 (ECO Center Q7)",
+      "clubName": "QT Sport - Cơ sở 4: ECO Badminton Center",
+      "location": "45 Huỳnh Tấn Phát, Tân Thuận Đông, Quận 7, TP.HCM",
+      "district": "Quận 7",
+      "price": 95000,
+      "type": "Thảm Victor Master Pro",
+      "status": "available",
+      "currentGuest": null,
+      "currentSlot": null,
+      "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+    },
+    {
+      "id": "14",
+      "clubId": "c5",
+      "name": "Sân 1 - Cơ sở 5 (Sky Badminton)",
+      "clubName": "QT Sport - Cơ sở 5: Sky Badminton Club",
+      "location": "18D Cộng Hòa, Phường 4, Tân Bình, TP.HCM",
+      "district": "Tân Bình",
+      "price": 85000,
+      "type": "Thảm Enlio Quốc Tế",
+      "status": "available",
+      "currentGuest": null,
+      "currentSlot": null,
+      "image": "https://images.unsplash.com/photo-1599474924187-334a4ae5bd3c?w=400&q=80"
+    },
+    {
+      "id": "15",
+      "clubId": "c6",
+      "name": "Sân 1 - Cơ sở 6 (Hoàng Văn Thụ)",
+      "clubName": "QT Sport - Cơ sở 6: CLB Hoàng Văn Thụ",
+      "location": "20 Hoàng Minh Giám, Phường 9, Phú Nhuận, TP.HCM",
+      "district": "Phú Nhuận",
+      "price": 80000,
+      "type": "Thảm Yonex Trần Cao 11m",
+      "status": "available",
+      "currentGuest": null,
+      "currentSlot": null,
+      "image": "https://images.unsplash.com/photo-1544919982-b61976f0ba43?w=400&q=80"
+    },
+    {
+      "id": "16",
+      "clubId": "c7",
+      "name": "Sân 1 - Cơ sở 7 (Gia Hân Arena)",
+      "clubName": "QT Sport - Cơ sở 7: Gia Hân Badminton Arena",
+      "location": "38 Chế Lan Viên, Tây Thạnh, Tân Phú, TP.HCM",
+      "district": "Tân Phú",
+      "price": 75000,
+      "type": "Thảm Đỏ VIP Arena",
+      "status": "available",
+      "currentGuest": null,
+      "currentSlot": null,
+      "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+    },
+    {
+      "id": "17",
+      "clubId": "c8",
+      "name": "Sân 1 - Cơ sở 8 (Hồng Châu Club)",
+      "clubName": "QT Sport - Cơ sở 8: Hồng Châu Sport Club",
+      "location": "56 Phan Đăng Lưu, Phường 5, Bình Thạnh, TP.HCM",
+      "district": "Bình Thạnh",
+      "price": 85000,
+      "type": "Thảm Yonex Chính Hãng",
+      "status": "available",
+      "currentGuest": null,
+      "currentSlot": null,
+      "image": "https://images.unsplash.com/photo-1599474924187-334a4ae5bd3c?w=400&q=80"
+    }
+  ],
+  "clubs": [
+    {
+      "id": "c1",
+      "name": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+      "address": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+      "district": "Cẩm Lệ",
+      "city": "Đà Nẵng",
+      "rating": 4.9,
+      "reviewsCount": 156,
+      "distance": "1.5 km",
+      "open": "05:00 - 23:00",
+      "tag": [
+        "Chuẩn BWF",
+        "Đơn ngày",
+        "Sự kiện"
+      ],
+      "lat": 15.9982,
+      "lng": 108.2145,
+      "totalCourts": 8,
+      "priceRange": "60.000đ - 120.000đ/h",
+      "phone": "0905 591 379",
+      "amenities": [
+        "Thảm BWF Yonex",
+        "Máy lạnh",
+        "Căng vợt lấy ngay",
+        "Nước uống",
+        "Bãi đỗ ô tô miễn phí"
+      ],
+      "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=800&q=80"
+    },
+    {
+      "id": "c2",
+      "name": "QT Sport - Cơ sở 2: Sân Kỳ Đồng",
+      "address": "93 Kỳ Đồng, Thanh Khê Đông, Thanh Khê, Đà Nẵng",
+      "district": "Thanh Khê",
+      "city": "Đà Nẵng",
+      "rating": 4.8,
+      "reviewsCount": 112,
+      "distance": "3.2 km",
+      "open": "05:30 - 22:30",
+      "tag": [
+        "Thảm PVC",
+        "Đặt nhanh",
+        "Giá sinh viên"
+      ],
+      "lat": 16.0612,
+      "lng": 108.195,
+      "totalCourts": 6,
+      "priceRange": "50.000đ - 100.000đ/h",
+      "phone": "0905 123 456",
+      "amenities": [
+        "Thảm PVC chống trơn",
+        "Wifi tốc độ cao",
+        "Phòng thay đồ",
+        "Căn tin thể thao"
+      ],
+      "image": "https://images.unsplash.com/photo-1599474924187-334a4ae5bd3c?w=800&q=80"
+    },
+    {
+      "id": "c3",
+      "name": "QT Sport - Cơ sở 3: Sân Sơn Trà Pro",
+      "address": "120 Ngô Quyền, An Hải Bắc, Sơn Trà, Đà Nẵng",
+      "district": "Sơn Trà",
+      "city": "Đà Nẵng",
+      "rating": 5,
+      "reviewsCount": 230,
+      "distance": "2.0 km",
+      "open": "05:00 - 23:00",
+      "tag": [
+        "Thi đấu Pro",
+        "VIP",
+        "Đèn chống chói"
+      ],
+      "lat": 16.0745,
+      "lng": 108.2312,
+      "totalCourts": 6,
+      "priceRange": "70.000đ - 130.000đ/h",
+      "phone": "0935 888 999",
+      "amenities": [
+        "Đèn LED chống chói chuẩn BWF",
+        "Huấn luyện viên",
+        "Shop đồ tập cầu lông",
+        "Khán đài VIP"
+      ],
+      "image": "https://images.unsplash.com/photo-1544919982-b61976f0ba43?w=800&q=80"
+    },
+    {
+      "id": "c4",
+      "name": "QT Sport - Cơ sở 4: ECO Badminton Center",
+      "address": "45 Huỳnh Tấn Phát, Tân Thuận Đông, Quận 7, TP.HCM",
+      "district": "Quận 7",
+      "city": "TP.HCM",
+      "rating": 4.9,
+      "reviewsCount": 188,
+      "distance": "4.8 km",
+      "open": "05:00 - 23:30",
+      "tag": [
+        "Thảm Victor",
+        "Máy lạnh",
+        "Sự kiện lớn"
+      ],
+      "lat": 10.7482,
+      "lng": 106.7289,
+      "totalCourts": 8,
+      "priceRange": "70.000đ - 140.000đ/h",
+      "phone": "0909 333 777",
+      "amenities": [
+        "Thảm Victor Master Pro",
+        "Hệ thống quạt làm mát",
+        "Tắm nóng lạnh",
+        "Bãi giữ xe 100 xe"
+      ],
+      "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=800&q=80"
+    },
+    {
+      "id": "c5",
+      "name": "QT Sport - Cơ sở 5: Sky Badminton Club",
+      "address": "18D Cộng Hòa, Phường 4, Tân Bình, TP.HCM",
+      "district": "Tân Bình",
+      "city": "TP.HCM",
+      "rating": 4.7,
+      "reviewsCount": 95,
+      "distance": "5.6 km",
+      "open": "05:30 - 23:00",
+      "tag": [
+        "Thảm Enlio",
+        "Gần sân bay"
+      ],
+      "lat": 10.8015,
+      "lng": 106.6548,
+      "totalCourts": 6,
+      "priceRange": "65.000đ - 130.000đ/h",
+      "phone": "0918 224 556",
+      "amenities": [
+        "Thảm Enlio cao cấp",
+        "Phòng tắm cá nhân",
+        "Nước giải khát thể thao Pocari/Revive"
+      ],
+      "image": "https://images.unsplash.com/photo-1599474924187-334a4ae5bd3c?w=800&q=80"
+    },
+    {
+      "id": "c6",
+      "name": "QT Sport - Cơ sở 6: CLB Hoàng Văn Thụ",
+      "address": "20 Hoàng Minh Giám, Phường 9, Phú Nhuận, TP.HCM",
+      "district": "Phú Nhuận",
+      "city": "TP.HCM",
+      "rating": 4.8,
+      "reviewsCount": 145,
+      "distance": "6.0 km",
+      "open": "05:00 - 22:30",
+      "tag": [
+        "Công viên",
+        "Trần cao",
+        "Thoáng đãng"
+      ],
+      "lat": 10.8062,
+      "lng": 106.6742,
+      "totalCourts": 6,
+      "priceRange": "60.000đ - 120.000đ/h",
+      "phone": "0903 667 889",
+      "amenities": [
+        "Trần cao 11m chuẩn quốc tế",
+        "Đèn LED chống lóa",
+        "Trọng tài điều hành giải đấu"
+      ],
+      "image": "https://images.unsplash.com/photo-1544919982-b61976f0ba43?w=800&q=80"
+    },
+    {
+      "id": "c7",
+      "name": "QT Sport - Cơ sở 7: Gia Hân Badminton Arena",
+      "address": "38 Chế Lan Viên, Tây Thạnh, Tân Phú, TP.HCM",
+      "district": "Tân Phú",
+      "city": "TP.HCM",
+      "rating": 4.6,
+      "reviewsCount": 82,
+      "distance": "7.3 km",
+      "open": "05:00 - 23:00",
+      "tag": [
+        "Sân Đỏ VIP",
+        "Thuê vợt Yonex"
+      ],
+      "lat": 10.8124,
+      "lng": 106.6275,
+      "totalCourts": 6,
+      "priceRange": "55.000đ - 110.000đ/h",
+      "phone": "0979 445 667",
+      "amenities": [
+        "Sân thảm đỏ độc quyền",
+        "Cho thuê vợt cao cấp",
+        "Khu thể lực & khởi động"
+      ],
+      "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=800&q=80"
+    },
+    {
+      "id": "c8",
+      "name": "QT Sport - Cơ sở 8: Hồng Châu Sport Club",
+      "address": "56 Phan Đăng Lưu, Phường 5, Bình Thạnh, TP.HCM",
+      "district": "Bình Thạnh",
+      "city": "TP.HCM",
+      "rating": 4.9,
+      "reviewsCount": 168,
+      "distance": "4.0 km",
+      "open": "05:30 - 23:00",
+      "tag": [
+        "Trung tâm",
+        "Căng vợt",
+        "Shop phụ kiện"
+      ],
+      "lat": 10.8012,
+      "lng": 106.6915,
+      "totalCourts": 6,
+      "priceRange": "65.000đ - 135.000đ/h",
+      "phone": "0938 556 778",
+      "amenities": [
+        "Thảm Yonex chính hãng",
+        "Khu vực máy lạnh chờ đấu",
+        "Máy căng vợt điện tử"
+      ],
+      "image": "https://images.unsplash.com/photo-1599474924187-334a4ae5bd3c?w=800&q=80"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "BK-1001",
+      "court": {
+        "id": "1",
+        "clubId": "c1",
+        "name": "Sân 1 - Cơ sở 1 (Hoa Thiên Lý)",
+        "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+        "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+        "district": "Cẩm Lệ",
+        "price": 80000,
+        "type": "Thảm Yonex Tiêu chuẩn BWF",
+        "status": "available",
+        "currentGuest": null,
+        "currentSlot": null,
+        "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+      },
+      "courtId": "1",
+      "userId": "user2",
+      "userName": "Hoàng Minh Đức",
+      "userPhone": "0905 888 777",
+      "date": "28/08/2026",
+      "slot": "10:00 - 12:00",
+      "hoursCount": 2,
+      "totalPrice": 160000,
+      "servicesAdded": [
+        {
+          "name": "Nước điện giải Revive",
+          "qty": 2,
+          "price": 30000
+        }
+      ],
+      "grandTotal": 190000,
+      "paymentMethod": "Chuyển khoản QR",
+      "paymentStatus": "paid",
+      "status": "in_use",
+      "note": "Yêu cầu bật đèn sáng tối đa",
+      "createdAt": "28/08/2026 09:30"
+    },
+    {
+      "id": "BK-1002",
+      "court": {
+        "id": "3",
+        "clubId": "c1",
+        "name": "Sân 3 - Cơ sở 1 (Hoa Thiên Lý)",
+        "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+        "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+        "district": "Cẩm Lệ",
+        "price": 80000,
+        "type": "Thảm Yonex Tiêu chuẩn BWF",
+        "status": "in_use",
+        "currentGuest": "Nguyễn Văn An (0912345678)",
+        "currentSlot": "18:00 - 20:00",
+        "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+      },
+      "courtId": "3",
+      "userId": "user1",
+      "userName": "Trung Quốc",
+      "userPhone": "0905591379",
+      "date": "28/08/2026",
+      "slot": "17:00 - 19:00",
+      "hoursCount": 2,
+      "totalPrice": 180000,
+      "servicesAdded": [
+        {
+          "name": "Ống cầu Hải Yến S90",
+          "qty": 1,
+          "price": 240000
+        }
+      ],
+      "grandTotal": 420000,
+      "paymentMethod": "VNPay",
+      "paymentStatus": "paid",
+      "status": "confirmed",
+      "note": "Đặt lịch sinh hoạt định kỳ tuần",
+      "createdAt": "28/08/2026 08:15"
+    },
+    {
+      "id": "BK-1003",
+      "court": {
+        "id": "5",
+        "clubId": "c1",
+        "name": "Sân 5 - Cơ sở 1 (VIP Thảm Đỏ)",
+        "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+        "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+        "district": "Cẩm Lệ",
+        "price": 120000,
+        "type": "Thảm Victor Pro VIP Khán Đài",
+        "status": "available",
+        "currentGuest": null,
+        "currentSlot": null,
+        "image": "https://images.unsplash.com/photo-1599474924187-334a4ae5bd3c?w=400&q=80"
+      },
+      "courtId": "5",
+      "userId": "user3",
+      "userName": "Phạm Thị Mai",
+      "userPhone": "0914 222 333",
+      "date": "28/08/2026",
+      "slot": "09:00 - 11:00",
+      "hoursCount": 2,
+      "totalPrice": 200000,
+      "servicesAdded": [
+        {
+          "name": "Thuê vợt Yonex",
+          "qty": 2,
+          "price": 60000
+        }
+      ],
+      "grandTotal": 260000,
+      "paymentMethod": "Tiền mặt",
+      "paymentStatus": "paid",
+      "status": "in_use",
+      "note": "Khách thanh toán trực tiếp tại quầy",
+      "createdAt": "28/08/2026 08:50"
+    },
+    {
+      "id": "BK-1004",
+      "court": {
+        "id": "8",
+        "clubId": "c1",
+        "name": "Sân 8 - Cơ sở 1 (Bảo dưỡng)",
+        "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+        "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+        "district": "Cẩm Lệ",
+        "price": 80000,
+        "type": "Thảm Yonex Tiêu chuẩn BWF",
+        "status": "maintenance",
+        "currentGuest": "Bảo trì hệ thống đèn LED",
+        "currentSlot": "Tạm ngừng ca ngày",
+        "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+      },
+      "courtId": "8",
+      "userId": "user2",
+      "userName": "Hoàng Minh Đức",
+      "userPhone": "0905 888 777",
+      "date": "28/08/2026",
+      "slot": "18:00 - 21:00",
+      "hoursCount": 3,
+      "totalPrice": 360000,
+      "servicesAdded": [],
+      "grandTotal": 360000,
+      "paymentMethod": "Chuyển khoản QR",
+      "paymentStatus": "pending",
+      "status": "pending",
+      "note": "Chờ đối soát bill ngân hàng",
+      "createdAt": "28/08/2026 10:10"
+    },
+    {
+      "id": "BK-1005",
+      "court": {
+        "id": "2",
+        "clubId": "c1",
+        "name": "Sân 2 - Cơ sở 1 (Hoa Thiên Lý)",
+        "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+        "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+        "district": "Cẩm Lệ",
+        "price": 80000,
+        "type": "Thảm Yonex Tiêu chuẩn BWF",
+        "status": "available",
+        "currentGuest": null,
+        "currentSlot": null,
+        "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+      },
+      "courtId": "2",
+      "userId": "user1",
+      "userName": "Trung Quốc",
+      "userPhone": "0905591379",
+      "date": "27/08/2026",
+      "slot": "07:00 - 09:00",
+      "hoursCount": 2,
+      "totalPrice": 160000,
+      "servicesAdded": [
+        {
+          "name": "Aquafina",
+          "qty": 4,
+          "price": 40000
+        }
+      ],
+      "grandTotal": 200000,
+      "paymentMethod": "Chuyển khoản QR",
+      "paymentStatus": "paid",
+      "status": "completed",
+      "note": "Đã hoàn thành",
+      "createdAt": "27/08/2026 06:45"
+    },
+    {
+      "id": "BK-1006",
+      "court": {
+        "id": "4",
+        "clubId": "c1",
+        "name": "Sân 4 - Cơ sở 1 (Hoa Thiên Lý)",
+        "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+        "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+        "district": "Cẩm Lệ",
+        "price": 80000,
+        "type": "Thảm Yonex Tiêu chuẩn BWF",
+        "status": "available",
+        "currentGuest": null,
+        "currentSlot": null,
+        "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+      },
+      "courtId": "4",
+      "userId": "user4",
+      "userName": "Đặng Tuấn Anh",
+      "userPhone": "0978 999 000",
+      "date": "27/08/2026",
+      "slot": "19:00 - 21:00",
+      "hoursCount": 2,
+      "totalPrice": 180000,
+      "servicesAdded": [],
+      "grandTotal": 180000,
+      "paymentMethod": "Tiền mặt",
+      "paymentStatus": "refunded",
+      "status": "cancelled",
+      "note": "Khách bận đột xuất - Hủy trước 4h",
+      "createdAt": "26/08/2026 14:20"
+    }
+  ],
+  "services": [
+    {
+      "id": "s1",
+      "name": "Nước khoáng Aquafina (500ml)",
+      "category": "Nước uống",
+      "price": 10000,
+      "cost": 5000,
+      "stock": 120,
+      "unit": "Chai",
+      "icon": "💧"
+    },
+    {
+      "id": "s2",
+      "name": "Nước điện giải Revive bù khoáng",
+      "category": "Nước uống",
+      "price": 15000,
+      "cost": 8000,
+      "stock": 85,
+      "unit": "Chai",
+      "icon": "🍋"
+    },
+    {
+      "id": "s3",
+      "name": "Pocari Sweat ion supply",
+      "category": "Nước uống",
+      "price": 20000,
+      "cost": 12000,
+      "stock": 45,
+      "unit": "Chai",
+      "icon": "🥤"
+    },
+    {
+      "id": "s4",
+      "name": "Bò húc RedBull / Rockstar",
+      "category": "Nước uống",
+      "price": 20000,
+      "cost": 12000,
+      "stock": 32,
+      "unit": "Lon",
+      "icon": "⚡"
+    },
+    {
+      "id": "s5",
+      "name": "Ống cầu lông Hải Yến S90 (12 quả)",
+      "category": "Phụ Kiện",
+      "price": 240000,
+      "cost": 195000,
+      "stock": 18,
+      "unit": "Ống",
+      "icon": "🏸"
+    },
+    {
+      "id": "s6",
+      "name": "Ống cầu lông Yonex AS-40",
+      "category": "Phụ Kiện",
+      "price": 420000,
+      "cost": 350000,
+      "stock": 6,
+      "unit": "Ống",
+      "icon": "🏸"
+    },
+    {
+      "id": "s7",
+      "name": "Thuê vợt Yonex Astrox (1 lượt)",
+      "category": "Cho thuê",
+      "price": 30000,
+      "cost": 0,
+      "stock": 15,
+      "unit": "Cây/lượt",
+      "icon": "🏸"
+    },
+    {
+      "id": "s8",
+      "name": "Thuê máy bắn bóng PP-Smart Pro (Giờ)",
+      "category": "Dịch vụ",
+      "price": 60000,
+      "cost": 0,
+      "stock": 3,
+      "unit": "Giờ",
+      "icon": "🤖"
+    },
+    {
+      "id": "s9",
+      "name": "Thuê giày cầu lông (kèm tất sạch)",
+      "category": "Cho thuê",
+      "price": 30000,
+      "cost": 5000,
+      "stock": 20,
+      "unit": "Đôi/lượt",
+      "icon": "👟"
+    },
+    {
+      "id": "s10",
+      "name": "Dịch vụ căng cước vợt 4 nút chuẩn BWF",
+      "category": "Dịch vụ",
+      "price": 80000,
+      "cost": 40000,
+      "stock": 999,
+      "unit": "Lần",
+      "icon": "🔧"
+    },
+    {
+      "id": "s11",
+      "name": "Quấn cán vợt VS Grip chống mồ hôi",
+      "category": "Phụ Kiện",
+      "price": 15000,
+      "cost": 7000,
+      "stock": 65,
+      "unit": "Cái",
+      "icon": "🎗️"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "TXN-901",
+      "bookingId": "BK-1001",
+      "customerName": "Hoàng Minh Đức",
+      "amount": 190000,
+      "method": "Chuyển khoản QR",
+      "status": "completed",
+      "time": "28/08/2026 09:35",
+      "ref": "MB-89234821"
+    },
+    {
+      "id": "TXN-902",
+      "bookingId": "BK-1002",
+      "customerName": "Trung Quốc",
+      "amount": 420000,
+      "method": "VNPay",
+      "status": "completed",
+      "time": "28/08/2026 08:18",
+      "ref": "VNP-1823901"
+    },
+    {
+      "id": "TXN-903",
+      "bookingId": "BK-1003",
+      "customerName": "Phạm Thị Mai",
+      "amount": 260000,
+      "method": "Tiền mặt",
+      "status": "completed",
+      "time": "28/08/2026 08:52",
+      "ref": "CASH-POS1"
+    },
+    {
+      "id": "TXN-904",
+      "bookingId": "BK-1004",
+      "customerName": "Hoàng Minh Đức",
+      "amount": 360000,
+      "method": "Chuyển khoản QR",
+      "status": "pending",
+      "time": "28/08/2026 10:10",
+      "ref": "VCB-Pending"
+    },
+    {
+      "id": "TXN-905",
+      "bookingId": "BK-1005",
+      "customerName": "Trung Quốc",
+      "amount": 200000,
+      "method": "Chuyển khoản QR",
+      "status": "completed",
+      "time": "27/08/2026 06:48",
+      "ref": "MB-7712399"
+    },
+    {
+      "id": "TXN-906",
+      "bookingId": "BK-1006",
+      "customerName": "Đặng Tuấn Anh",
+      "amount": 180000,
+      "method": "Tiền mặt",
+      "status": "refunded",
+      "time": "27/08/2026 15:00",
+      "ref": "REFUND-001"
+    }
+  ],
+  "logs": [
+    {
+      "id": "L-1",
+      "action": "Duyệt đơn đặt sân",
+      "detail": "Admin xác nhận đơn BK-1002 cho Trung Quốc",
+      "user": "Trần Quốc Trung",
+      "time": "10:15 - Hôm nay",
+      "type": "booking"
+    },
+    {
+      "id": "L-2",
+      "action": "Cập nhật trạng thái sân",
+      "detail": "Chuyển Sân 1 - TPT Sport sang Đang sử dụng",
+      "user": "Lê Thu Ngân",
+      "time": "10:00 - Hôm nay",
+      "type": "court"
+    },
+    {
+      "id": "L-3",
+      "action": "Xuất kho sản phẩm",
+      "detail": "Bán 2 chai Revive cho đơn BK-1001",
+      "user": "Lê Thu Ngân",
+      "time": "09:35 - Hôm nay",
+      "type": "service"
+    },
+    {
+      "id": "L-4",
+      "action": "Bảo trì sân đấu",
+      "detail": "Đặt Sân 2 - Nestworld sang Bảo dưỡng đèn LED",
+      "user": "Nguyễn Văn Quản Lý",
+      "time": "07:30 - Hôm nay",
+      "type": "court"
+    },
+    {
+      "id": "L-5",
+      "action": "Khóa tài khoản",
+      "detail": "Khóa tài khoản Đặng Tuấn Anh do vi phạm hủy giờ sát",
+      "user": "Trần Quốc Trung",
+      "time": "27/08/2026 16:00",
+      "type": "security"
+    }
+  ]
+}

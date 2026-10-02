@@ -1,0 +1,117 @@
+// ─── SERVICES & POS INVENTORY CONTROLLER ────────────────────────────────────
+const db = require('../config/db');
+
+// GET /api/services
+function getAllServices(req, res) {
+  const { category } = req.query;
+  let services = db.getServices();
+
+  if (category) {
+    services = services.filter(s => s.category.toLowerCase() === category.toLowerCase());
+  }
+
+  res.json({
+    success: true,
+    count: services.length,
+    data: services,
+  });
+}
+
+// PATCH /api/services/:id/stock
+function updateStock(req, res) {
+  const { id } = req.params;
+  const { stock, delta } = req.body;
+
+  const item = db.getServiceById(id);
+  if (!item) {
+    return res.status(404).json({ success: false, message: 'Không tìm thấy sản phẩm' });
+  }
+
+  const newStock = stock !== undefined ? Number(stock) : Math.max(0, item.stock + (Number(delta) || 0));
+  const updated = db.updateService(id, { stock: newStock });
+
+  res.json({
+    success: true,
+    message: 'Cập nhật tồn kho thành công',
+    data: updated,
+  });
+}
+
+// POST /api/services
+function addService(req, res) {
+  const { name, category, price, cost, stock, unit, icon } = req.body;
+
+  if (!name || !price) {
+    return res.status(400).json({ success: false, message: 'Tên sản phẩm và giá bán là bắt buộc' });
+  }
+
+  const newService = db.addService({
+    name,
+    category: category || 'Nước uống',
+    price: Number(price),
+    cost: Number(cost || 0),
+    stock: Number(stock || 0),
+    unit: unit || 'Cái',
+    icon: icon || '📦',
+  });
+
+  db.addLog({
+    action: 'Thêm sản phẩm mới',
+    detail: `Thêm món "${newService.name}" vào kho hàng POS`,
+    user: req.user ? req.user.name : 'Quản lý',
+    type: 'service',
+  });
+
+  res.status(201).json({
+    success: true,
+    message: 'Thêm sản phẩm mới thành công',
+    data: newService,
+  });
+}
+
+// POST /api/services/pos-checkout
+function posCheckout(req, res) {
+  const { items, totalAmount, customerName, paymentMethod } = req.body;
+
+  if (!items || !items.length) {
+    return res.status(400).json({ success: false, message: 'Giỏ hàng POS trống' });
+  }
+
+  // Deduct stock for each item
+  items.forEach(item => {
+    const s = db.getServiceById(item.id);
+    if (s && s.stock >= item.qty) {
+      db.updateService(item.id, { stock: s.stock - item.qty });
+    }
+  });
+
+  // Record Transaction
+  const newTxn = db.addTransaction({
+    customerName: customerName || 'Khách lẻ tại quầy POS',
+    amount: totalAmount || 0,
+    method: paymentMethod || 'Tiền mặt',
+    status: 'completed',
+    ref: 'POS-CASH',
+  });
+
+  // Audit Log
+  db.addLog({
+    action: 'Bán hàng POS tại quầy',
+    detail: `Đơn POS ${items.length} món. Tổng tiền: ${(totalAmount || 0).toLocaleString('vi-VN')} đ`,
+    user: req.user ? req.user.name : 'Thu ngân',
+    type: 'service',
+  });
+
+  res.json({
+    success: true,
+    message: 'Thanh toán đơn hàng POS thành công',
+    data: { transaction: newTxn },
+  });
+}
+
+module.exports = {
+  getAllServices,
+  updateStock,
+  addService,
+  posCheckout,
+};
