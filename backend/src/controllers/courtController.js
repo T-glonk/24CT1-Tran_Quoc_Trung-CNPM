@@ -1,10 +1,28 @@
-// ─── COURT CONTROLLER ────────────────────────────────────────────────────────
+// ─── COURT & BRANCHES CONTROLLER (MYSQL & PERSISTENCE) ────────────────────────
 const db = require('../config/db');
-const { pool } = require('../config/mysql');
+const { pool, query } = require('../config/mysql');
 
-// GET /api/courts
-function getAllCourts(req, res) {
-  const courts = db.getCourts();
+// GET /api/courts - Lấy danh sách sân (Đọc từ MySQL & Local Cache)
+async function getAllCourts(req, res) {
+  let courts = db.getCourts();
+
+  // Reads records from MySQL pool
+  try {
+    const [rows] = await pool.query('SELECT * FROM courts ORDER BY id ASC');
+    if (rows && rows.length > 0) {
+      courts = rows.map(r => ({
+        id: String(r.id),
+        name: r.name,
+        clubId: r.club_id || 'c1',
+        type: r.type || 'Thảm PVC thi đấu',
+        price: Number(r.price || r.price_per_hour || 90000),
+        status: r.status || 'available',
+      }));
+    }
+  } catch (err) {
+    courts = db.getCourts();
+  }
+
   res.json({
     success: true,
     count: courts.length,
@@ -12,17 +30,39 @@ function getAllCourts(req, res) {
   });
 }
 
-// GET /api/courts/:id
-function getCourtById(req, res) {
-  const court = db.getCourtById(req.params.id);
+// GET /api/courts/:id - Lấy chi tiết sân theo ID từ MySQL
+async function getCourtById(req, res) {
+  const { id } = req.params;
+  let court = null;
+
+  // Reads records from MySQL pool
+  try {
+    const [rows] = await pool.query('SELECT * FROM courts WHERE id = ? LIMIT 1', [id]);
+    if (rows && rows.length > 0) {
+      const r = rows[0];
+      court = {
+        id: String(r.id),
+        name: r.name,
+        clubId: r.club_id || 'c1',
+        type: r.type || 'Thảm PVC thi đấu',
+        price: Number(r.price || r.price_per_hour || 90000),
+        status: r.status || 'available',
+      };
+    }
+  } catch (err) {
+    court = db.getCourtById(id);
+  }
+
+  if (!court) court = db.getCourtById(id);
+
   if (!court) {
     return res.status(404).json({ success: false, message: 'Không tìm thấy sân' });
   }
   res.json({ success: true, data: court });
 }
 
-// PATCH /api/courts/:id/status
-function updateCourtStatus(req, res) {
+// PATCH /api/courts/:id/status - Cập nhật trạng thái sân vào MySQL
+async function updateCourtStatus(req, res) {
   const { id } = req.params;
   const { status, currentGuest, currentSlot } = req.body;
 
@@ -41,10 +81,14 @@ function updateCourtStatus(req, res) {
     return res.status(404).json({ success: false, message: 'Không tìm thấy sân cần cập nhật' });
   }
 
-  // Sync to MySQL
-  pool.query('UPDATE courts SET status = ? WHERE id = ?', [status, id]).catch(() => {});
+  // Writes records to MySQL database
+  try {
+    await pool.query('UPDATE courts SET status = ? WHERE id = ?', [status, id]);
+  } catch (err) {
+    console.warn(`[MySQL Court Status Warning]: ${err.message}`);
+  }
 
-  // Audit log
+  // Ghi audit log
   db.addLog({
     action: 'Cập nhật trạng thái sân',
     detail: `Sân "${updated.name}" đổi trạng thái thành ${status}`,
@@ -59,8 +103,8 @@ function updateCourtStatus(req, res) {
   });
 }
 
-// POST /api/courts
-function addCourt(req, res) {
+// POST /api/courts - Thêm sân đấu mới vào MySQL & Cache
+async function addCourt(req, res) {
   const { name, clubId, clubName, location, district, price, type } = req.body;
   if (!name || !price) {
     return res.status(400).json({ success: false, message: 'Vui lòng cung cấp tên sân và giá thuê' });
@@ -76,18 +120,22 @@ function addCourt(req, res) {
     type: type || 'Thảm PVC thi đấu',
   });
 
-  // Sync to MySQL
-  pool.query(
-    'INSERT INTO courts (id, club_id, name, type, price, status) VALUES (?, ?, ?, ?, ?, ?)',
-    [
-      newCourt.id,
-      newCourt.clubId || 'c1',
-      newCourt.name,
-      newCourt.type || 'Thảm PVC thi đấu',
-      newCourt.price,
-      'available',
-    ]
-  ).catch(() => {});
+  // Writes records to MySQL database
+  try {
+    await pool.query(
+      'INSERT INTO courts (id, club_id, name, type, price, status) VALUES (?, ?, ?, ?, ?, ?)',
+      [
+        newCourt.id,
+        newCourt.clubId || 'c1',
+        newCourt.name,
+        newCourt.type || 'Thảm PVC thi đấu',
+        newCourt.price,
+        'available',
+      ]
+    );
+  } catch (err) {
+    console.warn(`[MySQL Add Court Warning]: ${err.message}`);
+  }
 
   db.addLog({
     action: 'Thêm sân mới',
@@ -103,8 +151,8 @@ function addCourt(req, res) {
   });
 }
 
-// PATCH /api/courts/:id/price
-function updateCourtPrice(req, res) {
+// PATCH /api/courts/:id/price - Cập nhật giá sân trong MySQL
+async function updateCourtPrice(req, res) {
   const { id } = req.params;
   const { price } = req.body;
 
@@ -117,7 +165,12 @@ function updateCourtPrice(req, res) {
     return res.status(404).json({ success: false, message: 'Không tìm thấy sân' });
   }
 
-  pool.query('UPDATE courts SET price_per_hour = ? WHERE id = ?', [Number(price), id]).catch(() => {});
+  // Writes records to MySQL database
+  try {
+    await pool.query('UPDATE courts SET price = ?, price_per_hour = ? WHERE id = ?', [Number(price), Number(price), id]);
+  } catch (err) {
+    console.warn(`[MySQL Price Update Warning]: ${err.message}`);
+  }
 
   res.json({
     success: true,
@@ -126,9 +179,20 @@ function updateCourtPrice(req, res) {
   });
 }
 
-// GET /api/courts/clubs/all
-function getClubs(req, res) {
-  const clubs = db.getClubs();
+// GET /api/courts/clubs/all - Lấy danh sách câu lạc bộ / chi nhánh từ MySQL
+async function getClubs(req, res) {
+  let clubs = db.getClubs();
+
+  // Reads records from MySQL pool
+  try {
+    const [rows] = await pool.query('SELECT * FROM clubs ORDER BY id ASC');
+    if (rows && rows.length > 0) {
+      clubs = rows;
+    }
+  } catch (err) {
+    clubs = db.getClubs();
+  }
+
   res.json({
     success: true,
     count: clubs.length,
@@ -144,3 +208,4 @@ module.exports = {
   updateCourtPrice,
   getClubs,
 };
+

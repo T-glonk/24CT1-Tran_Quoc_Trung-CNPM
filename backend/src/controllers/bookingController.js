@@ -1,11 +1,50 @@
-// ─── BOOKING CONTROLLER ──────────────────────────────────────────────────────
+// ─── BOOKING & RESERVATION CONTROLLER (MYSQL & PERSISTENCE) ──────────────────
 const db = require('../config/db');
-const { pool } = require('../config/mysql');
+const { pool, query } = require('../config/mysql');
 
-// GET /api/bookings
-function getAllBookings(req, res) {
+// GET /api/bookings - Lấy danh sách đơn đặt sân (Đọc từ MySQL & Local Cache)
+async function getAllBookings(req, res) {
   const { status, userId } = req.query;
   let bookings = db.getBookings();
+
+  // Reads records from MySQL pool
+  try {
+    let sql = 'SELECT * FROM bookings WHERE 1=1';
+    const params = [];
+    if (status) {
+      sql += ' AND status = ?';
+      params.push(status);
+    }
+    if (userId) {
+      sql += ' AND user_id = ?';
+      params.push(userId);
+    }
+    sql += ' ORDER BY id DESC';
+
+    const [rows] = await pool.query(sql, params);
+    if (rows && rows.length > 0) {
+      bookings = rows.map(r => ({
+        id: r.id,
+        courtId: r.court_id,
+        userId: r.user_id,
+        userName: r.user_name,
+        userPhone: r.user_phone,
+        date: r.booking_date,
+        slot: r.slot_time,
+        hoursCount: r.hours_count,
+        totalPrice: r.court_price,
+        grandTotal: r.grand_total,
+        paymentMethod: r.payment_method,
+        paymentStatus: r.payment_status,
+        status: r.status,
+        note: r.note,
+        createdAt: r.created_at,
+        court: db.getCourtById(r.court_id) || { name: `Sân ${r.court_id}` },
+      }));
+    }
+  } catch (err) {
+    bookings = db.getBookings();
+  }
 
   if (status) {
     bookings = bookings.filter(b => b.status === status);
@@ -21,14 +60,47 @@ function getAllBookings(req, res) {
   });
 }
 
-// GET /api/bookings/:id
-function getBookingById(req, res) {
-  const booking = db.getBookingById(req.params.id);
+// GET /api/bookings/:id - Lấy chi tiết đơn đặt sân từ MySQL
+async function getBookingById(req, res) {
+  const { id } = req.params;
+  let booking = null;
+
+  // Reads records from MySQL pool
+  try {
+    const [rows] = await pool.query('SELECT * FROM bookings WHERE id = ? LIMIT 1', [id]);
+    if (rows && rows.length > 0) {
+      const r = rows[0];
+      booking = {
+        id: r.id,
+        courtId: r.court_id,
+        userId: r.user_id,
+        userName: r.user_name,
+        userPhone: r.user_phone,
+        date: r.booking_date,
+        slot: r.slot_time,
+        hoursCount: r.hours_count,
+        totalPrice: r.court_price,
+        grandTotal: r.grand_total,
+        paymentMethod: r.payment_method,
+        paymentStatus: r.payment_status,
+        status: r.status,
+        note: r.note,
+        createdAt: r.created_at,
+        court: db.getCourtById(r.court_id) || { name: `Sân ${r.court_id}` },
+      };
+    }
+  } catch (err) {
+    booking = db.getBookingById(id);
+  }
+
+  if (!booking) booking = db.getBookingById(id);
+
   if (!booking) {
     return res.status(404).json({ success: false, message: 'Không tìm thấy đơn đặt sân' });
   }
   res.json({ success: true, data: booking });
 }
+
 
 // POST /api/bookings
 function createBooking(req, res) {

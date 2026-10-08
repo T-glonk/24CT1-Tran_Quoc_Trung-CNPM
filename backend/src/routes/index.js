@@ -9,6 +9,7 @@ const serviceRoutes = require('./serviceRoutes');
 const transactionRoutes = require('./transactionRoutes');
 const reportRoutes = require('./reportRoutes');
 const dbRoutes = require('./dbRoutes');
+const syncRoutes = require('./syncRoutes');
 
 // Mount Sub-routers
 router.use('/auth', authRoutes);
@@ -19,6 +20,8 @@ router.use('/services', serviceRoutes);
 router.use('/transactions', transactionRoutes);
 router.use('/reports', reportRoutes);
 router.use('/db', dbRoutes);
+router.use('/sync', syncRoutes);
+
 
 // Health check endpoint
 router.get('/health', (req, res) => {

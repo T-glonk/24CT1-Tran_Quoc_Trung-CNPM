@@ -1,11 +1,36 @@
-// ─── SERVICES & POS INVENTORY CONTROLLER ────────────────────────────────────
+// ─── SERVICES & POS INVENTORY CONTROLLER (MYSQL & PERSISTENCE) ───────────────
 const db = require('../config/db');
-const { pool } = require('../config/mysql');
+const { pool, query } = require('../config/mysql');
 
-// GET /api/services
-function getAllServices(req, res) {
+// GET /api/services - Lấy danh mục sản phẩm/dịch vụ từ MySQL & Cache
+async function getAllServices(req, res) {
   const { category } = req.query;
   let services = db.getServices();
+
+  // Reads records from MySQL pool
+  try {
+    let sql = 'SELECT * FROM services WHERE status = "active"';
+    const params = [];
+    if (category) {
+      sql += ' AND LOWER(category) = LOWER(?)';
+      params.push(category);
+    }
+    const [rows] = await pool.query(sql, params);
+    if (rows && rows.length > 0) {
+      services = rows.map(r => ({
+        id: r.id,
+        name: r.name,
+        category: r.category,
+        price: Number(r.price),
+        cost: Number(r.cost || 0),
+        stock: Number(r.stock || 0),
+        unit: r.unit || 'Cái',
+        icon: r.icon || '📦',
+      }));
+    }
+  } catch (err) {
+    services = db.getServices();
+  }
 
   if (category) {
     services = services.filter(s => s.category.toLowerCase() === category.toLowerCase());
@@ -17,6 +42,7 @@ function getAllServices(req, res) {
     data: services,
   });
 }
+
 
 // PATCH /api/services/:id/stock
 function updateStock(req, res) {

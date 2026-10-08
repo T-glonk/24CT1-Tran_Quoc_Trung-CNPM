@@ -1,6 +1,7 @@
-// ─── PERSISTENT DATABASE ENGINE WITH FILE-BACKED STORE ─────────────────────────
+// ─── PERSISTENCE LAYER: MYSQL CONNECTION POOL & LOCAL CACHE SYNC ─────────────
 const fs = require('fs');
 const path = require('path');
+const { pool, query, testMySQLConnection } = require('./mysql');
 
 const { INITIAL_USERS } = require('../data/users');
 const { INITIAL_COURTS, INITIAL_CLUBS } = require('../data/courts');
@@ -9,6 +10,7 @@ const { INITIAL_SERVICES } = require('../data/services');
 const { INITIAL_TRANSACTIONS, INITIAL_ACTIVITY_LOGS } = require('../data/logs');
 
 const DB_FILE_PATH = path.join(__dirname, '../data/database.json');
+
 
 class DatabaseStore {
   constructor() {
@@ -255,9 +257,28 @@ class DatabaseStore {
     this.saveToFile();
     return newLog;
   }
+
+  // ── MySQL Direct Query & Sync Helpers ──
+  async queryMySQL(sql, params = []) {
+    return query(sql, params);
+  }
+
+  getPool() {
+    return pool;
+  }
 }
 
 // Singleton database instance
 const db = new DatabaseStore();
 
+// Attach MySQL Pool and Query executor to db instance for unified access
+db.pool = pool;
+db.query = query;
+db.testMySQLConnection = testMySQLConnection;
+
 module.exports = db;
+module.exports.db = db;
+module.exports.pool = pool;
+module.exports.query = query;
+module.exports.testMySQLConnection = testMySQLConnection;
+

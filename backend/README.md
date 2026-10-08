@@ -64,6 +64,34 @@ Server sẽ chạy tại: `http://localhost:5000`
 - `GET /api/transactions`: Sổ quỹ thu chi
 - `POST /api/transactions`: Ghi nhận khoản thu/chi thủ công
 
-### 7. Thống kê & Báo cáo (`/api/reports`)
-- `GET /api/reports/summary`: Báo cáo tổng hợp doanh thu, công suất, số lượng đơn
-- `GET /api/reports/logs`: Lịch sử Audit Logs hoạt động hệ thống
+### 8. Đồng bộ & Trạng thái Cơ sở dữ liệu (`/api/sync` & `/api/db`)
+- `GET /api/sync/health`: Kiểm tra kết nối MySQL 8.0 & bộ nhớ đệm
+- `POST /api/sync/mysql`: Đồng bộ dữ liệu 2 chiều MySQL Server
+- `POST /api/sync/reset`: Khôi phục cơ sở dữ liệu về mặc định ban đầu
+- `GET /api/db/stats`: Thống kê số lượng bản ghi trong database
+
+---
+
+## 🗄️ Kiến Trúc Cơ Sở Dữ Liệu (MySQL + Local Cache Engine)
+
+```mermaid
+graph LR
+    subgraph ExpressBackend ["Express.js API Layer"]
+        Controllers["Controllers (Auth, Court, Booking, POS, Reports, CRM)"]
+    end
+
+    subgraph DataEngine ["Persistence Layer"]
+        Pool["MySQL Connection Pool (mysql.js)"]
+        Cache["Persistent Cache (db.js / database.json)"]
+    end
+
+    subgraph DatabaseServer ["Database Storage"]
+        MySQL[("🗄️ MySQL Server (Port 3307)")]
+    end
+
+    Controllers -->|"SQL Queries (SELECT/INSERT/UPDATE)"| Pool
+    Pool <-->|"TCP Connection"| MySQL
+    Pool -.->|"Dual-Sync / Fallback"| Cache
+    Controllers -.->|"Fallback Cache"| Cache
+```
+

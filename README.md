@@ -4,16 +4,87 @@ Hệ thống quản lý và đặt sân cầu lông chuyên nghiệp được t�
 
 ---
 
-## 🏛️ Kiến Trúc Hệ Thống (Architecture)
+## 🏛️ Sơ Đồ Kiến Trúc Hệ Thống (System Architecture & Database Connections)
+
+```mermaid
+graph TD
+    subgraph Users ["Actors & Clients"]
+        CustomerUser["👤 Khách hàng (Customer)"]
+        AdminUser["🛡️ Quản trị viên (Admin / Staff)"]
+    end
+
+    subgraph FrontendApp ["Mobile Application (React Native / Expo)"]
+        AppEntry["App Entry [App.js]"]
+        Nav["App Navigator [AppNavigator.js]"]
+        State["Global Context [AppContext.js]"]
+        Screens["Screens (Auth, Customer, Admin 11 Modules, Map)"]
+        ApiClient["API Client [apiClient.js]"]
+        
+        AppEntry --> Nav
+        AppEntry --> State
+        Nav --> Screens
+        State --> ApiClient
+    end
+
+    CustomerUser --> FrontendApp
+    AdminUser --> FrontendApp
+
+    subgraph BackendServer ["REST API Server (Express.js)"]
+        Server["API Server [server.js]"]
+        Router["API Routing [index.js]"]
+        
+        subgraph Controllers ["Controllers & Business Logic"]
+            AuthController["Auth Controller [authController.js]"]
+            CourtController["Courts Controller [courtController.js]"]
+            BookingController["Bookings Controller [bookingController.js]"]
+            CustomerController["Customers CRM [customerController.js]"]
+            ServiceController["Services & POS [serviceController.js]"]
+            TxnController["Transactions [transactionController.js]"]
+            ReportController["Reports & Logs [reportController.js]"]
+            SyncController["Data Sync & Health [syncController.js]"]
+        end
+
+        Server --> Router
+        Router --> AuthController
+        Router --> CourtController
+        Router --> BookingController
+        Router --> CustomerController
+        Router --> ServiceController
+        Router --> TxnController
+        Router --> ReportController
+        Router --> SyncController
+    end
+
+    ApiClient -- "HTTP / REST API (Port 5000)" --> Server
+
+    subgraph Persistence ["Persistence Layer & Database Connection"]
+        MySQLPool["MySQL Connection Pool [mysql.js]"]
+        DBStore["Local Cache & Sync Engine [db.js / database.json]"]
+        MySQLDB[("🗄️ MySQL Database (alobo_badminton:3307)")]
+        
+        MySQLPool <-->|"connects to / executes SQL"| MySQLDB
+        DBStore <-->|"syncs & falls back"| MySQLPool
+    end
+
+    AuthController -->|"queries / inserts users"| MySQLPool
+    CourtController -->|"queries / updates courts"| MySQLPool
+    BookingController -->|"inserts / updates bookings"| MySQLPool
+    CustomerController -->|"queries / updates customers"| MySQLPool
+    ServiceController -->|"updates stock / records POS"| MySQLPool
+    TxnController -->|"inserts / reads ledger"| MySQLPool
+    ReportController -->|"aggregates KPIs & logs"| MySQLPool
+    SyncController -->|"health check & 2-way sync"| MySQLPool
+    SyncController -->|"persists cache"| DBStore
+```
 
 ```
 24CT1-Tran_Quoc_Trung/
 │
 ├── 📂 backend/                     # MODULE 1: REST API SERVER (Node.js & Express)
 │   ├── src/
-│   │   ├── config/                 # Cấu hình môi trường & In-memory Database
-│   │   ├── controllers/            # Xử lý nghiệp vụ (Auth, Courts, Bookings, Customers, Services, Reports)
-│   │   ├── data/                   # Seed Data & Cấu trúc dữ liệu mẫu
+│   │   ├── config/                 # MySQL Pool (mysql.js) & Local Cache Store (db.js)
+│   │   ├── controllers/            # Xử lý nghiệp vụ & Query SQL MySQL
+│   │   ├── data/                   # Script MySQL Workbench & database.json
 │   │   ├── middlewares/            # Auth JWT, Logger, Error Handler
 │   │   ├── routes/                 # REST API Endpoints Router
 │   │   └── server.js               # Entry point Express Server (Port 5000)
@@ -23,9 +94,9 @@ Hệ thống quản lý và đặt sân cầu lông chuyên nghiệp được t�
 ├── 📂 frontend/                    # MODULE 2: CLIENT APP (React Native / Expo)
 │   ├── App.js                      # Root React Native Component
 │   ├── src/
-│   │   ├── api/                    # Tầng giao tiếp REST API & Fallback Client
+│   │   ├── api/                    # Tầng giao tiếp REST API & apiClient.js
 │   │   ├── components/             # Reusable UI Components (Common, Auth, Map)
-│   │   ├── constants/              # Design System Theme & Initial Data
+│   │   ├── constants/              # Design System Theme & Assets
 │   │   ├── context/                # Global State Management (AppContext)
 │   │   ├── navigation/             # AppNavigator & BottomTabBar
 │   │   └── screens/                # Màn hình chức năng (Auth, Customer, Admin 11 Modules, Map)
@@ -42,6 +113,7 @@ Hệ thống quản lý và đặt sân cầu lông chuyên nghiệp được t�
 ---
 
 ## ⚡ Hướng Dẫn Cài Đặt & Chạy Dự Án
+
 
 ### 1. Cài đặt thư viện:
 ```bash
