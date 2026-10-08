@@ -26,6 +26,7 @@ export function AppProvider({ children }) {
 
   const [courts, setCourts] = useState(INITIAL_COURTS);
   const [clubs, setClubs] = useState(INITIAL_CLUBS);
+  const [selectedClub, setSelectedClub] = useState(INITIAL_CLUBS[0]);
   const [bookings, setBookings] = useState(INITIAL_BOOKINGS);
   const [usersList, setUsersList] = useState(INITIAL_USERS);
   const [servicesList, setServicesList] = useState(INITIAL_SERVICES);
@@ -46,12 +47,12 @@ export function AppProvider({ children }) {
           reportApi.getLogs(),
         ]);
 
-        if (courtsRes?.success) setCourts(courtsRes.data);
-        if (bookingsRes?.success) setBookings(bookingsRes.data);
-        if (servicesRes?.success) setServicesList(servicesRes.data);
-        if (usersRes?.success) setUsersList(usersRes.data);
-        if (txnsRes?.success) setTransactionsList(txnsRes.data);
-        if (logsRes?.success) setLogsList(logsRes.data);
+        if (courtsRes?.success && courtsRes.data?.length) setCourts(courtsRes.data);
+        if (bookingsRes?.success && bookingsRes.data?.length) setBookings(bookingsRes.data);
+        if (servicesRes?.success && servicesRes.data?.length) setServicesList(servicesRes.data);
+        if (usersRes?.success && usersRes.data?.length) setUsersList(usersRes.data);
+        if (txnsRes?.success && txnsRes.data?.length) setTransactionsList(txnsRes.data);
+        if (logsRes?.success && logsRes.data?.length) setLogsList(logsRes.data);
       } catch (err) {
         console.log('[AppProvider] Using local state cache:', err.message);
       }
@@ -60,6 +61,11 @@ export function AppProvider({ children }) {
   }, []);
 
   const navigate = (sc) => setScreen(sc);
+
+  const selectClubAndBook = (club) => {
+    if (club) setSelectedClub(club);
+    setScreen('booking');
+  };
 
   // ── Auth Actions ──
   const handleLogin = (user) => {
@@ -237,6 +243,9 @@ export function AppProvider({ children }) {
         screen,
         courts,
         clubs,
+        selectedClub,
+        setSelectedClub,
+        selectClubAndBook,
         bookings,
         usersList,
         servicesList,

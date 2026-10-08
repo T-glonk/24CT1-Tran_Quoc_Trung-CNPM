@@ -1,6 +1,16 @@
-// ─── API CLIENT CONFIGURATION & BASE FETCHER ─────────────────────────────────
+import Constants from 'expo-constants';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+// Tự động nhận diện IP máy chủ khi chạy trên điện thoại thật (Expo Go) hoặc Web
+const getBaseUrl = () => {
+  const debuggerHost = Constants.expoConfig?.hostUri || (Constants.manifest && Constants.manifest.debuggerHost) || '';
+  if (debuggerHost) {
+    const ip = debuggerHost.split(':')[0];
+    return `http://${ip}:5000/api`;
+  }
+  return 'http://localhost:5000/api';
+};
+
+const API_BASE_URL = getBaseUrl();
 
 /**
  * Perform an HTTP Request to the backend REST API

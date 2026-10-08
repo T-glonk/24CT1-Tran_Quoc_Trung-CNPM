@@ -3,43 +3,47 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Image,
   ScrollView,
   StyleSheet,
   TextInput,
 } from 'react-native';
 import { COLORS as C } from '../../constants/theme';
+import { APP_ASSETS } from '../../constants/assets';
 import { CLUBS } from '../../constants/initialData';
 import { MiniMapWidget } from '../../components/map/MiniMapWidget';
 
-export function HomeScreen({ user, navigate, bookings, favorites, onToggleFavorite }) {
+export function HomeScreen({ user, navigate, clubs = CLUBS, bookings = [], favorites = [], onToggleFavorite, onSelectClub }) {
   const [search, setSearch] = useState('');
   const today = new Date();
   const days = ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'];
   const dateStr = `${days[today.getDay()]}, ${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
 
   const filtered = search.trim()
-    ? CLUBS.filter((c) => c.name.toLowerCase().includes(search.toLowerCase()))
-    : CLUBS;
+    ? clubs.filter((c) => c.name.toLowerCase().includes(search.toLowerCase()) || (c.address && c.address.toLowerCase().includes(search.toLowerCase())))
+    : clubs;
 
   return (
     <ScrollView style={st.screen} showsVerticalScrollIndicator={false}>
       {/* Top Header */}
       <View style={st.topHeader}>
         <View style={st.topHeaderLeft}>
-          <View style={st.avatarGreen}>
-            <Text style={{ fontSize: 18 }}>🏸</Text>
-          </View>
+          <Image
+            source={APP_ASSETS.logo}
+            style={st.avatarGreen}
+            resizeMode="contain"
+          />
           <View style={{ marginLeft: 10 }}>
-            <Text style={st.dateText}>{dateStr}</Text>
+            <Text style={st.dateText}>QT SPORT · {dateStr}</Text>
             <Text style={st.userNameTop}>{user?.name || 'Khách hàng'}</Text>
           </View>
         </View>
         <View style={st.topHeaderRight}>
-          <TouchableOpacity style={st.iconBtn}>
-            <Text style={{ fontSize: 20 }}>🚩</Text>
+          <TouchableOpacity style={st.iconBtn} onPress={() => navigate('mapTab')}>
+            <Text style={{ fontSize: 18 }}>📍</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={st.iconBtn}>
-            <Text style={{ fontSize: 20 }}>🔔</Text>
+          <TouchableOpacity style={st.iconBtn} onPress={() => navigate('myBookings')}>
+            <Text style={{ fontSize: 18 }}>🔔</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -50,7 +54,7 @@ export function HomeScreen({ user, navigate, bookings, favorites, onToggleFavori
           <Text style={st.searchIcon}>🔍</Text>
           <TextInput
             style={st.searchInput}
-            placeholder="Tìm kiếm sân, CLB..."
+            placeholder="Tìm theo cơ sở, quận, tên sân..."
             placeholderTextColor="#94a3b8"
             value={search}
             onChangeText={setSearch}
@@ -61,18 +65,19 @@ export function HomeScreen({ user, navigate, bookings, favorites, onToggleFavori
             </TouchableOpacity>
           ) : null}
         </View>
-        <TouchableOpacity style={st.filterIconBtn}>
-          <Text style={{ fontSize: 18 }}>⚙️</Text>
+        <TouchableOpacity style={st.filterIconBtn} onPress={() => navigate('explore')}>
+          <Text style={{ fontSize: 18 }}>⚡</Text>
         </TouchableOpacity>
       </View>
 
       {/* Quick Nav Ribbon */}
       <View style={st.quickNav}>
         {[
-          { icon: '🗺️', label: 'Bản đồ', screen: 'mapTab' },
+          { icon: '🏸', label: 'Đặt sân nhanh', screen: 'booking' },
+          { icon: '🗺️', label: 'Bản đồ sân', screen: 'mapTab' },
           {
             icon: '📅',
-            label: 'Sân đã đặt',
+            label: 'Lịch của tôi',
             screen: 'myBookings',
             count: bookings.filter((b) => b.userId === user?.id).length,
           },
@@ -99,32 +104,42 @@ export function HomeScreen({ user, navigate, bookings, favorites, onToggleFavori
       {/* Banner */}
       <View style={st.banner}>
         <View style={{ flex: 1 }}>
-          <Text style={st.bannerBrand}>NACHI</Text>
-          <Text style={st.bannerAcademy}>BADMINTON COURT</Text>
-          <Text style={st.bannerSub}>Hệ thống sân tập & thi đấu chuẩn BWF tại Đà Nẵng</Text>
+          <View style={st.badgePill}>
+            <Text style={st.badgePillText}>⭐ HỆ THỐNG SÂN CHUẨN THI ĐẤU</Text>
+          </View>
+          <Text style={st.bannerBrand}>ALOBO SPORT</Text>
+          <Text style={st.bannerAcademy}>HỆ THỐNG QT SPORT (CƠ SỞ 1 - 8)</Text>
+          <Text style={st.bannerSub}>Thảm BWF tiêu chuẩn quốc tế • Đặt lịch linh hoạt 24/7</Text>
         </View>
-        <Text style={{ fontSize: 48 }}>🏸</Text>
       </View>
 
       {/* Mini Map Widget */}
       <MiniMapWidget onExpand={() => navigate('mapTab')} />
 
       {/* Clubs List Heading */}
-      <Text style={st.sectionTitle}>Danh Sách Câu Lạc Bộ Cầu Lông</Text>
+      <View style={st.sectionHeaderRow}>
+        <Text style={st.sectionTitle}>Hệ Thống Cơ Sở QT Sport ({filtered.length})</Text>
+        <TouchableOpacity onPress={() => navigate('explore')}>
+          <Text style={st.viewAllText}>Xem tất cả →</Text>
+        </TouchableOpacity>
+      </View>
 
       {filtered.map((item) => (
         <TouchableOpacity
           key={item.id}
           style={st.clubCard}
-          onPress={() => navigate('booking')}
-          activeOpacity={0.8}
+          onPress={() => onSelectClub ? onSelectClub(item) : navigate('booking')}
+          activeOpacity={0.85}
         >
           <View style={st.clubCardImg}>
-            <Text style={{ fontSize: 32 }}>🏸</Text>
+            <Text style={{ fontSize: 36 }}>🏸</Text>
+            <View style={st.courtCountBadge}>
+              <Text style={st.courtCountText}>{item.totalCourts || 6} SÂN</Text>
+            </View>
           </View>
           <View style={st.clubCardBody}>
-            <View style={{ flexDirection: 'row', gap: 4, marginBottom: 4 }}>
-              {item.tag.map((t) => (
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4, marginBottom: 4 }}>
+              {(item.tag || ['Chuẩn BWF']).map((t) => (
                 <View
                   key={t}
                   style={[
@@ -137,27 +152,25 @@ export function HomeScreen({ user, navigate, bookings, favorites, onToggleFavori
               ))}
             </View>
             <Text style={st.clubName}>{item.name}</Text>
-            <Text style={st.clubAddr} numberOfLines={1}>
+            <Text style={st.clubAddr} numberOfLines={2}>
               📍 {item.address}
             </Text>
-            <Text style={st.clubOpen}>⏰ {item.open}</Text>
-            <Text style={st.clubPrice}>💰 {item.priceRange}</Text>
+            <View style={st.metaRow}>
+              <Text style={st.clubOpen}>⏰ {item.open}</Text>
+              <Text style={st.ratingTag}>⭐ {item.rating} ({item.reviewsCount || 80})</Text>
+            </View>
+            <Text style={st.clubPrice}>💰 {item.priceRange || '60.000đ - 120.000đ/h'}</Text>
           </View>
           <View style={st.clubCardActions}>
-            <TouchableOpacity onPress={() => onToggleFavorite(item.id)}>
-              <Text style={{ fontSize: 20 }}>{favorites.includes(item.id) ? '❤️' : '🤍'}</Text>
+            <TouchableOpacity onPress={() => onToggleFavorite(item.id)} style={st.favBtn}>
+              <Text style={{ fontSize: 22 }}>{favorites.includes(item.id) ? '❤️' : '🤍'}</Text>
             </TouchableOpacity>
-            <View style={{ alignItems: 'center' }}>
-              <Text style={{ color: C.warning, fontSize: 11, fontWeight: '800' }}>
-                ⭐ {item.rating}
-              </Text>
-              <TouchableOpacity
-                style={st.bookSmallBtn}
-                onPress={() => navigate('booking')}
-              >
-                <Text style={{ color: '#fff', fontSize: 10, fontWeight: '800' }}>ĐẶT SÂN</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              style={st.bookSmallBtn}
+              onPress={() => onSelectClub ? onSelectClub(item) : navigate('booking')}
+            >
+              <Text style={st.bookSmallBtnText}>ĐẶT SÂN</Text>
+            </TouchableOpacity>
           </View>
         </TouchableOpacity>
       ))}
@@ -246,52 +259,90 @@ const st = StyleSheet.create({
   navBadgeText: { color: '#fff', fontSize: 10, fontWeight: '700' },
   banner: {
     margin: 12,
-    borderRadius: 14,
-    backgroundColor: '#15803d',
+    borderRadius: 16,
+    backgroundColor: '#065f46',
     flexDirection: 'row',
-    padding: 16,
+    padding: 18,
     alignItems: 'center',
   },
-  bannerBrand: { color: '#fff', fontSize: 20, fontWeight: '900' },
-  bannerAcademy: { color: '#facc15', fontSize: 22, fontWeight: '900' },
-  bannerSub: { color: '#dcfce7', fontSize: 11, marginTop: 4, lineHeight: 16 },
+  badgePill: {
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 12,
+    alignSelf: 'flex-start',
+    marginBottom: 6,
+  },
+  badgePillText: { color: '#fef08a', fontSize: 10, fontWeight: '800' },
+  bannerBrand: { color: '#fff', fontSize: 18, fontWeight: '900', letterSpacing: 0.5 },
+  bannerAcademy: { color: '#34d399', fontSize: 16, fontWeight: '900', marginTop: 2 },
+  bannerSub: { color: '#d1fae5', fontSize: 11, marginTop: 4, lineHeight: 16 },
+  sectionHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 14,
+    marginTop: 14,
+    marginBottom: 8,
+  },
   sectionTitle: {
     color: C.text,
     fontSize: 15,
+    fontWeight: '800',
+  },
+  viewAllText: {
+    color: C.primary,
+    fontSize: 12,
     fontWeight: '700',
-    marginHorizontal: 14,
-    marginTop: 10,
-    marginBottom: 8,
   },
   clubCard: {
     flexDirection: 'row',
     backgroundColor: C.card,
     borderRadius: 14,
     marginHorizontal: 12,
-    marginBottom: 10,
+    marginBottom: 12,
     borderWidth: 1,
-    borderColor: C.border,
+    borderColor: '#e2e8f0',
     overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
   },
   clubCardImg: {
-    width: 80,
-    backgroundColor: '#166534',
+    width: 85,
+    backgroundColor: '#064e3b',
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'relative',
   },
-  clubCardBody: { flex: 1, padding: 10 },
-  clubCardActions: { padding: 10, alignItems: 'center', justifyContent: 'space-between' },
-  clubName: { color: C.text, fontSize: 13, fontWeight: '700', marginBottom: 3 },
-  clubAddr: { color: C.sub, fontSize: 12, marginBottom: 2 },
-  clubOpen: { color: C.sub, fontSize: 11 },
-  clubPrice: { color: C.accent, fontSize: 11, fontWeight: '700', marginTop: 2 },
+  courtCountBadge: {
+    position: 'absolute',
+    bottom: 6,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  courtCountText: { color: '#fff', fontSize: 9, fontWeight: '800' },
+  clubCardBody: { flex: 1, padding: 12 },
+  metaRow: { flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 4, marginBottom: 4 },
+  ratingTag: { color: '#d97706', fontSize: 11, fontWeight: '700' },
+  clubCardActions: { padding: 12, alignItems: 'center', justifyContent: 'space-between' },
+  favBtn: { padding: 4 },
+  clubName: { color: C.text, fontSize: 14, fontWeight: '800', marginBottom: 3 },
+  clubAddr: { color: '#64748b', fontSize: 12, lineHeight: 16, marginBottom: 2 },
+  clubOpen: { color: '#64748b', fontSize: 11 },
+  clubPrice: { color: C.primary, fontSize: 12, fontWeight: '800', marginTop: 2 },
   tagBadge: { borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 },
-  tagText: { color: '#fff', fontSize: 10, fontWeight: '700' },
+  tagText: { color: '#fff', fontSize: 9, fontWeight: '700' },
   bookSmallBtn: {
     backgroundColor: C.primary,
-    borderRadius: 6,
-    paddingHorizontal: 8,
-    paddingVertical: 5,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
     marginTop: 6,
   },
+  bookSmallBtnText: { color: '#fff', fontSize: 11, fontWeight: '800' },
 });

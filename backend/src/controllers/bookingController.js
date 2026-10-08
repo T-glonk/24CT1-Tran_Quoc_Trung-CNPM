@@ -1,5 +1,6 @@
 // ─── BOOKING CONTROLLER ──────────────────────────────────────────────────────
 const db = require('../config/db');
+const { pool } = require('../config/mysql');
 
 // GET /api/bookings
 function getAllBookings(req, res) {
@@ -57,13 +58,66 @@ function createBooking(req, res) {
   });
 
   // Automatically record a transaction
-  db.addTransaction({
+  const newTxn = db.addTransaction({
     bookingId: newBooking.id,
     customerName: newBooking.userName,
     amount: newBooking.grandTotal,
     method: newBooking.paymentMethod,
     status: 'completed',
     ref: 'ONLINE-APP',
+  });
+
+  // Async sync to MySQL Server
+  const safeUserId = (newBooking.userId && newBooking.userId !== 'guest' && db.getUserById(newBooking.userId)) ? newBooking.userId : null;
+  const safeCourtId = String(targetCourt.id || '1');
+  const safeCourtName = targetCourt.name || 'Sân 1';
+  const safePrice = Number(targetCourt.price || 80000);
+
+  // Ensure court exists in MySQL courts table to satisfy foreign key
+  pool.query(
+    'INSERT INTO courts (id, club_id, name, type, price, status) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = VALUES(name), price = VALUES(price)',
+    [safeCourtId, targetCourt.clubId || 'c1', safeCourtName, targetCourt.type || 'Thảm PVC thi đấu', safePrice, 'available']
+  ).then(() => {
+    return pool.query(
+      'INSERT INTO bookings (id, user_id, court_id, user_name, user_phone, booking_date, slot_time, hours_count, court_price, services_total, grand_total, payment_method, payment_status, status, note, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [
+        newBooking.id,
+        safeUserId,
+        safeCourtId,
+        newBooking.userName,
+        newBooking.userPhone,
+        newBooking.date,
+        newBooking.slot,
+        Number(newBooking.hoursCount || 1),
+        Number(newBooking.totalPrice || targetCourt.price),
+        Number((newBooking.grandTotal || newBooking.totalPrice || 0) - (newBooking.totalPrice || 0)),
+        Number(newBooking.grandTotal || targetCourt.price),
+        newBooking.paymentMethod,
+        newBooking.paymentStatus || 'paid',
+        newBooking.status || 'confirmed',
+        newBooking.note || '',
+        new Date().toLocaleString('vi-VN'),
+      ]
+    );
+  }).catch(err => {
+    console.warn('[MySQL Booking Insert Warning]:', err.message);
+  });
+
+  pool.query(
+    'INSERT INTO transactions (id, booking_id, customer_name, amount, type, method, status, reference_code, transaction_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [
+      newTxn.id,
+      newBooking.id,
+      newBooking.userName,
+      Number(newBooking.grandTotal || targetCourt.price),
+      'income',
+      newBooking.paymentMethod,
+      'completed',
+      'ONLINE-APP',
+      new Date().toLocaleString('vi-VN'),
+    ]
+  ).catch(err => {
+    console.warn('[MySQL Transaction Insert Warning]:', err.message);
   });
 
   // Audit log
@@ -73,6 +127,18 @@ function createBooking(req, res) {
     user: userName || 'Khách hàng',
     type: 'booking',
   });
+
+  pool.query(
+    'INSERT INTO activity_logs (id, action, detail, user_name, log_type, log_time) VALUES (?, ?, ?, ?, ?, ?)',
+    [
+      `L-${Date.now()}`,
+      'Tạo đơn đặt sân',
+      `Đơn mới ${newBooking.id} cho ${newBooking.userName} (${targetCourt.name})`,
+      userName || 'Khách hàng',
+      'booking',
+      new Date().toLocaleString('vi-VN'),
+    ]
+  ).catch(() => {});
 
   res.status(201).json({
     success: true,
@@ -98,6 +164,9 @@ function updateBookingStatus(req, res) {
   if (!updated) {
     return res.status(404).json({ success: false, message: 'Không tìm thấy đơn đặt sân' });
   }
+
+  pool.query('UPDATE bookings SET status = ?, note = COALESCE(?, note) WHERE id = ?', [status, note || null, id])
+    .catch(err => console.warn('[MySQL Booking Status Update Warning]:', err.message));
 
   db.addLog({
     action: 'Cập nhật đơn đặt sân',
@@ -126,6 +195,9 @@ function cancelBooking(req, res) {
   if (!updated) {
     return res.status(404).json({ success: false, message: 'Không tìm thấy đơn đặt sân' });
   }
+
+  pool.query('UPDATE bookings SET status = ?, note = ? WHERE id = ?', ['cancelled', reason ? `Hủy: ${reason}` : 'Đã hủy bởi người dùng', id])
+    .catch(err => console.warn('[MySQL Booking Cancel Warning]:', err.message));
 
   db.addLog({
     action: 'Hủy đơn đặt sân',

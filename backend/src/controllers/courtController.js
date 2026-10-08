@@ -1,5 +1,6 @@
 // ─── COURT CONTROLLER ────────────────────────────────────────────────────────
 const db = require('../config/db');
+const { pool } = require('../config/mysql');
 
 // GET /api/courts
 function getAllCourts(req, res) {
@@ -40,6 +41,9 @@ function updateCourtStatus(req, res) {
     return res.status(404).json({ success: false, message: 'Không tìm thấy sân cần cập nhật' });
   }
 
+  // Sync to MySQL
+  pool.query('UPDATE courts SET status = ? WHERE id = ?', [status, id]).catch(() => {});
+
   // Audit log
   db.addLog({
     action: 'Cập nhật trạng thái sân',
@@ -72,6 +76,19 @@ function addCourt(req, res) {
     type: type || 'Thảm PVC thi đấu',
   });
 
+  // Sync to MySQL
+  pool.query(
+    'INSERT INTO courts (id, club_id, name, type, price, status) VALUES (?, ?, ?, ?, ?, ?)',
+    [
+      newCourt.id,
+      newCourt.clubId || 'c1',
+      newCourt.name,
+      newCourt.type || 'Thảm PVC thi đấu',
+      newCourt.price,
+      'available',
+    ]
+  ).catch(() => {});
+
   db.addLog({
     action: 'Thêm sân mới',
     detail: `Thêm sân đấu mới: ${newCourt.name}`,
@@ -99,6 +116,8 @@ function updateCourtPrice(req, res) {
   if (!updated) {
     return res.status(404).json({ success: false, message: 'Không tìm thấy sân' });
   }
+
+  pool.query('UPDATE courts SET price_per_hour = ? WHERE id = ?', [Number(price), id]).catch(() => {});
 
   res.json({
     success: true,

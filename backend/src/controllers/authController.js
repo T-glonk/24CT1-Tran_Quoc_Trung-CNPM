@@ -1,5 +1,6 @@
 // ─── AUTH CONTROLLER ─────────────────────────────────────────────────────────
 const db = require('../config/db');
+const { pool } = require('../config/mysql');
 
 // POST /api/auth/login
 function login(req, res) {
@@ -68,12 +69,44 @@ function register(req, res) {
     role: 'customer',
   });
 
+  // Async sync to MySQL Server if running
+  pool.query(
+    'INSERT INTO users (id, name, email, phone, password, role, status, joined_date, tier, total_spent, bookings_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [
+      newUser.id,
+      newUser.name,
+      newUser.email,
+      newUser.phone,
+      newUser.password,
+      newUser.role,
+      newUser.status,
+      newUser.joinedDate,
+      newUser.tier,
+      newUser.totalSpent,
+      newUser.bookingsCount,
+    ]
+  ).catch(err => {
+    // MySQL not reachable - persistent json db handles it
+  });
+
   db.addLog({
     action: 'Đăng ký tài khoản',
     detail: `Khách hàng mới ${newUser.name} đăng ký tài khoản`,
     user: newUser.name,
     type: 'security',
   });
+
+  pool.query(
+    'INSERT INTO activity_logs (id, action, detail, user_name, log_type, log_time) VALUES (?, ?, ?, ?, ?, ?)',
+    [
+      `L-${Date.now()}`,
+      'Đăng ký tài khoản',
+      `Khách hàng mới ${newUser.name} đăng ký tài khoản`,
+      newUser.name,
+      'security',
+      new Date().toLocaleString('vi-VN'),
+    ]
+  ).catch(() => {});
 
   return res.status(201).json({
     success: true,

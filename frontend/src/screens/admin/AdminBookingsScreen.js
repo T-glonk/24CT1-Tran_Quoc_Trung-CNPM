@@ -9,55 +9,99 @@ import {
   Alert,
 } from 'react-native';
 import { ALOBO_THEME as AL } from '../../constants/theme';
+import { INITIAL_CLUBS } from '../../constants/initialData';
 
-export function AdminBookingsScreen({ bookings = [], onUpdateStatus, onCancelBooking }) {
-  const [activeTab, setActiveTab] = useState('all'); // 'all' | 'day' | 'fixed' | 'event'
+export function AdminBookingsScreen({
+  bookings = [],
+  clubs = INITIAL_CLUBS,
+  selectedClub,
+  onSelectClub,
+  onUpdateStatus,
+  onCancelBooking,
+}) {
+  const [activeClubFilter, setActiveClubFilter] = useState('all'); // 'all' | clubId
+  const [activeStatusTab, setActiveStatusTab] = useState('all'); // 'all' | 'pending' | 'confirmed' | 'in_use' | 'cancelled'
 
-  const filtered = activeTab === 'all' ? bookings : bookings;
+  const filtered = bookings.filter((b) => {
+    // Filter by facility
+    if (activeClubFilter !== 'all') {
+      const matchClubId = b.clubId === activeClubFilter || b.court?.clubId === activeClubFilter;
+      if (!matchClubId) return false;
+    }
+    // Filter by status
+    if (activeStatusTab !== 'all') {
+      if (b.status !== activeStatusTab) return false;
+    }
+    return true;
+  });
 
   return (
     <View style={st.container}>
-      {/* Top Filter Bar */}
-      <View style={st.ordersHeader}>
-        <TouchableOpacity style={st.branchSelectBtn}>
-          <Text style={st.branchSelectText} numberOfLines={1}>
-            Sân Hoa Thiên Lý (CLB TPT Sport) ▾
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={st.datePickerBtn}>
-          <Text style={st.datePickerText}>28/08/2026 📅</Text>
-        </TouchableOpacity>
+      {/* Facility Filter Bar */}
+      <View style={st.facilityFilterCard}>
+        <Text style={st.facilityFilterTitle}>🏢 LỌC ĐƠN THEO CƠ SỞ:</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={st.facilityScroll}>
+          <TouchableOpacity
+            style={[st.facilityChip, activeClubFilter === 'all' && st.facilityChipActive]}
+            onPress={() => setActiveClubFilter('all')}
+          >
+            <Text style={[st.facilityChipText, activeClubFilter === 'all' && st.facilityChipTextActive]}>
+              🌐 Tất cả cơ sở ({bookings.length})
+            </Text>
+          </TouchableOpacity>
+
+          {clubs.map((club) => {
+            const countForClub = bookings.filter(
+              (b) => b.clubId === club.id || b.court?.clubId === club.id
+            ).length;
+            const isSelected = activeClubFilter === club.id;
+
+            return (
+              <TouchableOpacity
+                key={club.id}
+                style={[st.facilityChip, isSelected && st.facilityChipActive]}
+                onPress={() => {
+                  setActiveClubFilter(club.id);
+                  if (onSelectClub) onSelectClub(club);
+                }}
+              >
+                <Text style={[st.facilityChipText, isSelected && st.facilityChipTextActive]}>
+                  {club.name.replace('QT Sport - ', '')} ({countForClub})
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
       </View>
 
-      {/* Category Filter Pills */}
-      <View style={st.orderTabScrollContainer}>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ gap: 8, paddingHorizontal: 12 }}
-        >
+      {/* Status Filter Pills */}
+      <View style={st.statusFilterCard}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={st.statusScroll}>
           {[
-            ['all', 'Tất cả đơn'],
-            ['day', 'Đơn ngày'],
-            ['fixed', 'Đơn cố định'],
-            ['event', 'Sự kiện giao lưu'],
+            ['all', 'Tất cả trạng thái'],
+            ['pending', '⏳ Chờ duyệt'],
+            ['confirmed', '✅ Đã duyệt'],
+            ['in_use', '🏸 Đang thi đấu'],
+            ['cancelled', '❌ Đã hủy'],
           ].map(([key, label]) => (
             <TouchableOpacity
               key={key}
-              style={[st.orderCategoryPill, activeTab === key && st.orderCategoryPillActive]}
-              onPress={() => setActiveTab(key)}
+              style={[st.statusPill, activeStatusTab === key && st.statusPillActive]}
+              onPress={() => setActiveStatusTab(key)}
             >
-              <Text
-                style={[
-                  st.orderCategoryText,
-                  activeTab === key && st.orderCategoryTextActive,
-                ]}
-              >
+              <Text style={[st.statusPillText, activeStatusTab === key && st.statusPillTextActive]}>
                 {label}
               </Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
+      </View>
+
+      {/* Bookings Count Header */}
+      <View style={st.resultsCountRow}>
+        <Text style={st.resultsCountText}>
+          Danh sách: <Text style={{ fontWeight: '900', color: AL.textDark }}>{filtered.length} đơn đặt sân</Text>
+        </Text>
       </View>
 
       {/* List of Bookings */}
@@ -70,9 +114,15 @@ export function AdminBookingsScreen({ bookings = [], onUpdateStatus, onCancelBoo
           const isConfirmed = item.status === 'confirmed';
           const isInUse = item.status === 'in_use';
 
+          const facilityName =
+            item.clubName ||
+            item.court?.clubName ||
+            clubs.find((c) => c.id === item.clubId || c.id === item.court?.clubId)?.name ||
+            'QT Sport - Sân Hoa Thiên Lý';
+
           return (
             <View style={st.orderCard}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 6 }}>
+              <View style={st.orderTopRow}>
                 <View
                   style={[
                     st.tagRibbon,
@@ -95,17 +145,26 @@ export function AdminBookingsScreen({ bookings = [], onUpdateStatus, onCancelBoo
                 <Text style={st.orderCode}>Mã: {item.id}</Text>
               </View>
 
-              <Text style={st.cardTitle}>
-                {item.userName} · {item.userPhone || 'Khách trực tuyến'}
+              {/* Facility & Court Info */}
+              <View style={st.facilityTagBox}>
+                <Text style={st.facilityTagText} numberOfLines={1}>
+                  🏢 {facilityName}
+                </Text>
+              </View>
+
+              <Text style={st.cardCustomer}>
+                👤 {item.userName} · 📞 {item.userPhone || 'Khách trực tuyến'}
               </Text>
-              <Text style={st.cardDetail}>
-                🏟️ {item.court?.name || 'Sân Cầu Lông'} · ⏰ {item.slot}
+
+              <Text style={st.cardCourtTime}>
+                🏸 {item.court?.name || 'Sân Cầu Lông'} · ⏰ {item.slot} ({item.date || 'Hôm nay'})
               </Text>
+
               <Text style={st.cardPrice}>
                 💰 {(item.grandTotal || item.totalPrice || 160000).toLocaleString('vi-VN')} đ ({item.paymentMethod || 'Chuyển khoản QR'})
               </Text>
 
-              {item.note ? <Text style={st.noteText}>📝 Ghi chú: {item.note}</Text> : null}
+              {item.note ? <Text style={st.noteText}>📝 {item.note}</Text> : null}
 
               {/* Action Buttons */}
               <View style={st.actionRow}>
@@ -113,28 +172,30 @@ export function AdminBookingsScreen({ bookings = [], onUpdateStatus, onCancelBoo
                   <TouchableOpacity
                     style={st.approveBtn}
                     onPress={() => {
-                      onUpdateStatus(item.id, 'confirmed');
+                      if (onUpdateStatus) onUpdateStatus(item.id, 'confirmed');
                       Alert.alert('✅ Thành công', `Đã duyệt đơn ${item.id}`);
                     }}
                   >
-                    <Text style={st.btnText}>Duyệt Đơn</Text>
+                    <Text style={st.btnText}>Duyệt Đơn Ngay</Text>
                   </TouchableOpacity>
                 )}
-                <TouchableOpacity
-                  style={st.cancelBtn}
-                  onPress={() =>
-                    Alert.alert('Hủy đơn', `Bạn có chắc muốn hủy đơn ${item.id}?`, [
-                      { text: 'Không' },
-                      {
-                        text: 'Hủy đơn',
-                        style: 'destructive',
-                        onPress: () => onCancelBooking(item.id, 'Admin hủy đơn'),
-                      },
-                    ])
-                  }
-                >
-                  <Text style={st.cancelBtnText}>Hủy Đơn</Text>
-                </TouchableOpacity>
+                {item.status !== 'cancelled' && (
+                  <TouchableOpacity
+                    style={st.cancelBtn}
+                    onPress={() =>
+                      Alert.alert('Hủy đơn', `Bạn có chắc muốn hủy đơn ${item.id}?`, [
+                        { text: 'Không' },
+                        {
+                          text: 'Hủy đơn',
+                          style: 'destructive',
+                          onPress: () => onCancelBooking && onCancelBooking(item.id, 'Admin hủy đơn'),
+                        },
+                      ])
+                    }
+                  >
+                    <Text style={st.cancelBtnText}>Hủy Đơn</Text>
+                  </TouchableOpacity>
+                )}
               </View>
             </View>
           );
@@ -146,61 +207,173 @@ export function AdminBookingsScreen({ bookings = [], onUpdateStatus, onCancelBoo
 
 const st = StyleSheet.create({
   container: { flex: 1, backgroundColor: AL.bg },
-  ordersHeader: {
-    flexDirection: 'row',
-    backgroundColor: AL.headerGreen,
-    paddingHorizontal: 12,
+  facilityFilterCard: {
+    backgroundColor: '#064e3b',
     paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderBottomWidth: 1,
+    borderColor: '#047857',
+  },
+  facilityFilterTitle: {
+    color: '#a7f3d0',
+    fontSize: 11,
+    fontWeight: '900',
+    marginBottom: 6,
+  },
+  facilityScroll: {
     gap: 8,
   },
-  branchSelectBtn: {
-    flex: 1,
-    backgroundColor: 'rgba(255,255,255,0.18)',
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+  facilityChip: {
+    backgroundColor: 'rgba(255,255,255,0.12)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.2)',
   },
-  branchSelectText: { color: '#fff', fontSize: 12, fontWeight: '800' },
-  datePickerBtn: {
-    backgroundColor: 'rgba(255,255,255,0.18)',
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+  facilityChipActive: {
+    backgroundColor: '#10b981',
+    borderColor: '#34d399',
   },
-  datePickerText: { color: '#fff', fontSize: 12, fontWeight: '800' },
-  orderTabScrollContainer: {
+  facilityChipText: {
+    color: '#e2e8f0',
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  facilityChipTextActive: {
+    color: '#ffffff',
+    fontWeight: '900',
+  },
+  statusFilterCard: {
     backgroundColor: '#ffffff',
     paddingVertical: 8,
     borderBottomWidth: 1,
     borderColor: AL.border,
   },
-  orderCategoryPill: {
+  statusScroll: {
+    gap: 8,
+    paddingHorizontal: 12,
+  },
+  statusPill: {
+    backgroundColor: '#f1f5f9',
     paddingHorizontal: 12,
     paddingVertical: 6,
-    borderRadius: 16,
-    backgroundColor: '#f1f5f9',
+    borderRadius: 10,
   },
-  orderCategoryPillActive: { backgroundColor: AL.primary },
-  orderCategoryText: { fontSize: 12, fontWeight: '700', color: AL.textSub },
-  orderCategoryTextActive: { color: '#fff', fontWeight: '800' },
+  statusPillActive: {
+    backgroundColor: AL.primary,
+  },
+  statusPillText: {
+    color: AL.textSub,
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  statusPillTextActive: {
+    color: '#ffffff',
+    fontWeight: '800',
+  },
+  resultsCountRow: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+  },
+  resultsCountText: {
+    color: AL.textSub,
+    fontSize: 12,
+  },
   orderCard: {
     backgroundColor: '#ffffff',
-    borderRadius: 14,
-    padding: 12,
-    marginBottom: 10,
+    borderRadius: 16,
+    padding: 14,
+    marginBottom: 12,
     borderWidth: 1,
     borderColor: AL.border,
+    elevation: 1,
   },
-  tagRibbon: { borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 },
-  tagRibbonText: { color: '#fff', fontSize: 9, fontWeight: '900' },
-  orderCode: { color: AL.textSub, fontSize: 11 },
-  cardTitle: { color: AL.textDark, fontSize: 14, fontWeight: '800', marginTop: 2 },
-  cardDetail: { color: AL.primaryDark, fontSize: 12, fontWeight: '700', marginTop: 2 },
-  cardPrice: { color: '#d97706', fontSize: 12, fontWeight: '800', marginTop: 2 },
-  noteText: { color: AL.textSub, fontSize: 11, fontStyle: 'italic', marginTop: 4 },
-  actionRow: { flexDirection: 'row', gap: 8, marginTop: 10, justifyContent: 'flex-end' },
-  approveBtn: { backgroundColor: AL.primary, borderRadius: 8, paddingHorizontal: 14, paddingVertical: 6 },
-  btnText: { color: '#fff', fontSize: 11, fontWeight: '800' },
-  cancelBtn: { backgroundColor: '#fee2e2', borderRadius: 8, paddingHorizontal: 12, paddingVertical: 6 },
-  cancelBtnText: { color: '#ef4444', fontSize: 11, fontWeight: '800' },
+  orderTopRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  tagRibbon: {
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+  },
+  tagRibbonText: {
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: '900',
+  },
+  orderCode: {
+    color: AL.textSub,
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  facilityTagBox: {
+    backgroundColor: '#f0fdf4',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+    marginBottom: 6,
+  },
+  facilityTagText: {
+    color: '#166534',
+    fontSize: 11,
+    fontWeight: '800',
+  },
+  cardCustomer: {
+    color: AL.textDark,
+    fontSize: 15,
+    fontWeight: '800',
+    marginBottom: 4,
+  },
+  cardCourtTime: {
+    color: AL.textSub,
+    fontSize: 13,
+    marginBottom: 4,
+  },
+  cardPrice: {
+    color: AL.primaryDark,
+    fontSize: 13,
+    fontWeight: '800',
+    marginBottom: 4,
+  },
+  noteText: {
+    color: '#64748b',
+    fontSize: 12,
+    fontStyle: 'italic',
+    marginTop: 4,
+  },
+  actionRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginTop: 12,
+  },
+  approveBtn: {
+    flex: 1.5,
+    backgroundColor: AL.primary,
+    borderRadius: 10,
+    paddingVertical: 8,
+    alignItems: 'center',
+  },
+  btnText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '800',
+  },
+  cancelBtn: {
+    flex: 1,
+    backgroundColor: '#f1f5f9',
+    borderRadius: 10,
+    paddingVertical: 8,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  cancelBtnText: {
+    color: '#ef4444',
+    fontSize: 12,
+    fontWeight: '800',
+  },
 });

@@ -1,5 +1,6 @@
 // ─── SERVICES & POS INVENTORY CONTROLLER ────────────────────────────────────
 const db = require('../config/db');
+const { pool } = require('../config/mysql');
 
 // GET /api/services
 function getAllServices(req, res) {
@@ -30,6 +31,9 @@ function updateStock(req, res) {
   const newStock = stock !== undefined ? Number(stock) : Math.max(0, item.stock + (Number(delta) || 0));
   const updated = db.updateService(id, { stock: newStock });
 
+  // Sync MySQL
+  pool.query('UPDATE services SET stock = ? WHERE id = ?', [newStock, id]).catch(() => {});
+
   res.json({
     success: true,
     message: 'Cập nhật tồn kho thành công',
@@ -54,6 +58,22 @@ function addService(req, res) {
     unit: unit || 'Cái',
     icon: icon || '📦',
   });
+
+  // Sync MySQL
+  pool.query(
+    'INSERT INTO services (id, name, category, price, cost, stock, unit, icon, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [
+      newService.id,
+      newService.name,
+      newService.category,
+      newService.price,
+      newService.cost,
+      newService.stock,
+      newService.unit,
+      newService.icon,
+      'active',
+    ]
+  ).catch(() => {});
 
   db.addLog({
     action: 'Thêm sản phẩm mới',
@@ -81,7 +101,9 @@ function posCheckout(req, res) {
   items.forEach(item => {
     const s = db.getServiceById(item.id);
     if (s && s.stock >= item.qty) {
-      db.updateService(item.id, { stock: s.stock - item.qty });
+      const remainingStock = s.stock - item.qty;
+      db.updateService(item.id, { stock: remainingStock });
+      pool.query('UPDATE services SET stock = ? WHERE id = ?', [remainingStock, item.id]).catch(() => {});
     }
   });
 
@@ -94,6 +116,21 @@ function posCheckout(req, res) {
     ref: 'POS-CASH',
   });
 
+  // Sync transaction to MySQL
+  pool.query(
+    'INSERT INTO transactions (id, customer_name, amount, type, method, status, reference_code, transaction_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+    [
+      newTxn.id,
+      customerName || 'Khách lẻ tại quầy POS',
+      totalAmount || 0,
+      'income',
+      paymentMethod || 'Tiền mặt',
+      'completed',
+      'POS-CASH',
+      new Date().toLocaleString('vi-VN'),
+    ]
+  ).catch(err => console.warn('[MySQL POS Transaction Warning]:', err.message));
+
   // Audit Log
   db.addLog({
     action: 'Bán hàng POS tại quầy',
@@ -101,6 +138,18 @@ function posCheckout(req, res) {
     user: req.user ? req.user.name : 'Thu ngân',
     type: 'service',
   });
+
+  pool.query(
+    'INSERT INTO activity_logs (id, action, detail, user_name, log_type, log_time) VALUES (?, ?, ?, ?, ?, ?)',
+    [
+      `L-${Date.now()}`,
+      'Bán hàng POS tại quầy',
+      `Đơn POS ${items.length} món. Tổng: ${(totalAmount || 0).toLocaleString('vi-VN')} đ`,
+      req.user ? req.user.name : 'Thu ngân',
+      'service',
+      new Date().toLocaleString('vi-VN'),
+    ]
+  ).catch(() => {});
 
   res.json({
     success: true,

@@ -1,24 +1,31 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { COLORS as C } from '../../constants/theme';
+import { APP_ASSETS } from '../../constants/assets';
 
 export function WelcomeScreen({ navigate }) {
   return (
     <View style={[st.greenBg, { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 28 }]}>
-      <Text style={{ fontSize: 72, marginBottom: 12 }}>🏸</Text>
-      <Text style={st.welcomeTitle}>NACHIBOOKING</Text>
-      <Text style={st.welcomeSub}>Đặt sân cầu lông trực tuyến</Text>
+      {/* Brand App Logo */}
+      <Image
+        source={APP_ASSETS.logo}
+        style={st.logoImage}
+        resizeMode="contain"
+      />
+
+      <Text style={st.welcomeTitle}>QT SPORT</Text>
+      <Text style={st.welcomeSub}>Ứng dụng đặt sân cầu lông & Quản lý CLB</Text>
       <View style={st.welcomeDivider} />
-      <Text style={st.welcomeClass}>CHÀO MỪNG CÁC BẠN</Text>
-      <Text style={st.welcomeClass}>ĐẾN VỚI APP BOOKING BADMINTON</Text>
+      <Text style={st.welcomeClass}>HỆ THỐNG ĐẶT SÂN THỂ THAO</Text>
+      <Text style={st.welcomeClass}>24CT1 - TRẦN QUỐC TRUNG</Text>
       <View style={st.welcomeDivider} />
 
-      <View style={{ width: '100%', marginTop: 20 }}>
-        <TouchableOpacity style={st.whiteBtn} onPress={() => navigate('login')}>
-          <Text style={st.whiteBtnText}>ĐĂNG NHẬP</Text>
+      <View style={{ width: '100%', marginTop: 24 }}>
+        <TouchableOpacity style={st.whiteBtn} onPress={() => navigate('login')} activeOpacity={0.85}>
+          <Text style={st.whiteBtnText}>ĐĂNG NHẬP NGAY</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={st.outlineBtn} onPress={() => navigate('register')}>
-          <Text style={st.outlineBtnText}>ĐĂNG KÝ TÀI KHOẢN</Text>
+        <TouchableOpacity style={st.outlineBtn} onPress={() => navigate('register')} activeOpacity={0.85}>
+          <Text style={st.outlineBtnText}>ĐĂNG KÝ TÀI KHOẢN MỚI</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -27,13 +34,24 @@ export function WelcomeScreen({ navigate }) {
 
 const st = StyleSheet.create({
   greenBg: {
-    backgroundColor: C.primary,
+    backgroundColor: C.primaryDark,
+  },
+  logoImage: {
+    width: 110,
+    height: 110,
+    borderRadius: 24,
+    marginBottom: 16,
+    shadowColor: '#22c55e',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.5,
+    shadowRadius: 12,
+    elevation: 8,
   },
   welcomeTitle: {
     color: '#ffffff',
-    fontSize: 26,
+    fontSize: 30,
     fontWeight: '900',
-    letterSpacing: 1.5,
+    letterSpacing: 2,
     textAlign: 'center',
   },
   welcomeSub: {

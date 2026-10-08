@@ -3,6 +3,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Image,
   ScrollView,
   StyleSheet,
   KeyboardAvoidingView,
@@ -11,6 +12,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { COLORS as C } from '../../constants/theme';
+import { APP_ASSETS } from '../../constants/assets';
 import { PhoneInput } from '../../components/auth/PhoneInput';
 import { FormInput } from '../../components/auth/FormInput';
 import { FieldLabel } from '../../components/auth/FieldLabel';
@@ -93,9 +95,13 @@ export function RegisterScreen({ navigate, onLogin }) {
         showsVerticalScrollIndicator={false}
       >
         <View style={st.topBadge}>
-          <Text style={{ fontSize: 36, marginBottom: 4 }}>🏸</Text>
-          <Text style={st.badgeTitle}>TẠO TÀI KHOẢN MỚI</Text>
-          <Text style={st.badgeSub}>Gia nhập cộng đồng người chơi cầu lông</Text>
+          <Image
+            source={APP_ASSETS.logo}
+            style={st.logoImage}
+            resizeMode="contain"
+          />
+          <Text style={st.badgeTitle}>QT SPORT</Text>
+          <Text style={st.badgeSub}>Tạo tài khoản thành viên trên ứng dụng di động</Text>
         </View>
 
         <View style={{ marginTop: 10 }}>
@@ -165,11 +171,22 @@ const st = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
+  logoImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 18,
+    marginBottom: 10,
+    shadowColor: '#22c55e',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.35,
+    shadowRadius: 8,
+    elevation: 5,
+  },
   badgeTitle: {
     color: '#0f172a',
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '900',
-    letterSpacing: 1,
+    letterSpacing: 1.5,
   },
   badgeSub: {
     color: '#64748b',

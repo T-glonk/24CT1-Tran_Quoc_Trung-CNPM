@@ -3,13 +3,17 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Image,
   ScrollView,
   StyleSheet,
   Modal,
   Dimensions,
   Platform,
+  Alert,
 } from 'react-native';
 import { ALOBO_THEME as AL } from '../../constants/theme';
+import { APP_ASSETS } from '../../constants/assets';
+import { INITIAL_CLUBS } from '../../constants/initialData';
 
 const { width } = Dimensions.get('window');
 
@@ -18,6 +22,9 @@ export function AdminHomeScreen({
   navigate,
   bookings = [],
   courts = [],
+  clubs = INITIAL_CLUBS,
+  selectedClub,
+  onSelectClub,
   services = [],
   transactions = [],
   onUpdateCourtStatus,
@@ -26,29 +33,43 @@ export function AdminHomeScreen({
 }) {
   const [guideModal, setGuideModal] = useState(false);
   const [logoutModal, setLogoutModal] = useState(false);
-  const [selectedBranch, setSelectedBranch] = useState('QT Sport - Cơ sở 1: Sân Hoa Thiên Lý');
+  const [slotModal, setSlotModal] = useState(null); // { court, slotHour, booking }
+  const [activeClubId, setActiveClubId] = useState(selectedClub?.id || clubs[0]?.id || 'c1');
+
+  const activeClub = clubs.find((c) => c.id === activeClubId) || clubs[0] || INITIAL_CLUBS[0];
 
   const TIME_SLOTS = [
-    '12:00', '12:30', '13:00', '13:30', '14:00', '14:30',
-    '15:00', '15:30', '16:00', '16:30', '17:00', '17:30',
-    '18:00', '18:30', '19:00', '19:30', '20:00', '20:30',
+    '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
+    '12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
+    '18:00', '19:00', '20:00', '21:00', '22:00',
   ];
 
-  const MATRIX_COURTS = [
-    { id: 'c6', name: 'Sân 6', color: '#10b981', guest: 'Huy - 0969678482', start: 1, span: 3, type: 'Lịch ngày' },
-    { id: 'c7', name: 'Sân 7', color: '#f59e0b', guest: 'Ngọc Ngân - 0379241287', start: 5, span: 4, type: 'Chờ cọc' },
-    { id: 'c8', name: 'Sân 8', color: '#0284c7', guest: 'Anh Bình An - 0985685956', start: 3, span: 4, type: 'Lịch cố định' },
-    { id: 'c9', name: 'Sân 9', color: '#ec4899', guest: '[Xé vé] - Sự kiện cuối tuần (#8746)', start: 3, span: 5, type: 'Sự kiện' },
-    { id: 'c10', name: 'Sân 10', color: '#84cc16', guest: '[Xé vé] - aa (#8738)', start: 4, span: 4, type: 'Lịch sinh hoạt' },
-    { id: 'c11', name: 'Sân 11', color: '#10b981', guest: 'Trâm - 0708018101', start: 4, span: 5, type: 'Lịch ngày' },
-    { id: 'cVIP', name: 'Sân VIP', color: '#0284c7', guest: 'A Bắc - 0984561253', start: 6, span: 4, type: 'Lịch cố định' },
-    { id: 'c12', name: 'Sân 12', color: '#64748b', guest: 'Bảo trì hệ thống đèn', start: 0, span: 2, type: 'Khóa' },
-  ];
+  // Lấy danh sách sân CHỈ THUỘC CƠ SỞ ĐANG CHỌN (Không gộp chung các cơ sở khác)
+  const facilityCourts = courts.filter((c) => c.clubId === activeClub.id);
+  const displayCourts =
+    facilityCourts.length > 0
+      ? facilityCourts
+      : Array.from({ length: activeClub.totalCourts || 6 }, (_, i) => ({
+          id: `${activeClub.id}_${i + 1}`,
+          name: `Sân ${i + 1}`,
+          clubId: activeClub.id,
+          clubName: activeClub.name,
+          location: activeClub.address,
+          price: 80000,
+          status: 'available',
+        }));
 
   const handleConfirmLogout = () => {
     setLogoutModal(false);
     if (onLogout) {
       onLogout();
+    }
+  };
+
+  const handleSelectFacility = (club) => {
+    setActiveClubId(club.id);
+    if (onSelectClub) {
+      onSelectClub(club);
     }
   };
 
@@ -61,9 +82,11 @@ export function AdminHomeScreen({
             <Text style={{ fontSize: 20, color: '#fff' }}>☰</Text>
           </TouchableOpacity>
 
-          <View style={st.aloboLogoCircle}>
-            <Text style={{ fontSize: 32 }}>🏸</Text>
-          </View>
+          <Image
+            source={APP_ASSETS.logo}
+            style={st.aloboLogoCircle}
+            resizeMode="contain"
+          />
 
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
             <TouchableOpacity style={st.headerIconBtn} onPress={() => navigate('adminBookings')}>
@@ -73,7 +96,6 @@ export function AdminHomeScreen({
               <Text style={{ fontSize: 12, marginRight: 2 }}>💡</Text>
               <Text style={st.guideBtnText}>HD</Text>
             </TouchableOpacity>
-            {/* Direct Logout Button in Header */}
             <TouchableOpacity style={st.logoutHeaderBtn} onPress={() => setLogoutModal(true)}>
               <Text style={{ fontSize: 13, marginRight: 3 }}>🚪</Text>
               <Text style={st.logoutHeaderText}>Đăng xuất</Text>
@@ -81,7 +103,7 @@ export function AdminHomeScreen({
           </View>
         </View>
 
-        {/* Admin Quick Profile & Session Strip */}
+        {/* Admin Profile & Active Facility Banner */}
         <View style={st.adminSessionCard}>
           <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
             <View style={st.adminAvatarSmall}>
@@ -89,10 +111,10 @@ export function AdminHomeScreen({
             </View>
             <View style={{ marginLeft: 8, flex: 1 }}>
               <Text style={st.adminSessionName} numberOfLines={1}>
-                {user?.name || 'Trần Quốc Trung'}
+                {user?.name || 'Trần Quốc Trung'} (Super Admin)
               </Text>
-              <Text style={st.adminSessionRole}>
-                👑 Super Admin · {selectedBranch}
+              <Text style={st.adminSessionRole} numberOfLines={1}>
+                📍 Đang quản lý: <Text style={{ fontWeight: '900', color: '#facc15' }}>{activeClub.name}</Text>
               </Text>
             </View>
           </View>
@@ -105,18 +127,69 @@ export function AdminHomeScreen({
         </View>
       </View>
 
-      {/* Live Timeline Matrix Widget */}
+      {/* Facility Switcher Tabs (Quản lý riêng biệt từng cơ sở) */}
+      <View style={st.facilitySection}>
+        <View style={st.facilityHeaderRow}>
+          <Text style={st.facilitySectionTitle}>🏢 CHỌN CƠ SỞ QUẢN LÝ SÂN:</Text>
+          <Text style={st.facilityCountText}>{displayCourts.length} Sân hoạt động</Text>
+        </View>
+
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={st.facilityScrollContent}
+        >
+          {clubs.map((club, idx) => {
+            const isSelected = club.id === activeClub.id;
+            return (
+              <TouchableOpacity
+                key={club.id}
+                style={[st.facilityChip, isSelected && st.facilityChipActive]}
+                onPress={() => handleSelectFacility(club)}
+                activeOpacity={0.8}
+              >
+                <Text style={[st.facilityChipIcon, isSelected && { color: '#fff' }]}>
+                  {idx === 0 ? '🥇' : idx === 1 ? '🥈' : '🏸'}
+                </Text>
+                <View style={{ marginLeft: 6 }}>
+                  <Text
+                    style={[st.facilityChipName, isSelected && st.facilityChipNameActive]}
+                    numberOfLines={1}
+                  >
+                    {club.name.replace('QT Sport - ', '')}
+                  </Text>
+                  <Text style={[st.facilityChipSub, isSelected && { color: '#dcfce7' }]}>
+                    {club.totalCourts || 6} Sân đấu · {club.district}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      </View>
+
+      {/* Live Timeline Matrix Widget (Chỉ hiển thị sân của cơ sở đã chọn) */}
       <View style={st.matrixWidgetCard}>
+        <View style={st.matrixCardTop}>
+          <View>
+            <Text style={st.matrixCardTitle}>
+              📊 Ma Trận Lịch Trực Tiếp: {activeClub.name.replace('QT Sport - ', '')}
+            </Text>
+            <Text style={st.matrixCardSubtitle}>
+              Chỉ hiển thị các sân thuộc cơ sở này ({displayCourts.map((c) => c.name).join(', ')})
+            </Text>
+          </View>
+        </View>
+
         {/* Legend Ribbon Bar */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={st.legendRow}>
           {[
             { label: 'Trống', color: '#ffffff', border: true },
-            { label: 'Lịch cố định', color: '#0284c7' },
             { label: 'Lịch ngày', color: '#10b981' },
-            { label: 'Lịch sinh hoạt', color: '#84cc16' },
-            { label: 'Khóa', color: '#64748b' },
+            { label: 'Đang dùng', color: '#0284c7' },
+            { label: 'Cố định', color: '#7c3aed' },
             { label: 'Chờ cọc', color: '#f59e0b' },
-            { label: 'Sự kiện', color: '#ec4899' },
+            { label: 'Bảo trì', color: '#64748b' },
           ].map((item) => (
             <View key={item.label} style={st.legendPill}>
               <View
@@ -144,41 +217,124 @@ export function AdminHomeScreen({
               ))}
             </View>
 
-            {MATRIX_COURTS.map((row) => (
-              <View key={row.id} style={st.matrixBodyRow}>
+            {displayCourts.map((court, courtIdx) => (
+              <View key={court.id} style={st.matrixBodyRow}>
                 <View style={st.matrixCourtLabelCol}>
-                  <Text style={st.matrixCourtLabelText}>{row.name}</Text>
+                  <Text style={st.matrixCourtLabelText}>{court.name}</Text>
+                  <Text style={st.matrixCourtPriceText}>{((court.price || 80000) / 1000)}k</Text>
                 </View>
 
-                {TIME_SLOTS.map((slot, idx) => {
-                  if (idx >= row.start && idx < row.start + row.span) {
-                    if (idx === row.start) {
-                      return (
-                        <View
-                          key={slot}
-                          style={[
-                            st.matrixBookingBlock,
-                            {
-                              backgroundColor: row.color,
-                              width: 62 * row.span - 4,
-                            },
-                          ]}
-                        >
-                          <Text style={st.matrixBookingText} numberOfLines={1}>
-                            {row.guest}
-                          </Text>
-                        </View>
-                      );
-                    }
-                    return null;
+                {TIME_SLOTS.map((slot, hourIdx) => {
+                  const hourNum = parseInt(slot.split(':')[0]);
+                  // Match real booking or simulate facility-based patterns
+                  const matchedBooking = bookings.find(
+                    (b) =>
+                      (b.courtId === court.id || b.court?.id === court.id) &&
+                      b.slot &&
+                      b.slot.includes(slot)
+                  );
+
+                  // Unique mock occupancy pattern per facility court
+                  const isSimInUse = (courtIdx + hourIdx) % 7 === 2 && hourNum >= 17 && hourNum <= 20;
+                  const isSimBooked = (courtIdx * 3 + hourIdx) % 8 === 3 && hourNum >= 14 && hourNum <= 21;
+                  const isSimFixed = courtIdx === 0 && hourNum >= 18 && hourNum <= 20;
+
+                  if (matchedBooking) {
+                    return (
+                      <TouchableOpacity
+                        key={slot}
+                        style={[st.matrixBookingBlock, { backgroundColor: '#10b981' }]}
+                        onPress={() =>
+                          setSlotModal({
+                            court,
+                            slotHour: slot,
+                            booking: matchedBooking,
+                          })
+                        }
+                      >
+                        <Text style={st.matrixBookingText} numberOfLines={1}>
+                          {matchedBooking.userName || 'Khách đặt'}
+                        </Text>
+                      </TouchableOpacity>
+                    );
                   }
+
+                  if (isSimFixed) {
+                    return (
+                      <TouchableOpacity
+                        key={slot}
+                        style={[st.matrixBookingBlock, { backgroundColor: '#7c3aed' }]}
+                        onPress={() =>
+                          setSlotModal({
+                            court,
+                            slotHour: slot,
+                            title: 'Lịch cố định tháng',
+                            guest: 'CLB Cầu Lông Đôi Nam Nữ (#8921)',
+                          })
+                        }
+                      >
+                        <Text style={st.matrixBookingText} numberOfLines={1}>
+                          Cố định #8921
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  }
+
+                  if (isSimInUse) {
+                    return (
+                      <TouchableOpacity
+                        key={slot}
+                        style={[st.matrixBookingBlock, { backgroundColor: '#0284c7' }]}
+                        onPress={() =>
+                          setSlotModal({
+                            court,
+                            slotHour: slot,
+                            title: 'Khách đang chơi tại sân',
+                            guest: 'Anh Tuấn - 0905 112 233',
+                          })
+                        }
+                      >
+                        <Text style={st.matrixBookingText} numberOfLines={1}>
+                          Đang chơi 🏸
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  }
+
+                  if (isSimBooked) {
+                    return (
+                      <TouchableOpacity
+                        key={slot}
+                        style={[st.matrixBookingBlock, { backgroundColor: '#f59e0b' }]}
+                        onPress={() =>
+                          setSlotModal({
+                            court,
+                            slotHour: slot,
+                            title: 'Khách đặt chờ cọc',
+                            guest: 'Chị Mai - 0988 554 433',
+                          })
+                        }
+                      >
+                        <Text style={st.matrixBookingText} numberOfLines={1}>
+                          Chờ cọc ⏳
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  }
+
                   return (
                     <TouchableOpacity
                       key={slot}
                       style={st.matrixEmptySlot}
-                      onPress={() => navigate('adminSchedule')}
+                      onPress={() =>
+                        setSlotModal({
+                          court,
+                          slotHour: slot,
+                          isAvailable: true,
+                        })
+                      }
                     >
-                      <Text style={{ color: '#cbd5e1', fontSize: 10 }}>＋</Text>
+                      <Text style={{ color: '#cbd5e1', fontSize: 11, fontWeight: '700' }}>＋</Text>
                     </TouchableOpacity>
                   );
                 })}
@@ -199,7 +355,7 @@ export function AdminHomeScreen({
           </View>
           <View style={{ marginLeft: 10, flex: 1 }}>
             <Text style={st.featureBigTitle}>ĐẶT LỊCH</Text>
-            <Text style={st.featureBigSub}>Quản lý lịch sân</Text>
+            <Text style={st.featureBigSub}>Xếp sân {activeClub.district}</Text>
           </View>
         </TouchableOpacity>
 
@@ -247,7 +403,7 @@ export function AdminHomeScreen({
       <View style={st.extraShortcutsRow}>
         <TouchableOpacity style={st.extraBtn} onPress={() => navigate('adminCourts')}>
           <Text style={{ fontSize: 18 }}>🏸</Text>
-          <Text style={st.extraBtnText}>Trạng thái sân</Text>
+          <Text style={st.extraBtnText}>Sân cơ sở</Text>
         </TouchableOpacity>
         <TouchableOpacity style={st.extraBtn} onPress={() => navigate('adminBookings')}>
           <Text style={{ fontSize: 18 }}>📋</Text>
@@ -296,15 +452,84 @@ export function AdminHomeScreen({
         </View>
       </View>
 
+      {/* Slot Details / Quick Action Modal */}
+      <Modal visible={!!slotModal} transparent animationType="fade">
+        <View style={st.modalBackdrop}>
+          <View style={st.modalCard}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+              <Text style={st.modalTitleText}>
+                🏸 {slotModal?.court?.name} · {slotModal?.slotHour}
+              </Text>
+              <TouchableOpacity onPress={() => setSlotModal(null)} style={{ padding: 4 }}>
+                <Text style={{ color: '#94a3b8', fontSize: 18, fontWeight: '800' }}>✕</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={st.slotModalBody}>
+              <Text style={st.slotModalFacilityText}>
+                🏢 {activeClub.name}
+              </Text>
+              <Text style={st.slotModalDetailText}>
+                📍 Địa chỉ: {activeClub.address}
+              </Text>
+
+              {slotModal?.booking ? (
+                <View style={st.slotDetailCard}>
+                  <Text style={st.slotDetailTitle}>👤 Khách đặt: {slotModal.booking.userName}</Text>
+                  <Text style={st.slotDetailSub}>📞 SĐT: {slotModal.booking.userPhone || '0905 591 379'}</Text>
+                  <Text style={st.slotDetailSub}>💰 Giá thuê: {(slotModal.booking.grandTotal || 80000).toLocaleString('vi-VN')} đ</Text>
+                  <Text style={st.slotDetailSub}>💳 Phương thức: {slotModal.booking.paymentMethod || 'Chuyển khoản QR'}</Text>
+                </View>
+              ) : slotModal?.guest ? (
+                <View style={st.slotDetailCard}>
+                  <Text style={st.slotDetailTitle}>ℹ️ {slotModal.title || 'Lịch đã có khách'}</Text>
+                  <Text style={st.slotDetailSub}>👤 {slotModal.guest}</Text>
+                </View>
+              ) : (
+                <View style={st.slotFreeCard}>
+                  <Text style={{ fontSize: 24, marginBottom: 4 }}>✅</Text>
+                  <Text style={st.slotFreeTitle}>Khung giờ hiện đang TRỐNG</Text>
+                  <Text style={st.slotFreeSub}>Giá thuê: {(slotModal?.court?.price || 80000).toLocaleString('vi-VN')} đ/h</Text>
+                </View>
+              )}
+            </View>
+
+            <View style={st.slotModalBtnRow}>
+              {slotModal?.isAvailable ? (
+                <TouchableOpacity
+                  style={st.slotBookBtn}
+                  onPress={() => {
+                    setSlotModal(null);
+                    navigate('adminSchedule');
+                  }}
+                >
+                  <Text style={st.slotBookBtnText}>＋ Đặt Lịch Cho Khách Tại Quầy</Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={st.slotCancelBtn}
+                  onPress={() => {
+                    Alert.alert('Thành công', 'Đã cập nhật trạng thái khung giờ.');
+                    setSlotModal(null);
+                  }}
+                >
+                  <Text style={st.slotCancelBtnText}>Đóng</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+        </View>
+      </Modal>
+
       {/* Guide Modal */}
       <Modal visible={guideModal} transparent animationType="fade">
         <View style={st.modalBackdrop}>
           <View style={st.modalCard}>
-            <Text style={st.modalTitleText}>💡 Hướng Dẫn Sử Dụng Alobo Sport</Text>
-            <Text style={st.guideStepText}>1. Xem trực tiếp ma trận sân đấu theo khung giờ.</Text>
-            <Text style={st.guideStepText}>2. Bấm vào "BÁN HÀNG" để lên đơn đồ uống hoặc phụ kiện.</Text>
-            <Text style={st.guideStepText}>3. Bấm vào "HỘI VIÊN" để quản lý gói cước và gia hạn thẻ.</Text>
-            <Text style={st.guideStepText}>4. Nhấn vào nút "Đăng xuất" ở góc trên hoặc thanh tài khoản để thoát quyền Admin.</Text>
+            <Text style={st.modalTitleText}>💡 Hướng Dẫn Quản Lý Cơ Sở QT Sport</Text>
+            <Text style={st.guideStepText}>1. Chọn từng Cơ sở ở thanh trên để xem riêng danh sách sân của cơ sở đó.</Text>
+            <Text style={st.guideStepText}>2. Ma trận lịch chỉ hiển thị các Sân 1, Sân 2... thuộc riêng cơ sở đang chọn.</Text>
+            <Text style={st.guideStepText}>3. Chạm vào ô giờ trống để đặt khách vãng lai trực tiếp tại quầy.</Text>
+            <Text style={st.guideStepText}>4. Nhấn nút "Đăng xuất" ở góc trên để thoát phiên làm việc.</Text>
             <TouchableOpacity style={st.modalCloseBtn} onPress={() => setGuideModal(false)}>
               <Text style={{ color: '#fff', fontWeight: '800' }}>ĐÃ HIỂU</Text>
             </TouchableOpacity>
@@ -321,7 +546,7 @@ export function AdminHomeScreen({
             </View>
             <Text style={st.logoutModalTitle}>Xác Nhận Đăng Xuất</Text>
             <Text style={st.logoutModalDesc}>
-              Bạn có chắc chắn muốn kết thúc phiên làm việc và đăng xuất khỏi tài khoản Quản trị viên (Admin) không?
+              Bạn có chắc chắn muốn kết thúc phiên làm việc và đăng xuất khỏi tài khoản Quản trị viên không?
             </Text>
 
             <View style={st.logoutModalBtnRow}>
@@ -353,7 +578,7 @@ const st = StyleSheet.create({
   homeHeader: {
     backgroundColor: AL.headerBg,
     paddingTop: Platform.OS === 'ios' ? 14 : 18,
-    paddingBottom: 20,
+    paddingBottom: 16,
     paddingHorizontal: 16,
   },
   homeHeaderTop: {
@@ -370,9 +595,9 @@ const st = StyleSheet.create({
     justifyContent: 'center',
   },
   aloboLogoCircle: {
-    width: 58,
-    height: 58,
-    borderRadius: 29,
+    width: 52,
+    height: 52,
+    borderRadius: 26,
     backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -409,7 +634,7 @@ const st = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.12)',
     borderRadius: 12,
     paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingVertical: 10,
     marginTop: 12,
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.18)',
@@ -423,7 +648,7 @@ const st = StyleSheet.create({
     justifyContent: 'center',
   },
   adminSessionName: { color: '#ffffff', fontSize: 13, fontWeight: '900' },
-  adminSessionRole: { color: 'rgba(255,255,255,0.8)', fontSize: 10, marginTop: 1 },
+  adminSessionRole: { color: 'rgba(255,255,255,0.9)', fontSize: 11, marginTop: 2 },
   quickLogoutBadge: {
     backgroundColor: 'rgba(239,68,68,0.25)',
     borderWidth: 1,
@@ -433,16 +658,70 @@ const st = StyleSheet.create({
     borderRadius: 8,
   },
   quickLogoutBadgeText: { color: '#fca5a5', fontSize: 10, fontWeight: '800' },
+
+  // Facility Switcher
+  facilitySection: {
+    backgroundColor: '#ffffff',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderColor: AL.border,
+  },
+  facilityHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 14,
+    marginBottom: 8,
+  },
+  facilitySectionTitle: { color: AL.textDark, fontSize: 12, fontWeight: '900', letterSpacing: 0.5 },
+  facilityCountText: { color: AL.primary, fontSize: 11, fontWeight: '800' },
+  facilityScrollContent: { paddingHorizontal: 12, gap: 8 },
+  facilityChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f1f5f9',
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: '#cbd5e1',
+  },
+  facilityChipActive: {
+    backgroundColor: AL.headerGreen,
+    borderColor: AL.primaryDark,
+    shadowColor: AL.primary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  facilityChipIcon: { fontSize: 16 },
+  facilityChipName: { color: AL.textDark, fontSize: 12, fontWeight: '800' },
+  facilityChipNameActive: { color: '#ffffff' },
+  facilityChipSub: { color: AL.textSub, fontSize: 10, marginTop: 1 },
+
+  // Matrix Card
   matrixWidgetCard: {
     backgroundColor: '#ffffff',
     marginHorizontal: 12,
-    marginTop: -8,
+    marginTop: 12,
     borderRadius: 14,
-    padding: 10,
+    padding: 12,
     borderWidth: 1,
     borderColor: AL.border,
     elevation: 4,
   },
+  matrixCardTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+    paddingBottom: 6,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f1f5f9',
+  },
+  matrixCardTitle: { fontSize: 13, fontWeight: '900', color: AL.textDark },
+  matrixCardSubtitle: { fontSize: 11, color: AL.textSub, marginTop: 2 },
   legendRow: { flexDirection: 'row', gap: 6, paddingBottom: 8 },
   legendPill: {
     flexDirection: 'row',
@@ -460,10 +739,10 @@ const st = StyleSheet.create({
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
   },
-  matrixCourtHeaderCol: { width: 64, padding: 6, justifyContent: 'center' },
+  matrixCourtHeaderCol: { width: 70, padding: 6, justifyContent: 'center' },
   matrixHeaderText: { fontSize: 10, fontWeight: '800', color: '#475569' },
   matrixHourCell: {
-    width: 62,
+    width: 64,
     paddingVertical: 6,
     alignItems: 'center',
     borderLeftWidth: 1,
@@ -474,13 +753,14 @@ const st = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderBottomColor: '#f1f5f9',
-    height: 34,
+    height: 38,
     alignItems: 'center',
   },
-  matrixCourtLabelCol: { width: 64, paddingLeft: 6 },
-  matrixCourtLabelText: { fontSize: 10, fontWeight: '800', color: '#1e293b' },
+  matrixCourtLabelCol: { width: 70, paddingLeft: 6 },
+  matrixCourtLabelText: { fontSize: 11, fontWeight: '900', color: '#1e293b' },
+  matrixCourtPriceText: { fontSize: 9, color: AL.primary, fontWeight: '700' },
   matrixEmptySlot: {
-    width: 62,
+    width: 64,
     height: '100%',
     borderLeftWidth: 1,
     borderLeftColor: '#f1f5f9',
@@ -488,13 +768,17 @@ const st = StyleSheet.create({
     justifyContent: 'center',
   },
   matrixBookingBlock: {
-    height: 28,
-    borderRadius: 4,
+    width: 62,
+    height: 30,
+    borderRadius: 6,
     justifyContent: 'center',
+    alignItems: 'center',
     paddingHorizontal: 4,
-    marginHorizontal: 2,
+    marginHorizontal: 1,
   },
   matrixBookingText: { color: '#ffffff', fontSize: 9, fontWeight: '800' },
+
+  // 4 Main Feature Cards
   fourFeaturesGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -580,6 +864,8 @@ const st = StyleSheet.create({
     alignItems: 'center',
   },
   logoutPrimaryBtnText: { color: '#ffffff', fontSize: 12, fontWeight: '900' },
+
+  // Modals
   modalBackdrop: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.65)',
@@ -594,7 +880,45 @@ const st = StyleSheet.create({
     width: '100%',
     maxWidth: 400,
   },
-  modalTitleText: { fontSize: 16, fontWeight: '900', color: AL.textDark, marginBottom: 10 },
+  modalTitleText: { fontSize: 15, fontWeight: '900', color: AL.textDark },
+  slotModalBody: { marginVertical: 10 },
+  slotModalFacilityText: { fontSize: 13, fontWeight: '800', color: AL.headerGreen, marginBottom: 2 },
+  slotModalDetailText: { fontSize: 11, color: AL.textSub, marginBottom: 10 },
+  slotDetailCard: {
+    backgroundColor: '#f8fafc',
+    borderRadius: 10,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  slotDetailTitle: { color: AL.textDark, fontSize: 13, fontWeight: '800', marginBottom: 4 },
+  slotDetailSub: { color: '#475569', fontSize: 12, marginTop: 2 },
+  slotFreeCard: {
+    backgroundColor: '#f0fdf4',
+    borderRadius: 10,
+    padding: 14,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#bbf7d0',
+  },
+  slotFreeTitle: { color: '#166534', fontSize: 13, fontWeight: '800' },
+  slotFreeSub: { color: '#15803d', fontSize: 12, marginTop: 2 },
+  slotModalBtnRow: { marginTop: 12 },
+  slotBookBtn: {
+    backgroundColor: '#ea580c',
+    borderRadius: 10,
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  slotBookBtnText: { color: '#ffffff', fontSize: 13, fontWeight: '900' },
+  slotCancelBtn: {
+    backgroundColor: '#f1f5f9',
+    borderRadius: 10,
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  slotCancelBtnText: { color: '#475569', fontSize: 12, fontWeight: '800' },
+
   guideStepText: { fontSize: 13, color: '#334155', marginBottom: 8, lineHeight: 18 },
   modalCloseBtn: {
     backgroundColor: AL.primary,

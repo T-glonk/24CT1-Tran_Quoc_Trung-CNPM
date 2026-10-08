@@ -42,6 +42,10 @@ export function AppNavigator() {
     authScreen,
     screen,
     courts,
+    clubs,
+    selectedClub,
+    setSelectedClub,
+    selectClubAndBook,
     bookings,
     usersList,
     servicesList,
@@ -118,9 +122,11 @@ export function AppNavigator() {
           <HomeScreen
             user={currentUser}
             navigate={navigate}
+            clubs={clubs}
             bookings={bookings}
             favorites={favorites}
             onToggleFavorite={handleToggleFavorite}
+            onSelectClub={selectClubAndBook}
           />
         );
       case 'mapTab':
@@ -136,6 +142,9 @@ export function AppNavigator() {
           <BookingScreen
             user={currentUser}
             courts={courts}
+            clubs={clubs}
+            selectedClub={selectedClub}
+            onSelectClub={setSelectedClub}
             navigate={navigate}
             onConfirm={handleConfirmBooking}
           />
@@ -177,6 +186,9 @@ export function AppNavigator() {
             navigate={navigate}
             bookings={bookings}
             courts={courts}
+            clubs={clubs}
+            selectedClub={selectedClub}
+            onSelectClub={setSelectedClub}
             services={servicesList}
             transactions={transactionsList}
             onUpdateCourtStatus={handleCourtStatusChange}
@@ -190,6 +202,9 @@ export function AppNavigator() {
             {renderAdminHeader('2.1 & 2.8 Quản Lý Sân & Trạng Thái')}
             <AdminCourtsScreen
               courts={courts}
+              clubs={clubs}
+              selectedClub={selectedClub}
+              onSelectClub={setSelectedClub}
               onToggleStatus={handleCourtStatusChange}
               onAddCourt={handleAddCourt}
               onUpdatePrice={handleUpdateCourtPrice}
@@ -202,6 +217,9 @@ export function AppNavigator() {
             {renderAdminHeader('2.2 Lịch Real-time & Đặt Tại Quầy')}
             <AdminScheduleScreen
               courts={courts}
+              clubs={clubs}
+              selectedClub={selectedClub}
+              onSelectClub={setSelectedClub}
               onAddWalkinBooking={handleAddWalkinBooking}
             />
           </View>
@@ -212,6 +230,9 @@ export function AppNavigator() {
             {renderAdminHeader('2.3 Quản Lý & Duyệt Đơn Đặt Sân')}
             <AdminBookingsScreen
               bookings={bookings}
+              clubs={clubs}
+              selectedClub={selectedClub}
+              onSelectClub={setSelectedClub}
               onUpdateStatus={handleUpdateBookingStatus}
               onCancelBooking={handleCancelBooking}
             />

@@ -1,26 +1,37 @@
 {
   "expo": {
-    "name": "24CT1-Tran_Quoc_Trung",
-    "slug": "24CT1-Tran_Quoc_Trung",
+    "name": "QT Sport",
+    "slug": "qt-sport",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme": "badmintoncourt",
-    "userInterfaceStyle": "light",
-    "ios": {
-      "supportsTablet": true
+    "scheme": "qtsport",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0f172a"
     },
-    "android": {
-      "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.tranquoctrung.qtsport",
+      "splash": {
+        "image": "./assets/splash-icon.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#0f172a"
       }
     },
-    "web": {
-      "favicon": "./assets/favicon.png",
-      "bundler": "metro"
+    "android": {
+      "package": "com.tranquoctrung.qtsport",
+      "splash": {
+        "image": "./assets/splash-icon.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#0f172a"
+      },
+      "adaptiveIcon": {
+        "backgroundColor": "#0f172a",
+        "foregroundImage": "./assets/android-icon-foreground.png"
+      }
     },
     "plugins": [
       "expo-router",
