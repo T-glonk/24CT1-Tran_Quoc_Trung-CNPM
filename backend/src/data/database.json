@@ -2,7 +2,7 @@
   "meta": {
     "version": "1.0.0",
     "appName": "Alobo Badminton Court Booking & Management",
-    "lastSaved": "2026-11-12T12:18:30.461Z",
+    "lastSaved": "2026-11-12T14:04:30.303Z",
     "tablesCount": 7,
     "recordsCount": {
       "users": 16,
@@ -11,7 +11,7 @@
       "bookings": 15,
       "services": 11,
       "transactions": 18,
-      "logs": 34
+      "logs": 35
     }
   },
   "users": [
@@ -2012,6 +2012,14 @@
     }
   ],
   "logs": [
+    {
+      "id": "L-1794492270303",
+      "time": "Vừa xong",
+      "action": "Đăng nhập hệ thống",
+      "detail": "An0210 (customer) đã đăng nhập",
+      "user": "An0210",
+      "type": "security"
+    },
     {
       "id": "L-1794485910460",
       "time": "Vừa xong",

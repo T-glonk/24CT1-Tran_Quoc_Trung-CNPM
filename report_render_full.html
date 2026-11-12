@@ -24,19 +24,21 @@
     padding: 0;
   }
 
-  /* BÌA BÁO CÁO */
+  /* BÌA BÁO CÁO - KÍCH THƯỚC CHUẨN IN A4 (KHÔNG DÙNG VH ĐỂ TRÁNH CO NHỎ) */
   .cover-page {
-    height: 98vh;
+    box-sizing: border-box;
+    width: 100%;
+    height: 252mm; /* Chiều cao chuẩn in A4 trừ lề 20mm trên + 20mm dưới */
+    page-break-after: always;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-sizing: border-box;
-    page-break-after: always;
   }
   .cover-border {
-    border: 3px double #1E3A8A;
-    padding: 30px 25px;
+    border: 3.5px double #1E3A8A;
+    padding: 35px 30px 25px 30px;
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -46,42 +48,57 @@
   .cover-header {
     font-size: 13pt;
     font-weight: bold;
-    color: #1E3A8A;
+    color: #111827;
     text-transform: uppercase;
     line-height: 1.4;
   }
-  .cover-header-sub {
-    font-size: 12pt;
+  .cover-header-school {
+    font-size: 15.5pt;
     font-weight: bold;
     color: #800000;
-    margin-top: 5px;
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+  .cover-header-dept {
+    font-size: 13.5pt;
+    font-weight: bold;
+    color: #1E3A8A;
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+  .cover-divider {
+    width: 160px;
+    height: 2px;
+    background-color: #D97706;
+    margin: 8px auto 12px auto;
   }
   .cover-logo {
     margin: 15px auto;
-    width: 110px;
+    width: 125px;
     height: auto;
+    display: block;
   }
   .cover-title-box {
-    margin: 25px 0;
+    margin: 15px 0 20px 0;
   }
   .cover-type {
-    font-size: 14pt;
+    font-size: 14.5pt;
     font-weight: bold;
     color: #334155;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
   .cover-title {
-    font-size: 21pt;
+    font-size: 20pt;
     font-weight: bold;
     color: #1E3A8A;
-    margin-top: 20px;
+    margin-top: 14px;
     line-height: 1.35;
     text-transform: uppercase;
   }
   .cover-info {
     text-align: left;
-    width: 85%;
+    width: 82%;
     margin: 15px auto;
     font-size: 13pt;
     line-height: 1.8;
@@ -256,9 +273,9 @@
   .toc-item {
     display: flex;
     align-items: baseline;
-    margin: 2.8px 0;
-    font-size: 10.5pt;
-    line-height: 1.32;
+    margin: 3px 0;
+    font-size: 11.2pt;
+    line-height: 1.34;
   }
   .toc-text {
     flex-shrink: 0;
@@ -269,8 +286,8 @@
     overflow: hidden;
     white-space: nowrap;
     margin: 0 4px;
-    font-size: 10pt;
-    color: #555;
+    font-size: 10.5pt;
+    color: #475569;
     letter-spacing: 2px;
   }
   .toc-dots::after {
@@ -278,10 +295,11 @@
   }
   .toc-page {
     flex-shrink: 0;
-    min-width: 25px;
+    min-width: 28px;
     text-align: right;
     font-weight: bold;
-    font-size: 11pt;
+    font-size: 11.5pt;
+    color: #1E3A8A;
   }
 
 </style>
@@ -292,10 +310,10 @@
 <div class="cover-page">
   <div class="cover-border">
     <div class="cover-header">
-      BỘ GIÁO DỤC VÀ ĐÀO TẠO<br>
-      TRƯỜNG ĐẠI HỌC KIẾN TRÚC ĐÀ NẴNG<br>
-      <span class="cover-header-sub">KHOA CÔNG NGHỆ THÔNG TIN</span><br>
-      oOo
+      BỘ GIÁO DỤC VÀ ĐÀO TẠO
+      <div class="cover-header-school">TRƯỜNG ĐẠI HỌC KIẾN TRÚC ĐÀ NẴNG</div>
+      <div class="cover-header-dept">KHOA CÔNG NGHỆ THÔNG TIN</div>
+      <div class="cover-divider"></div>
     </div>
 
     <div>
@@ -305,16 +323,16 @@
     <div class="cover-title-box">
       <div class="cover-type">BÁO CÁO CÔNG NGHỆ PHẦN MỀM</div>
       <div class="cover-title">ỨNG DỤNG ĐẶT SÂN CẦU LÔNG TRỰC TUYẾN</div>
-      <div style="font-size: 13pt; font-weight: bold; color: #059669; margin-top: 8px;">(ALOBOSPORT / QT SPORT SYSTEM)</div>
+      <div style="font-size: 13.5pt; font-weight: bold; color: #059669; margin-top: 8px;">(ALOBOSPORT / QT SPORT SYSTEM)</div>
     </div>
 
     <div class="cover-info">
       <table style="border: none; margin: 0; font-size: 13pt; width: 100%;">
-        <tr style="background: none;"><td style="border: none; width: 220px; font-weight: bold;">Sinh viên thực hiện:</td><td style="border: none;">Trần Quốc Trung</td></tr>
-        <tr style="background: none;"><td style="border: none; font-weight: bold;">Mã số sinh viên:</td><td style="border: none;">2351220096</td></tr>
-        <tr style="background: none;"><td style="border: none; font-weight: bold;">Lớp sinh hoạt:</td><td style="border: none;">24CT1</td></tr>
-        <tr style="background: none;"><td style="border: none; font-weight: bold;">Ngành:</td><td style="border: none;">Công nghệ Thông tin</td></tr>
-        <tr style="background: none;"><td style="border: none; font-weight: bold;">Giảng viên hướng dẫn:</td><td style="border: none;">ThS. Phạm Thị Dung</td></tr>
+        <tr style="background: none;"><td style="border: none; width: 220px; font-weight: bold; color: #1E3A8A;">Sinh viên thực hiện:</td><td style="border: none; font-weight: bold;">Trần Quốc Trung</td></tr>
+        <tr style="background: none;"><td style="border: none; font-weight: bold; color: #1E3A8A;">Mã số sinh viên:</td><td style="border: none; font-weight: bold;">2351220096</td></tr>
+        <tr style="background: none;"><td style="border: none; font-weight: bold; color: #1E3A8A;">Lớp sinh hoạt:</td><td style="border: none; font-weight: bold;">24CT1</td></tr>
+        <tr style="background: none;"><td style="border: none; font-weight: bold; color: #1E3A8A;">Ngành:</td><td style="border: none; font-weight: bold;">Công nghệ Thông tin</td></tr>
+        <tr style="background: none;"><td style="border: none; font-weight: bold; color: #1E3A8A;">Giảng viên hướng dẫn:</td><td style="border: none; font-weight: bold;">ThS. Phạm Thị Dung</td></tr>
       </table>
     </div>
 
@@ -327,7 +345,7 @@
 <!-- MỤC LỤC & DANH MỤC -->
 <div class="page-break"></div>
 
-<h1 style="margin-top: 10px; margin-bottom: 15px;">MỤC LỤC</h1>
+<h1 style="margin-top: 5px; margin-bottom: 12px; font-size: 16pt;">MỤC LỤC</h1>
 <div class="toc-container">
   <div class="toc-item"><span class="toc-text" style="padding-left: 0px; font-weight: bold;">LỜI MỞ ĐẦU</span><span class="toc-dots"></span><span class="toc-page">4</span></div>
   <div class="toc-item"><span class="toc-text" style="padding-left: 0px; font-weight: bold;">CHƯƠNG 1: TỔNG QUAN CƠ SỞ LÝ THUYẾT</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
