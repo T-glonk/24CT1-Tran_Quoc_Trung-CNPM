@@ -28,7 +28,8 @@
     "start:backend": "node backend/src/server.js",
     "start:frontend": "expo start",
     "db:init": "node backend/src/scripts/initDb.js",
-    "db:mysql": "node backend/src/scripts/importMySQL.js"
+    "db:mysql": "node backend/src/scripts/importMySQL.js",
+    "build:report": "python scripts/build_report.py"
   },
   "private": true
 }

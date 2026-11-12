@@ -1,24 +1,32 @@
 # -*- coding: utf-8 -*-
 import os, sys, base64, subprocess, shutil
 
-def img_to_b64(path):
-    if not os.path.exists(path):
-        print(f"Warning: file {path} not found!")
+# Xác định đường dẫn thư mục gốc dự án
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+def get_path(rel_path):
+    return os.path.join(BASE_DIR, rel_path)
+
+def img_to_b64(rel_path):
+    full_path = get_path(rel_path)
+    if not os.path.exists(full_path):
+        print(f"Warning: file {full_path} not found!")
         return ""
-    ext = os.path.splitext(path)[1].lower()
+    ext = os.path.splitext(full_path)[1].lower()
     mime = "image/png" if ext == ".png" else "image/jpeg"
-    with open(path, "rb") as f:
+    with open(full_path, "rb") as f:
         data = base64.b64encode(f.read()).decode("utf-8")
     return f"data:{mime};base64,{data}"
 
-print("Reading report_template.html...")
-with open("report_template.html", "r", encoding="utf-8") as f:
+template_path = get_path("report_template.html")
+print(f"Reading template from {template_path}...")
+with open(template_path, "r", encoding="utf-8") as f:
     template = f.read()
 
 print("Encoding images...")
 replacements = {
     "__LOGO__": img_to_b64("template-do-an-ttnt/assets/dau-logo.png"),
-        "__LUONG_DANGKY__": img_to_b64("template-do-an-ttnt/figs/luong_dangky.png"),
+    "__LUONG_DANGKY__": img_to_b64("template-do-an-ttnt/figs/luong_dangky.png"),
     "__LUONG_DANGNHAP__": img_to_b64("template-do-an-ttnt/figs/luong_dangnhap.png"),
     "__LUONG_DATSAN__": img_to_b64("template-do-an-ttnt/figs/luong_datsan.png"),
     "__SEQ_DANGKY__": img_to_b64("template-do-an-ttnt/figs/seq_dangky.png"),
@@ -47,13 +55,13 @@ for tag, b64 in replacements.items():
     template = template.replace(tag, b64)
 
 # Write rendered HTML
-html_path = os.path.abspath("report_render_full.html")
+html_path = get_path("report_render_full.html")
 with open(html_path, "w", encoding="utf-8") as f:
     f.write(template)
 print(f"Generated complete HTML report at: {html_path}")
 
-out_pdf_root = os.path.abspath("BaoCao_DoAn_CNPM_24CT1_TranQuocTrung.pdf")
-out_pdf_template = os.path.abspath("template-do-an-ttnt/do-an.pdf")
+out_pdf_root = get_path("BaoCao_DoAn_CNPM_24CT1_TranQuocTrung.pdf")
+out_pdf_template = get_path("template-do-an-ttnt/do-an.pdf")
 
 args = [
     r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",

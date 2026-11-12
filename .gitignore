@@ -36,6 +36,9 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+# Build & generated files
+report_render_full.html
+
 # IDE & OS
 .idea/
 .vscode/
