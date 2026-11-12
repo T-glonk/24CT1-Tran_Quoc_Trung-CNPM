@@ -55,34 +55,27 @@ export function RegisterScreen({ navigate, onLogin }) {
         password: password.trim(),
       });
 
+      setLoading(false);
+
       if (res && res.success && res.data) {
-        setLoading(false);
-        Alert.alert('✅ Thành công', 'Đăng ký tài khoản thành công!', [
-          { text: 'Đăng nhập ngay', onPress: () => onLogin(res.data) },
+        Alert.alert('✅ Thành công', 'Đăng ký tài khoản thành công và đã lưu vào cơ sở dữ liệu!', [
+          { text: 'Vào ứng dụng ngay', onPress: () => onLogin(res.data) },
         ]);
         return;
       }
-    } catch (e) {}
 
-    // Fallback registration
-    const newUser = {
-      id: `user_${Date.now()}`,
-      name: name.trim(),
-      phone: phone.trim(),
-      email: email.trim() || `${phone.trim()}@court.vn`,
-      password: password.trim(),
-      role: 'customer',
-      status: 'active',
-      joinedDate: new Date().toLocaleDateString('vi-VN'),
-      tier: 'Đồng',
-      totalSpent: 0,
-      bookingsCount: 0,
-    };
+      // Xử lý lỗi trả về từ Backend hoặc lỗi kết nối
+      const errorMsg =
+        res?.message ||
+        (res?.isOffline
+          ? 'Không thể kết nối tới Backend API. Vui lòng đảm bảo máy chủ Backend đang chạy (npm start).'
+          : 'Đăng ký thất bại. Vui lòng thử lại.');
 
-    setLoading(false);
-    Alert.alert('✅ Thành công', 'Đăng ký tài khoản thành công!', [
-      { text: 'Vào ứng dụng', onPress: () => onLogin(newUser) },
-    ]);
+      Alert.alert('Lỗi đăng ký', errorMsg);
+    } catch (err) {
+      setLoading(false);
+      Alert.alert('Lỗi kết nối', `Có lỗi xảy ra: ${err.message || 'Không thể kết nối đến máy chủ.'}`);
+    }
   };
 
   return (

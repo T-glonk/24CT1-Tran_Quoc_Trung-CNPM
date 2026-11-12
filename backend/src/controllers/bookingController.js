@@ -23,6 +23,19 @@ async function getAllBookings(req, res) {
 
     const [rows] = await pool.query(sql, params);
     if (rows && rows.length > 0) {
+      // Lấy danh sách các dịch vụ đi kèm của tất cả các đơn
+      const bookingIds = rows.map((r) => r.id);
+      let allServices = [];
+      try {
+        const [serviceRows] = await pool.query(
+          'SELECT booking_id as bookingId, service_id as id, service_name as name, quantity as qty, unit_price as price, total_price as totalPrice FROM booking_services WHERE booking_id IN (?)',
+          [bookingIds]
+        );
+        allServices = serviceRows || [];
+      } catch (err) {
+        allServices = [];
+      }
+
       bookings = rows.map(r => ({
         id: r.id,
         courtId: r.court_id,
@@ -40,6 +53,7 @@ async function getAllBookings(req, res) {
         note: r.note,
         createdAt: r.created_at,
         court: db.getCourtById(r.court_id) || { name: `Sân ${r.court_id}` },
+        servicesAdded: allServices.filter(s => s.bookingId === r.id),
       }));
     }
   } catch (err) {
@@ -70,6 +84,18 @@ async function getBookingById(req, res) {
     const [rows] = await pool.query('SELECT * FROM bookings WHERE id = ? LIMIT 1', [id]);
     if (rows && rows.length > 0) {
       const r = rows[0];
+
+      let servicesAdded = [];
+      try {
+        const [serviceRows] = await pool.query(
+          'SELECT service_id as id, service_name as name, quantity as qty, unit_price as price, total_price as totalPrice FROM booking_services WHERE booking_id = ?',
+          [id]
+        );
+        servicesAdded = serviceRows || [];
+      } catch (err) {
+        servicesAdded = [];
+      }
+
       booking = {
         id: r.id,
         courtId: r.court_id,
@@ -87,6 +113,7 @@ async function getBookingById(req, res) {
         note: r.note,
         createdAt: r.created_at,
         court: db.getCourtById(r.court_id) || { name: `Sân ${r.court_id}` },
+        servicesAdded,
       };
     }
   } catch (err) {
@@ -103,7 +130,7 @@ async function getBookingById(req, res) {
 
 
 // POST /api/bookings
-function createBooking(req, res) {
+async function createBooking(req, res) {
   const { courtId, court, userId, userName, userPhone, date, slot, hoursCount, totalPrice, servicesAdded, grandTotal, paymentMethod, note } = req.body;
 
   const targetCourt = court || db.getCourtById(courtId);
@@ -145,12 +172,15 @@ function createBooking(req, res) {
   const safeCourtName = targetCourt.name || 'Sân 1';
   const safePrice = Number(targetCourt.price || 80000);
 
-  // Ensure court exists in MySQL courts table to satisfy foreign key
-  pool.query(
-    'INSERT INTO courts (id, club_id, name, type, price, status) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = VALUES(name), price = VALUES(price)',
-    [safeCourtId, targetCourt.clubId || 'c1', safeCourtName, targetCourt.type || 'Thảm PVC thi đấu', safePrice, 'available']
-  ).then(() => {
-    return pool.query(
+  try {
+    // 1. Đảm bảo sân tồn tại trong MySQL courts table để thỏa mãn foreign key
+    await pool.query(
+      'INSERT INTO courts (id, club_id, name, type, price, status) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = VALUES(name), price = VALUES(price)',
+      [safeCourtId, targetCourt.clubId || 'c1', safeCourtName, targetCourt.type || 'Thảm PVC thi đấu', safePrice, 'available']
+    );
+
+    // 2. Lưu đơn đặt sân vào MySQL bookings table
+    await pool.query(
       'INSERT INTO bookings (id, user_id, court_id, user_name, user_phone, booking_date, slot_time, hours_count, court_price, services_total, grand_total, payment_method, payment_status, status, note, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [
         newBooking.id,
@@ -171,10 +201,42 @@ function createBooking(req, res) {
         new Date().toLocaleString('vi-VN'),
       ]
     );
-  }).catch(err => {
-    console.warn('[MySQL Booking Insert Warning]:', err.message);
-  });
+    console.log(`[MySQL Success] ✅ Đã lưu đơn đặt sân ${newBooking.id} vào MySQL.`);
 
+    // 3. Lưu chi tiết các dịch vụ đi kèm vào bảng booking_services
+    if (Array.isArray(newBooking.servicesAdded) && newBooking.servicesAdded.length > 0) {
+      for (const item of newBooking.servicesAdded) {
+        const qty = Number(item.qty || item.quantity || 1);
+        const unitPrice = Number(item.price || item.unitPrice || 0);
+        const itemTotalPrice = qty * unitPrice;
+        const serviceId = String(item.id || 's1');
+        const serviceName = item.name || 'Dịch vụ tiện ích';
+
+        // Đảm bảo mã dịch vụ tồn tại trong bảng services để thỏa mãn foreign key constraint
+        await pool.query(
+          'INSERT INTO services (id, name, category, price, stock, unit, status) VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = VALUES(name), price = VALUES(price)',
+          [serviceId, serviceName, 'drink', unitPrice, 50, 'món', 'active']
+        ).catch(() => {});
+
+        await pool.query(
+          'INSERT INTO booking_services (booking_id, service_id, service_name, quantity, unit_price, total_price) VALUES (?, ?, ?, ?, ?, ?)',
+          [
+            newBooking.id,
+            serviceId,
+            serviceName,
+            qty,
+            unitPrice,
+            itemTotalPrice,
+          ]
+        );
+        console.log(`[MySQL Success] ✅ Đã lưu dịch vụ: ${serviceName} (SL: ${qty}) vào bảng booking_services cho đơn ${newBooking.id}`);
+      }
+    }
+  } catch (err) {
+    console.warn('[MySQL Booking Insert Warning]:', err.message);
+  }
+
+  // 4. Lưu sổ quỹ giao dịch (transactions)
   pool.query(
     'INSERT INTO transactions (id, booking_id, customer_name, amount, type, method, status, reference_code, transaction_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
     [
@@ -192,7 +254,7 @@ function createBooking(req, res) {
     console.warn('[MySQL Transaction Insert Warning]:', err.message);
   });
 
-  // Audit log
+  // 5. Ghi nhật ký hoạt động (activity_logs)
   db.addLog({
     action: 'Tạo đơn đặt sân',
     detail: `Đơn mới ${newBooking.id} cho ${newBooking.userName} (${targetCourt.name})`,
@@ -212,7 +274,7 @@ function createBooking(req, res) {
     ]
   ).catch(() => {});
 
-  res.status(201).json({
+  return res.status(201).json({
     success: true,
     message: 'Đặt sân thành công',
     data: newBooking,

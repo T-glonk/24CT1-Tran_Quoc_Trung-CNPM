@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>BÁO CÁO CÔNG NGHỆ PHẦN MỀM - ỨNG DỤNG ĐẶT SÂN CẦU LÔNG TRỰC TUYẾN</title>
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 20mm 20mm 20mm 25mm; /* Top, Right, Bottom, Left chuẩn luận văn DAU */
+    @bottom-center {
+      content: counter(page);
+      font-family: 'Times New Roman', serif;
+      font-size: 10pt;
+    }
+  }
+
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 13pt;
+    line-height: 1.5;
+    color: #111827;
+    text-align: justify;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* BÌA BÁO CÁO */
+  .cover-page {
+    height: 98vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    page-break-after: always;
+  }
+  .cover-border {
+    border: 3px double #1E3A8A;
+    padding: 30px 25px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .cover-header {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #1E3A8A;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+  .cover-header-sub {
+    font-size: 12pt;
+    font-weight: bold;
+    color: #800000;
+    margin-top: 5px;
+  }
+  .cover-logo {
+    margin: 15px auto;
+    width: 110px;
+    height: auto;
+  }
+  .cover-title-box {
+    margin: 25px 0;
+  }
+  .cover-type {
+    font-size: 14pt;
+    font-weight: bold;
+    color: #334155;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .cover-title {
+    font-size: 21pt;
+    font-weight: bold;
+    color: #1E3A8A;
+    margin-top: 20px;
+    line-height: 1.35;
+    text-transform: uppercase;
+  }
+  .cover-info {
+    text-align: left;
+    width: 85%;
+    margin: 15px auto;
+    font-size: 13pt;
+    line-height: 1.8;
+  }
+  .cover-footer {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #1E3A8A;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+
+  h1 {
+    font-size: 16pt;
+    font-weight: bold;
+    color: #1E3A8A;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+  h2 {
+    font-size: 14pt;
+    font-weight: bold;
+    color: #1E3A8A;
+    margin-top: 22px;
+    margin-bottom: 12px;
+  }
+  h3 {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #0F172A;
+    margin-top: 16px;
+    margin-bottom: 8px;
+  }
+  h4 {
+    font-size: 13pt;
+    font-weight: bold;
+    font-style: italic;
+    color: #334155;
+    margin-top: 12px;
+    margin-bottom: 6px;
+  }
+
+  p {
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-indent: 1.25cm;
+  }
+  .no-indent {
+    text-indent: 0 !important;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 11pt;
+  }
+  th, td {
+    border: 1px solid #94A3B8;
+    padding: 6px 8px;
+    vertical-align: middle;
+  }
+  th {
+    background-color: #1E3A8A;
+    color: #FFFFFF;
+    font-weight: bold;
+    text-align: center;
+  }
+  tr:nth-child(even) td {
+    background-color: #F8FAFC;
+  }
+  .table-caption {
+    font-size: 11pt;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 6px;
+    color: #1E3A8A;
+  }
+
+  .figure-box {
+    text-align: center;
+    margin: 18px 0;
+    page-break-inside: avoid;
+  }
+  .figure-box img {
+    max-width: 95%;
+    height: auto;
+    border: 1px solid #CBD5E1;
+    border-radius: 4px;
+  }
+  .figure-box img.phone-screen {
+    max-height: 480px;
+    width: auto;
+    border: 2px solid #334155;
+    border-radius: 14px;
+    margin: 8px auto;
+  }
+  .figure-box img.wireframe-screen {
+    max-height: 380px;
+    width: auto;
+    border: 1.5px solid #64748B;
+    border-radius: 12px;
+    margin: 8px auto;
+  }
+  .figure-caption {
+    font-size: 11pt;
+    font-weight: bold;
+    color: #1E3A8A;
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  .code-table {
+    width: 100%;
+    border: 1px solid #CBD5E1;
+    background-color: #F8FAFC;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 8.5pt;
+    margin: 12px 0;
+    border-collapse: collapse;
+    box-sizing: border-box;
+  }
+  .code-table td {
+    padding: 8px 12px;
+    white-space: pre;
+    word-break: normal;
+    overflow-wrap: normal;
+    overflow-x: auto;
+    border: none;
+    line-height: 1.35;
+  }
+
+  .formula {
+    text-align: center;
+    font-family: 'Times New Roman', serif;
+    font-style: italic;
+    font-weight: bold;
+    margin: 10px 0;
+    font-size: 13pt;
+    color: #1E3A8A;
+  }
+
+  ul, ol {
+    margin: 6px 0 10px 30px;
+    padding: 0;
+  }
+  li {
+    margin-bottom: 4px;
+  }
+
+  code {
+    font-family: Consolas, monospace;
+    font-size: 11pt;
+    background-color: #F1F5F9;
+    padding: 1px 4px;
+    border-radius: 3px;
+    color: #0F172A;
+  }
+
+  .demo-block {
+    margin: 14px 0;
+  }
+
+  .toc-item {
+    display: flex;
+    align-items: baseline;
+    margin: 2.8px 0;
+    font-size: 10.5pt;
+    line-height: 1.32;
+  }
+  .toc-text {
+    flex-shrink: 0;
+    max-width: 82%;
+  }
+  .toc-dots {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0 4px;
+    font-size: 10pt;
+    color: #555;
+    letter-spacing: 2px;
+  }
+  .toc-dots::after {
+    content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ";
+  }
+  .toc-page {
+    flex-shrink: 0;
+    min-width: 25px;
+    text-align: right;
+    font-weight: bold;
+    font-size: 11pt;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- TRANG BÌA -->
+<div class="cover-page">
+  <div class="cover-border">
+    <div class="cover-header">
+      BỘ GIÁO DỤC VÀ ĐÀO TẠO<br>
+      TRƯỜNG ĐẠI HỌC KIẾN TRÚC ĐÀ NẴNG<br>
+      <span class="cover-header-sub">KHOA CÔNG NGHỆ THÔNG TIN</span><br>
+      oOo
+    </div>
+
+    <div>
+      <img src="__LOGO__" class="cover-logo" alt="DAU Logo">
+    </div>
+
+    <div class="cover-title-box">
+      <div class="cover-type">BÁO CÁO CÔNG NGHỆ PHẦN MỀM</div>
+      <div class="cover-title">ỨNG DỤNG ĐẶT SÂN CẦU LÔNG TRỰC TUYẾN</div>
+      <div style="font-size: 13pt; font-weight: bold; color: #059669; margin-top: 8px;">(ALOBOSPORT / QT SPORT SYSTEM)</div>
+    </div>
+
+    <div class="cover-info">
+      <table style="border: none; margin: 0; font-size: 13pt; width: 100%;">
+        <tr style="background: none;"><td style="border: none; width: 220px; font-weight: bold;">Sinh viên thực hiện:</td><td style="border: none;">Trần Quốc Trung</td></tr>
+        <tr style="background: none;"><td style="border: none; font-weight: bold;">Mã số sinh viên:</td><td style="border: none;">2351220096</td></tr>
+        <tr style="background: none;"><td style="border: none; font-weight: bold;">Lớp sinh hoạt:</td><td style="border: none;">24CT1</td></tr>
+        <tr style="background: none;"><td style="border: none; font-weight: bold;">Ngành:</td><td style="border: none;">Công nghệ Thông tin</td></tr>
+        <tr style="background: none;"><td style="border: none; font-weight: bold;">Giảng viên hướng dẫn:</td><td style="border: none;">ThS. Phạm Thị Dung</td></tr>
+      </table>
+    </div>
+
+    <div class="cover-footer">
+      ĐÀ NẴNG – 2026
+    </div>
+  </div>
+</div>
+
+<!-- MỤC LỤC & DANH MỤC -->
+<div class="page-break"></div>
+
+<h1 style="margin-top: 10px; margin-bottom: 15px;">MỤC LỤC</h1>
+<div class="toc-container">
+  <div class="toc-item"><span class="toc-text" style="padding-left: 0px; font-weight: bold;">LỜI MỞ ĐẦU</span><span class="toc-dots"></span><span class="toc-page">4</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 0px; font-weight: bold;">CHƯƠNG 1: TỔNG QUAN CƠ SỞ LÝ THUYẾT</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">1.1. Framework cài đặt</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.1.1. Tổng quan về React Native & Expo</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.1.2. Framework Backend Node.js & Express RESTful API</span><span class="toc-dots"></span><span class="toc-page">7</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">1.2. Các Công cụ (Tools) hỗ trợ</span><span class="toc-dots"></span><span class="toc-page">7</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.1. Antigravity IDE - Môi trường phát triển tích hợp (IDE)</span><span class="toc-dots"></span><span class="toc-page">7</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.2. Draw.io (diagrams.net) - Thiết kế mô hình hóa phần mềm</span><span class="toc-dots"></span><span class="toc-page">7</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.3. MySQL Workbench & XAMPP - Quản trị CSDL quan hệ</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.4. Postman - Kiểm thử và thiết kế API</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.5. Git & GitHub - Quản lý phiên bản mã nguồn phân tán</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.6. Trello - Quản lý tiến độ dự án theo phương pháp Agile/Kanban</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">1.3. Ngôn ngữ lập trình & Cấu trúc dự án</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.3.1. Ngôn ngữ lập trình JavaScript & SQL</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.3.2. Cấu trúc thư mục dự án và môi trường cài đặt</span><span class="toc-dots"></span><span class="toc-page">9</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 0px; font-weight: bold;">CHƯƠNG 2: THỰC NGHIỆM</span><span class="toc-dots"></span><span class="toc-page">10</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">2.1. Sơ đồ tuần tự (Sequence Diagram) & Sơ đồ luồng (Flowchart)</span><span class="toc-dots"></span><span class="toc-page">10</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.1.1. Sơ đồ tuần tự và Sơ đồ luồng chức năng Đăng ký</span><span class="toc-dots"></span><span class="toc-page">11</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.1.2. Sơ đồ tuần tự và Sơ đồ luồng chức năng Đăng nhập</span><span class="toc-dots"></span><span class="toc-page">12</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.1.3. Sơ đồ tuần tự và Sơ đồ luồng chức năng Tự chọn 1: Đặt sân & Thanh toán VietQR</span><span class="toc-dots"></span><span class="toc-page">13</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.1.4. Sơ đồ tuần tự chức năng Tự chọn 2: Quản lý & Cập nhật đơn đặt sân Chủ sân</span><span class="toc-dots"></span><span class="toc-page">14</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">2.2. Sơ đồ Pert (PERT Chart) & Đường găng (Critical Path)</span><span class="toc-dots"></span><span class="toc-page">15</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.2.1. Phương pháp luận mạng PERT và giải thuật CPM</span><span class="toc-dots"></span><span class="toc-page">15</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.2.2. Bảng phân rã công việc (WBS) và tính toán tham số thời gian</span><span class="toc-dots"></span><span class="toc-page">15</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.2.3. Sơ đồ mạng PERT học thuật và phân tích đường găng</span><span class="toc-dots"></span><span class="toc-page">17</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.2.4. Ý nghĩa quản trị tiến độ và kiểm soát rủi ro dự án</span><span class="toc-dots"></span><span class="toc-page">17</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">2.3. Demo</span><span class="toc-dots"></span><span class="toc-page">19</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.0. Tổng quan Bảng điều khiển & Khám phá cụm sân (Home & Map View)</span><span class="toc-dots"></span><span class="toc-page">19</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.1. Giao diện chức năng Đăng ký</span><span class="toc-dots"></span><span class="toc-page">21</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.2. Giao diện chức năng Đăng nhập</span><span class="toc-dots"></span><span class="toc-page">23</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.3. Giao diện chức năng Tự chọn 1: Chọn sân & Đặt lịch thi đấu kèm Thanh toán VietQR</span><span class="toc-dots"></span><span class="toc-page">25</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.4. Giao diện chức năng Tự chọn 2: Quản lý và theo dõi lịch đặt sân của khách hàng & chủ sân</span><span class="toc-dots"></span><span class="toc-page">28</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">2.4. Dữ liệu (Database)</span><span class="toc-dots"></span><span class="toc-page">30</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.4.1. Giới thiệu tổng quan hệ CSDL quan hệ MySQL</span><span class="toc-dots"></span><span class="toc-page">30</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.4.2. Thiết kế cấu trúc cơ sở dữ liệu (Sơ đồ ERD & Data Dictionary)</span><span class="toc-dots"></span><span class="toc-page">30</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.4.3. Các tập dữ liệu thực nghiệm trong hệ thống</span><span class="toc-dots"></span><span class="toc-page">36</span></div>
+</div>
+
+<div class="page-break"></div>
+
+<h2 class="no-indent" style="text-align: center; color: #1E3A8A; margin-top: 10px; margin-bottom: 15px;">DANH MỤC HÌNH ẢNH</h2>
+<div class="toc-container">
+  <div class="toc-item"><span class="toc-text">Hình 1: Sơ đồ tuần tự (Sequence Diagram) chức năng Đăng ký tài khoản người dùng</span><span class="toc-dots"></span><span class="toc-page">11</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 2: Sơ đồ luồng (Flowchart) chức năng Đăng ký tài khoản</span><span class="toc-dots"></span><span class="toc-page">11</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 3: Sơ đồ tuần tự (Sequence Diagram) chức năng Đăng nhập hệ thống đa vai trò</span><span class="toc-dots"></span><span class="toc-page">12</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 4: Sơ đồ luồng (Flowchart) chức năng Đăng nhập hệ thống</span><span class="toc-dots"></span><span class="toc-page">12</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 5: Sơ đồ tuần tự (Sequence Diagram) chức năng Đặt sân & Thanh toán VietQR Người dùng</span><span class="toc-dots"></span><span class="toc-page">13</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 6: Sơ đồ luồng (Flowchart) chức năng Đặt sân & Thanh toán trực tuyến</span><span class="toc-dots"></span><span class="toc-page">13</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 7: Sơ đồ tuần tự (Sequence Diagram) chức năng Quản lý & Cập nhật trạng thái đơn đặt sân Chủ sân</span><span class="toc-dots"></span><span class="toc-page">14</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 8: Sơ đồ mạng PERT học thuật và xác định Đường găng (Critical Path)</span><span class="toc-dots"></span><span class="toc-page">17</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 9: Phác thảo Wireframe sơ bộ Bảng điều khiển tổng quan Trang chủ</span><span class="toc-dots"></span><span class="toc-page">19</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 10: Kết quả thực hiện thực tế Giao diện Bản đồ định vị cụm sân</span><span class="toc-dots"></span><span class="toc-page">20</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 11: Phác thảo Wireframe sơ bộ giao diện Đăng ký tài khoản</span><span class="toc-dots"></span><span class="toc-page">21</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 12: Kết quả thực hiện thực tế giao diện Đăng ký tài khoản di động</span><span class="toc-dots"></span><span class="toc-page">22</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 13: Phác thảo Wireframe sơ bộ giao diện Đăng nhập hệ thống</span><span class="toc-dots"></span><span class="toc-page">23</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 14: Kết quả thực hiện thực tế giao diện Đăng nhập hệ thống đa vai trò</span><span class="toc-dots"></span><span class="toc-page">24</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 15: Phác thảo Wireframe sơ bộ giao diện Đặt sân và Xác nhận thanh toán</span><span class="toc-dots"></span><span class="toc-page">25</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 16: Kết quả thực hiện thực tế giao diện Chọn sân & Đặt lịch thi đấu</span><span class="toc-dots"></span><span class="toc-page">26</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 17: Kết quả thực hiện thực tế giao diện Xác nhận và Thanh toán VietQR</span><span class="toc-dots"></span><span class="toc-page">27</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 18: Phác thảo Wireframe sơ bộ giao diện Quản lý lịch đặt sân</span><span class="toc-dots"></span><span class="toc-page">28</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 19: Kết quả thực hiện thực tế giao diện Quản lý lịch đặt sân đã đặt</span><span class="toc-dots"></span><span class="toc-page">29</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 20: Sơ đồ cấu trúc Cơ sở dữ liệu quan hệ (ERD) toàn hệ thống đặt sân</span><span class="toc-dots"></span><span class="toc-page">31</span></div>
+</div>
+
+<h2 class="no-indent" style="text-align: center; color: #1E3A8A; margin-top: 25px; margin-bottom: 15px;">DANH MỤC BẢNG BIỂU</h2>
+<div class="toc-container">
+  <div class="toc-item"><span class="toc-text">Bảng 1: Bảng phân rã công việc (WBS) và tính toán tham số thời gian PERT / CPM</span><span class="toc-dots"></span><span class="toc-page">15</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 2: Từ điển dữ liệu bảng users (Tài khoản người dùng)</span><span class="toc-dots"></span><span class="toc-page">31</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 3: Từ điển dữ liệu bảng clubs (Cụm sân cầu lông / Chi nhánh)</span><span class="toc-dots"></span><span class="toc-page">33</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 4: Từ điển dữ liệu bảng courts (Danh mục sân cầu lông)</span><span class="toc-dots"></span><span class="toc-page">33</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 5: Từ điển dữ liệu bảng bookings (Đơn đặt sân)</span><span class="toc-dots"></span><span class="toc-page">34</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 6: Từ điển dữ liệu bảng services (Danh mục sản phẩm, nước uống & phụ kiện)</span><span class="toc-dots"></span><span class="toc-page">34</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 7: Từ điển dữ liệu bảng booking_services (Chi tiết dịch vụ đi kèm đơn đặt)</span><span class="toc-dots"></span><span class="toc-page">34</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 8: Tập dữ liệu thực nghiệm bảng users</span><span class="toc-dots"></span><span class="toc-page">36</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 9: Tập dữ liệu thực nghiệm bảng clubs</span><span class="toc-dots"></span><span class="toc-page">36</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 10: Tập dữ liệu thực nghiệm bảng courts</span><span class="toc-dots"></span><span class="toc-page">37</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 11: Tập dữ liệu thực nghiệm bảng bookings</span><span class="toc-dots"></span><span class="toc-page">37</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 12: Tập dữ liệu thực nghiệm bảng services</span><span class="toc-dots"></span><span class="toc-page">37</span></div>
+</div>
+
+<div class="page-break"></div>
+<h1>LỜI MỞ ĐẦU</h1>
+<p>Trong bối cảnh đô thị hóa và chuyển đổi số đang diễn ra mạnh mẽ, việc tự động hóa các tiện ích công cộng và phong trào thể dục thể thao đã trở thành xu thế tất yếu của đời sống hiện đại. Bộ môn cầu lông hiện thu hút đông đảo người chơi ở mọi lứa tuổi nhờ tính linh hoạt, lợi ích sức khỏe và tính gắn kết cộng đồng. Tuy nhiên, quy trình quản lý và vận hành sân cầu lông truyền thống hiện nay tại nhiều đô thị lớn như Đà Nẵng vẫn phụ thuộc nặng nề vào các thao tác thủ công qua tin nhắn, cuộc gọi hoặc sổ sách ghi chép. Thực trạng này dẫn đến nhiều bất cập nhức nhối như tình trạng trùng lịch đặt (double-booking), tốn thời gian đối soát chuyển khoản ngân hàng và thiếu kênh quảng bá, tìm kiếm sân thi đấu trực quan cho người chơi.</p>
+<p>Xuất phát từ thực tiễn trên, đề tài <strong>"Ứng dụng Đặt sân Cầu lông Trực tuyến" (AloboSport / QT Sport)</strong> được nghiên cứu và xây dựng nhằm cung cấp giải pháp chuyển đổi số toàn diện cho hệ sinh thái thể thao. Ứng dụng di động giúp người chơi dễ dàng tìm kiếm cụm sân theo bán kính vị trí trên bản đồ, theo dõi trực quan bảng Timeline tình trạng trống/bận của từng sân theo thời gian thực, tiến hành đặt lịch và thanh toán quét mã VietQR chuẩn xác trong vòng chưa đầy 30 giây. Đồng thời, hệ thống cung cấp phân hệ quản trị dành cho chủ sân để kiểm soát trạng thái ca chơi, phê duyệt đơn, điều phối sân và thống kê dòng tiền minh bạch.</p>
+<p>Báo cáo môn học Công nghệ phần mềm này được hoàn thiện nhằm hệ thống hóa cơ sở lý thuyết và tổng kết toàn bộ kết quả thực nghiệm đạt được xuyên suốt đồ án. Nội dung báo cáo được phân chia thành 2 chương chính:
+<ul>
+  <li><strong>Chương 1: Tổng quan cơ sở lý thuyết:</strong> Giới thiệu tổng quan về Framework cài đặt (React Native/Expo, Node.js/Express), các Công cụ (Tools) hỗ trợ quy trình công nghệ phần mềm và Ngôn ngữ lập trình áp dụng trong dự án.</li>
+  <li><strong>Chương 2: Thực nghiệm:</strong> Trình bày chi tiết các sản phẩm kỹ thuật trọng tâm gồm 4 Sơ đồ tuần tự (Sequence Diagram), Sơ đồ PERT và phương pháp tìm đường găng (Critical Path), Demo quy trình thiết kế 3/5 bước từ Wireframe đến sản phẩm thực tế, cùng Thiết kế cơ sở dữ liệu quan hệ (ERD, Data Dictionary và tập dữ liệu thực nghiệm).</li>
+</ul>
+</p>
+<p>Em xin chân thành cảm ơn cô <strong>ThS. Phạm Thị Dung</strong> đã tận tình hướng dẫn, truyền đạt kiến thức chuyên môn sâu rộng và định hướng phương pháp luận khoa học xuyên suốt quá trình thực hiện đồ án môn học này.</p>
+
+<div class="page-break"></div>
+
+<!-- CHƯƠNG 1 -->
+<h1>CHƯƠNG 1: TỔNG QUAN CƠ SỞ LÝ THUYẾT</h1>
+<p>Chương này tập trung trình bày tổng quan về nền tảng lý thuyết và công nghệ kỹ thuật được lựa chọn để triển khai dự án <strong>Ứng dụng Đặt sân Cầu lông Trực tuyến (AloboSport / QT Sport)</strong>. Các nội dung bao gồm việc phân tích kiến trúc Framework đa nền tảng, hệ thống công cụ hỗ trợ quy trình phát triển phần mềm chuẩn mực, cùng ngôn ngữ lập trình và cấu trúc cây thư mục mã nguồn dự án.</p>
+
+<h2>1.1. Framework cài đặt</h2>
+
+<h3>1.1.1. Tổng quan về React Native & Expo</h3>
+<h4>1.1.1.1. Khái niệm và kiến trúc cốt lõi của React Native</h4>
+<p>React Native là một framework phát triển ứng dụng di động mã nguồn mở được Facebook giới thiệu vào năm 2015. Khác với các giải pháp ứng dụng lai (Hybrid App) chạy trên WebView vốn gặp nhiều hạn chế về hiệu năng đồ họa, React Native sử dụng kiến trúc cầu nối (Bridge) và kiến trúc mới (New Architecture - Fabric Renderer & TurboModules) cho phép render trực tiếp các thành phần giao diện gốc (Native UI Components) của cả Android và iOS từ một cơ sở mã nguồn JavaScript duy nhất.</p>
+<p>Kiến trúc React Native trong dự án được tối ưu hóa thông qua Expo SDK 52 kết hợp trình thông dịch Hermes Engine. Hermes được thiết kế đặc thù cho môi trường di động với cơ chế biên dịch trước mã bytecode (AOT Compilation), giúp giảm thiểu thời gian khởi động ứng dụng (Time-to-Interactive), tối ưu hóa dung lượng gói cài đặt APK và giải phóng đáng kể bộ nhớ RAM của thiết bị di động.</p>
+
+<h4>1.1.1.2. Các tính năng nổi bật của React Native & Expo áp dụng trong đề tài</h4>
+<p>Trong quá trình phát triển ứng dụng đặt sân cầu lông trực tuyến, React Native và Expo mang lại các giải pháp công nghệ then chốt:
+<ul>
+  <li><strong>Điều hướng màn hình mượt mà (React Navigation Stack & Bottom Tabs):</strong> Hệ thống tổ chức phân cấp các màn hình chức năng linh hoạt, hỗ trợ hiệu ứng chuyển cảnh tự nhiên theo tiêu chuẩn Material Design trên Android và Cupertino trên iOS.</li>
+  <li><strong>Quản lý trạng thái phiên làm việc toàn cục (React Context API):</strong> Trạng thái đăng nhập của người dùng, giỏ hàng đặt sân, thông tin phân quyền và cơ chế đếm ngược giữ chỗ được đồng bộ nhất quán giữa các màn hình mà không cần truyền props phức tạp.</li>
+  <li><strong>Hỗ trợ định vị bản đồ và quét mã (Expo Location & Vector Icons):</strong> Tích hợp mượt mà cảm biến GPS để tính toán khoảng cách từ người dùng tới 8 cụm sân cầu lông tại Đà Nẵng.</li>
+</ul>
+</p>
+
+<div class="table-caption">Bảng cấu hình mã nguồn: Cấu hình điều hướng và màn hình đặt sân với React Native & Context API</div>
+<table class="code-table">
+<tr>
+<td>// frontend/src/screens/booking/BookingGridStep.js - Xử lý chọn slot thời gian thực
+import React, { useContext, useState } from 'react';
+import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { AppContext } from '../../context/AppContext';
+
+export const BookingGridStep = ({ navigation, route }) => {
+  const { user, currentClub } = useContext(AppContext);
+  const [selectedSlots, setSelectedSlots] = useState([]);
+  
+  // Tính tổng tiền tự động dựa trên thời lượng đặt và đơn giá sân
+  const calculateTotal = () => {
+    return selectedSlots.length * (currentClub.pricePerHour || 80000);
+  };
+
+  const handleProceedPayment = () => {
+    if (selectedSlots.length === 0) {
+      Alert.alert('Thông báo', 'Vui lòng chọn ít nhất một khung giờ thi đấu!');
+      return;
+    }
+    navigation.navigate('BookingPaymentStep', {
+      slots: selectedSlots,
+      total: calculateTotal()
+    });
+  };
+
+  return (
+    &lt;View style={{ flex: 1, backgroundColor: '#0F172A', padding: 16 }}&gt;
+      &lt;Text style={{ color: '#F8FAFC', fontSize: 18, fontWeight: 'bold' }}&gt;
+        CHỌN KHUNG GIỜ THI ĐẤU - {currentClub.name}
+      &lt;/Text&gt;
+      {/* Ma trận hiển thị slot sân trống/bận từ 05:00 đến 23:00 */}
+    &lt;/View&gt;
+  );
+};</td>
+</tr>
+</table>
+
+<h4>1.1.1.3. Đánh giá ưu điểm và nhược điểm của React Native trong dự án</h4>
+<p><strong>Ưu điểm:</strong> Tốc độ phát triển cực nhanh nhờ cơ chế Fast Refresh cho phép lập trình viên quan sát tức thì mọi thay đổi giao diện mà không cần biên dịch lại từ đầu; tiết kiệm hơn 50% chi phí và nhân lực khi duy trì một mã nguồn duy nhất cho cả hai nền tảng; hệ sinh thái thư viện khổng lồ được bảo chứng bởi cộng đồng toàn cầu.</p>
+<p><strong>Nhược điểm:</strong> Đối với một số tác vụ xử lý đồ họa phức tạp hoặc đồng bộ dữ liệu nền ngầm, hiệu năng có thể chịu ảnh hưởng nhỏ so với mã nguồn thuần Native (Kotlin/Swift). Tuy nhiên, với bài toán đặt sân và thương mại điện tử dịch vụ, React Native hoàn toàn đáp ứng xuất sắc mọi chỉ số phản hồi dưới 200ms.</p>
+
+<h3>1.1.2. Framework Backend Node.js & Express RESTful API</h3>
+<p>Hệ thống máy chủ dịch vụ của đề tài được xây dựng trên nền tảng <strong>Node.js</strong> và framework <strong>Express.js</strong>. Node.js hoạt động dựa trên mô hình hướng sự kiện không chặn (Event-Driven Non-blocking I/O) cùng động cơ V8 JavaScript hiệu năng cao. Kiến trúc này cho phép máy chủ xử lý mượt mà hàng trăm yêu cầu đặt sân, truy vấn lịch trống và cập nhật hóa đơn thanh toán đồng thời mà không bị nghẽn luồng (thread blocking).</p>
+<p>Express.js cung cấp kiến trúc Middleware linh hoạt để chuẩn hóa quy trình tiếp nhận và phản hồi dữ liệu:
+<ul>
+  <li><strong>Middleware CORS:</strong> Kiểm soát chặt chẽ quyền truy cập API từ các ứng dụng khách di động.</li>
+  <li><strong>Middleware Body-Parser:</strong> Phân tích cú pháp các gói tin JSON gửi lên máy chủ với độ trễ cực thấp.</li>
+  <li><strong>Middleware Xác thực JWT (JSON Web Token):</strong> Mã hóa và giải mã phiên làm việc của người dùng, bảo vệ các endpoint nhạy cảm như tạo đơn đặt, hủy lịch và quản lý doanh thu.</li>
+</ul>
+</p>
+
+<h2>1.2. Các Công cụ (Tools) hỗ trợ</h2>
+<p>Để đảm bảo quy trình công nghệ phần mềm được thực hiện một cách chuyên nghiệp, đúng tiến độ và đạt chuẩn chất lượng kỹ thuật của đồ án, nhóm nghiên cứu đã vận dụng đồng bộ 6 công cụ chuyên dụng:</p>
+
+<h3>1.2.1. Antigravity IDE - Môi trường phát triển tích hợp (IDE)</h3>
+<p>Trong đề tài này, <strong>Antigravity IDE</strong> kết hợp Visual Studio Code được lựa chọn làm môi trường lập trình và phát triển chính cho toàn bộ các phân hệ của dự án. Với các tính năng phân tích cú pháp mã nguồn theo thời gian thực, quản lý các tiến trình nền độc lập (Terminal Tasks), hỗ trợ gỡ lỗi đa luồng và khả năng quản lý không gian làm việc trực quan, công cụ giúp sinh viên kiểm soát toàn diện mã nguồn từ phía Backend đến ứng dụng Frontend.</p>
+
+<h3>1.2.2. Draw.io (diagrams.net) - Công cụ thiết kế mô hình hóa phần mềm</h3>
+<p>Draw.io là công cụ mô hình hóa trực quan được sử dụng để xây dựng toàn bộ hệ thống sơ đồ kiến trúc, sơ đồ luồng dữ liệu (Data Flow Diagram - DFD) và sơ đồ tuần tự (Sequence Diagram) theo chuẩn UML 2.5 của đồ án. Draw.io cung cấp bộ thư viện ký hiệu chuẩn mực, cho phép phân tách rõ ràng ranh giới giữa tác nhân (Actor), giao diện (Boundary), bộ điều khiển (Controller) và thực thể cơ sở dữ liệu (Entity).</p>
+
+<h3>1.2.3. MySQL Workbench & XAMPP - Quản trị CSDL quan hệ</h3>
+<p>Hệ quản trị cơ sở dữ liệu MySQL được vận hành và thiết kế thông qua hai công cụ bổ trợ đắc lực. <strong>XAMPP</strong> đóng vai trò là môi trường máy chủ lưu trữ cục bộ, khởi tạo dịch vụ MySQL Daemon ổn định. Trong khi đó, <strong>MySQL Workbench</strong> được sử dụng để thiết kế mô hình vật lý cơ sở dữ liệu (Physical Data Model), tự động hóa kỹ thuật tạo sơ đồ quan hệ thực thể (Reverse Engineering sang ERD) và thực thi các câu lệnh DDL/DML kiểm tra ràng buộc toàn vẹn khóa ngoại.</p>
+
+<h3>1.2.4. Postman - Nền tảng kiểm thử và thiết kế API</h3>
+<p>Postman được sử dụng làm môi trường kiểm thử độc lập cho toàn bộ các điểm cuối API của hệ thống trước khi tích hợp vào giao diện di động. Các bộ kiểm thử tự động (Test Scripts) được thiết lập để đánh giá tính đúng đắn của các mã trạng thái phản hồi HTTP (200 OK, 201 Created, 400 Bad Request, 401 Unauthorized, 409 Conflict), đảm bảo API vận hành ổn định ngay cả trong các trường hợp dữ liệu đầu vào không hợp lệ hoặc cố tình đặt trùng giờ.</p>
+
+<h3>1.2.5. Git & GitHub - Quản lý phiên bản mã nguồn phân tán</h3>
+<p>Hệ thống quản lý phiên bản Git kết hợp dịch vụ lưu trữ đám mây GitHub đóng vai trò là xương sống quản trị mã nguồn. Toàn bộ lịch sử cam kết (commits), các nhánh phát triển tính năng (feature branches: <code>main</code>, <code>backend-api</code>, <code>frontend-ui</code>) và các yêu cầu tích hợp đều được ghi vết minh bạch, ngăn ngừa xung đột mã nguồn và hỗ trợ phục hồi phiên bản nhanh chóng khi phát sinh lỗi kỹ thuật.</p>
+
+<h3>1.2.6. Trello - Quản lý tiến độ dự án theo phương pháp Agile/Kanban</h3>
+<p>Công cụ Trello được áp dụng để trực quan hóa tiến độ công việc theo bảng Kanban. Toàn bộ danh mục đầu việc phân rã từ sơ đồ mạng PERT/CPM được chuyển hóa thành các thẻ công việc (Cards) gắn nhãn phụ thuộc, phân loại trực quan theo 4 cột trạng thái: <em>To Do, In Progress, Code Review, Done</em>, giúp quản trị thời gian chặt chẽ và không bị trễ hạn các mốc giao nộp.</p>
+
+<h2>1.3. Ngôn ngữ lập trình & Cấu trúc dự án</h2>
+
+<h3>1.3.1. Ngôn ngữ lập trình JavaScript & SQL</h3>
+<p><strong>JavaScript (ES6+)</strong> là ngôn ngữ lập trình chủ đạo được ứng dụng đồng nhất trên toàn bộ hệ thống từ client đến server (Full-stack JavaScript). Với các cú pháp hiện đại như Async/Await, Promise, Arrow Function, Destructuring Assignment và Object Spread, JavaScript mang lại khả năng xử lý bất đồng bộ mượt mà, giúp mã nguồn cô đọng và dễ bảo trì.</p>
+<p><strong>SQL (Structured Query Language)</strong> được áp dụng để tương tác trực tiếp với cơ sở dữ liệu quan hệ MySQL. Các câu truy vấn được tối ưu hóa thông qua các chỉ mục (Index) đánh trên trường email, số điện thoại, mã sân và thời gian đặt, đảm bảo thời gian thực thi truy vấn tìm kiếm sân trống luôn dưới 10ms.</p>
+
+<h3>1.3.2. Cấu trúc thư mục dự án và môi trường cài đặt</h3>
+<p>Mã nguồn dự án được tổ chức khoa học theo nguyên lý phân tách mối quan tâm (Separation of Concerns), tách biệt hoàn toàn giữa ứng dụng di động Frontend, máy chủ dịch vụ Backend, tài liệu thiết kế và các sơ đồ kỹ thuật:</p>
+
+<div class="table-caption">Cấu trúc tổ chức thư mục mã nguồn dự án (24CT1-Tran_Quoc_Trung)</div>
+<table class="code-table">
+<tr>
+<td>24CT1-Tran_Quoc_Trung/
+├── frontend/               # Phân hệ Di động (React Native / Expo)
+│   ├── src/screens/auth/   # Màn hình Đăng ký, Đăng nhập, Quên mật khẩu
+│   ├── src/screens/booking/# Màn hình Chọn sân, Lịch Timeline, Thanh toán
+│   ├── src/screens/profile/# Màn hình Hồ sơ & Danh sách sân đã đặt
+│   ├── src/components/     # Component dùng chung (FormInput, Button...)
+│   ├── src/context/        # AppContext lưu trữ trạng thái phiên toàn cục
+│   └── App.js              # Khởi tạo Navigation và cấu hình Theme thể thao
+├── backend/                # Phân hệ Máy chủ (Node.js & Express RESTful API)
+│   ├── src/server.js       # Điểm vào chính ứng dụng, cấu hình Middleware & Port
+│   ├── src/routes/         # Định tuyến API (authRoutes, bookingRoutes, clubRoutes)
+│   ├── src/controllers/    # Tầng điều khiển tiếp nhận và xử lý nghiệp vụ
+│   ├── src/data/alobo_badminton_mysql.sql # Tập lệnh DDL/DML khởi tạo CSDL MySQL
+│   └── src/data/schema.sql # Lược đồ chuẩn hóa 8 bảng CSDL quan hệ
+├── docs/                   # Tài liệu kỹ thuật, báo cáo & đặc tả yêu cầu
+├── HINH ANH/               # Kho lưu trữ hình ảnh giao diện & sơ đồ đồ án
+│   ├── PHÁC THẢO GIAO DIỆN/# Bản vẽ phác thảo Wireframe Lo-Fi
+│   ├── SƠ ĐỒ TUẦN TỰ CHỨC NĂNG/# Bản vẽ Sơ đồ tuần tự chuẩn UML
+│   ├── SƠ ĐỒ LUỒNG/        # Sơ đồ luồng quy trình nghiệp vụ (Flowchart)
+│   └── GIAO DIEN DEMO/     # Ảnh chụp thực tế ứng dụng di động trên thiết bị
+└── README.md               # Hướng dẫn thiết lập môi trường và khởi chạy</td>
+</tr>
+</table>
+
+<div class="page-break"></div>
+
+<!-- CHƯƠNG 2 -->
+<h1>CHƯƠNG 2: THỰC NGHIỆM</h1>
+<p>Chương 2 trình bày toàn diện các kết quả thực nghiệm đạt được từ Bài nhận thức 2 đến Bài nhận thức 5 theo đúng đề cương chuẩn mực của học phần Công nghệ phần mềm. Trọng tâm của chương bao gồm: xây dựng 4 Sơ đồ tuần tự UML chi tiết, giải thuật lập lịch mạng PERT/CPM và tính toán đường găng, thực nghiệm quy trình thiết kế 3/5 bước từ Wireframe đến sản phẩm thực tế, cùng thiết kế cơ sở dữ liệu và các tập dữ liệu thử nghiệm.</p>
+
+<h2>2.1. Sơ đồ tuần tự (Sequence Diagram) & Sơ đồ luồng (Flowchart)</h2>
+<p>Sơ đồ tuần tự (Sequence Diagram) là biểu đồ tương tác thuộc chuẩn UML 2.5, mô hình hóa trình tự thời gian của các thông điệp trao đổi giữa các đối tượng để hoàn thành một ca sử dụng (Use Case) cụ thể. Cấu trúc mỗi sơ đồ gồm 4 thành phần quy chuẩn:
+<ul>
+  <li><strong>Tác nhân (Actor):</strong> Đại diện cho người dùng trực tiếp thao tác (Khách hàng đặt sân hoặc Chủ sân / Nhân viên bốt trực).</li>
+  <li><strong>Lớp giao diện (Boundary):</strong> Đại diện cho màn hình ứng dụng di động React Native tiếp nhận tương tác chạm và hiển thị dữ liệu.</li>
+  <li><strong>Lớp điều khiển (Controller):</strong> Đại diện cho tầng xử lý logic nghiệp vụ máy chủ Node.js/Express.</li>
+  <li><strong>Lớp thực thể (Entity / Database):</strong> Đại diện cho hệ cơ sở dữ liệu quan hệ MySQL lưu trữ bền vững các bảng quan hệ.</li>
+</ul>
+Song song với mô hình tương tác hướng đối tượng, sơ đồ luồng quy trình nghiệp vụ (Flowchart) thể hiện tiến trình điều khiển logic tuần tự từ điểm khởi đầu (Start), qua các khối xử lý và các nút rẽ nhánh điều kiện (Decision Points), đến khi kết thúc (End). Việc đối chiếu song song giữa Sơ đồ tuần tự kỹ thuật và Sơ đồ luồng nghiệp vụ giúp làm sáng tỏ toàn diện cả cấu trúc kiến trúc lẫn trải nghiệm người dùng trong hệ thống.</p>
+
+<div class="page-break"></div>
+
+<h3>2.1.1. Sơ đồ tuần tự và Sơ đồ luồng chức năng Đăng ký</h3>
+<p style="margin-bottom: 4px;"><strong>a. Sơ đồ tuần tự chức năng Đăng ký tài khoản:</strong></p>
+<p style="margin-bottom: 4px;"><strong>Tác nhân tham gia:</strong> Khách hàng (Customer), Màn hình <code>RegisterScreen</code>, <code>AuthController</code> và Bảng <code>users</code>.</p>
+<p style="margin-bottom: 6px;"><strong>Mô tả luồng xử lý tuần tự:</strong> Khách hàng nhập thông tin gồm Họ tên, Số điện thoại, Email và Mật khẩu. Giao diện thực hiện kiểm tra tính hợp lệ cơ bản tại máy khách (Client-side validation) rồi gửi yêu cầu HTTP POST <code>/api/auth/register</code> đến máy chủ. Controller kiểm tra sự tồn tại của số điện thoại và email trong CSDL MySQL. Nếu dữ liệu hợp lệ và chưa từng được đăng ký, máy chủ tiến hành băm mật khẩu bảo mật (Bcrypt), khởi tạo bản ghi mới với vai trò <code>customer</code>, lưu xuống MySQL và trả về thông báo tạo tài khoản thành công kèm điều hướng về màn hình Đăng nhập.</p>
+
+<div class="figure-box" style="margin: 6px 0;">
+  <img src="__SEQ_DANGKY__" alt="Sơ đồ tuần tự chức năng Đăng ký" style="max-height: 200px; width: auto; max-width: 100%;">
+  <div class="figure-caption" style="margin-top: 4px;">Hình 1: Sơ đồ tuần tự (Sequence Diagram) chức năng Đăng ký tài khoản người dùng</div>
+</div>
+
+<p style="margin-top: 10px; margin-bottom: 4px;"><strong>b. Sơ đồ luồng nghiệp vụ chức năng Đăng ký tài khoản:</strong></p>
+<p style="margin-bottom: 6px;"><strong>Mô tả luồng nghiệp vụ:</strong> Người dùng mở ứng dụng và chuyển sang màn hình Đăng ký tài khoản &rarr; Người dùng điền Họ tên, Số điện thoại (bắt buộc), Địa chỉ Email (kiểm tra định dạng hợp lệ) và Mật khẩu (tối thiểu 6 ký tự) &rarr; Khi nhấn "Đăng ký", hệ thống kiểm tra tính hợp lệ dữ liệu: nếu lỗi thì yêu cầu nhập lại &rarr; Kiểm tra trùng lặp tài khoản trên CSDL: nếu đã tồn tại thì báo lỗi 409 Conflict &rarr; Nếu hợp lệ thì lưu người dùng mới vào MySQL và tự động chuyển về trang Đăng nhập.</p>
+
+<div class="figure-box" style="margin: 6px 0;">
+  <img src="__LUONG_DANGKY__" alt="Sơ đồ luồng chức năng Đăng ký" style="max-height: 125px; width: auto; max-width: 100%;">
+  <div class="figure-caption" style="margin-top: 4px;">Hình 2: Sơ đồ luồng (Flowchart) chức năng Đăng ký tài khoản</div>
+</div>
+
+<div class="page-break"></div>
+
+<h3>2.1.2. Sơ đồ tuần tự và Sơ đồ luồng chức năng Đăng nhập</h3>
+<p style="margin-bottom: 4px;"><strong>a. Sơ đồ tuần tự chức năng Đăng nhập hệ thống:</strong></p>
+<p style="margin-bottom: 4px;"><strong>Tác nhân tham gia:</strong> Người dùng (User), Màn hình đăng nhập (<code>LoginScreen</code>), <code>AuthController</code> và Bảng <code>users</code>.</p>
+<p style="margin-bottom: 6px;"><strong>Mô tả luồng xử lý tuần tự:</strong> Người dùng nhập Số điện thoại hoặc Email cùng Mật khẩu. Giao diện gửi yêu cầu HTTP POST <code>/api/auth/login</code> đến máy chủ. Controller truy vấn CSDL để tìm kiếm người dùng theo định danh tài khoản. Nếu tìm thấy và mật khẩu khớp với chuỗi băm lưu trữ, hệ thống khởi tạo chuỗi mã thông báo JSON Web Token (JWT) có hiệu lực 7 ngày chứa thông tin định danh và phân quyền vai trò (Role: <code>admin</code>, <code>staff</code> hoặc <code>customer</code>). Phía ứng dụng di động lưu JWT vào bộ nhớ bảo mật và Context API, tự động điều hướng người dùng đến giao diện tương ứng theo quyền hạn.</p>
+
+<div class="figure-box" style="margin: 6px 0;">
+  <img src="__SEQ_DANGNHAP__" alt="Sơ đồ tuần tự chức năng Đăng nhập" style="max-height: 200px; width: auto; max-width: 100%;">
+  <div class="figure-caption" style="margin-top: 4px;">Hình 3: Sơ đồ tuần tự (Sequence Diagram) chức năng Đăng nhập hệ thống đa vai trò</div>
+</div>
+
+<p style="margin-top: 10px; margin-bottom: 4px;"><strong>b. Sơ đồ luồng nghiệp vụ chức năng Đăng nhập hệ thống:</strong></p>
+<p style="margin-bottom: 6px;"><strong>Mô tả luồng nghiệp vụ:</strong> Người dùng mở ứng dụng và tại màn hình đăng nhập thực hiện điền Số điện thoại/Email và Mật khẩu &rarr; Sau khi bấm "Đăng nhập", hệ thống gửi yêu cầu xác thực &rarr; Nếu thông tin không chính xác hoặc tài khoản không tồn tại, trả về lỗi 401 và hiển thị cảnh báo để nhập lại; trường hợp tài khoản bị khóa (locked), hệ thống trả về mã 403 &rarr; Khi thông tin hợp lệ, hệ thống cấp JWT token, lưu phiên làm việc vào Context API, phân quyền vai trò và chuyển hướng tới Dashboard tương ứng.</p>
+
+<div class="figure-box" style="margin: 6px 0;">
+  <img src="__LUONG_DANGNHAP__" alt="Sơ đồ luồng chức năng Đăng nhập" style="max-height: 125px; width: auto; max-width: 100%;">
+  <div class="figure-caption" style="margin-top: 4px;">Hình 4: Sơ đồ luồng (Flowchart) chức năng Đăng nhập hệ thống</div>
+</div>
+
+<div class="page-break"></div>
+
+<h3>2.1.3. Sơ đồ tuần tự và Sơ đồ luồng chức năng Tự chọn 1: Đặt sân & Thanh toán VietQR</h3>
+<p style="margin-bottom: 4px;"><strong>a. Sơ đồ tuần tự chức năng Đặt sân & Thanh toán VietQR:</strong></p>
+<p style="margin-bottom: 4px;"><strong>Tác nhân tham gia:</strong> Khách hàng (Customer), Màn hình đặt sân (<code>BookingGridStep</code>), Màn hình thanh toán (<code>BookingPaymentStep</code>), Bộ điều khiển đặt sân (<code>BookingController</code>), CSDL MySQL (<code>Bookings & Courts Table</code>) và Cổng thanh toán VietQR.</p>
+<p style="margin-bottom: 6px;"><strong>Mô tả luồng xử lý tuần tự:</strong> Khách hàng chọn cơ sở sân, ngày thi đấu và các slot ca chơi trên Timeline Grid. Hệ thống kiểm tra tức thì trạng thái khả dụng của sân để tránh xung đột lịch. Sau khi xác nhận, người dùng được chuyển đến màn hình thanh toán. Controller tự động sinh chuỗi mã VietQR chuẩn Napas247 nhúng sẵn số tài khoản thụ hưởng, số tiền chính xác và mã đơn hàng (<code>ALOBOSPORT_ID</code>). Khách hàng thực hiện quét mã trên ứng dụng ngân hàng. Sau khi tiếp nhận thông báo nộp tiền thành công, trạng thái đơn đặt được cập nhật thành <code>confirmed</code>, sân thi đấu chuyển sang trạng thái <code>in_use</code> và hệ thống cấp vé điện tử (E-Ticket) với mã QR check-in tại quầy.</p>
+
+<div class="figure-box" style="margin: 4px 0;">
+  <img src="__SEQ_DATSAN__" alt="Sơ đồ tuần tự Đặt sân & Thanh toán" style="max-height: 180px; width: auto; max-width: 100%;">
+  <div class="figure-caption" style="margin-top: 3px;">Hình 5: Sơ đồ tuần tự (Sequence Diagram) chức năng Đặt sân & Thanh toán VietQR Người dùng</div>
+</div>
+
+<p style="margin-top: 6px; margin-bottom: 2px;"><strong>b. Sơ đồ luồng nghiệp vụ chức năng Đặt sân & Thanh toán:</strong></p>
+<p style="margin-bottom: 4px;"><strong>Mô tả luồng nghiệp vụ:</strong> Khách hàng chọn cơ sở sân và xem lịch thi đấu &rarr; Chọn ngày và khung giờ trống &rarr; Bấm "Xác nhận & Đặt sân" &rarr; Hệ thống kiểm tra tình trạng sân (báo lỗi nếu trùng lịch) &rarr; Chuyển sang màn hình thanh toán VietQR &rarr; Khách hàng quét mã hoàn tất chuyển tiền, hệ thống cập nhật lịch đặt sân thành công và cấp vé điện tử mã QR.</p>
+
+<div class="figure-box" style="margin: 4px 0;">
+  <img src="__LUONG_DATSAN__" alt="Sơ đồ luồng Đặt sân & Thanh toán" style="max-height: 110px; width: auto; max-width: 100%;">
+  <div class="figure-caption" style="margin-top: 3px;">Hình 6: Sơ đồ luồng (Flowchart) chức năng Đặt sân & Thanh toán trực tuyến</div>
+</div>
+
+<div class="page-break"></div>
+
+<h3>2.1.4. Sơ đồ tuần tự chức năng Tự chọn 2: Quản lý & Cập nhật đơn đặt sân Chủ sân</h3>
+<p><strong>Tác nhân tham gia:</strong> Chủ sân / Quản trị viên (Admin/Staff), Bảng điều khiển quản lý ca (<code>HostShiftScreen</code>), Bộ điều khiển điều phối sân (<code>CourtController</code>) và Bảng dữ liệu sân & đơn đặt (<code>Courts & Bookings Table</code>).</p>
+<p><strong>Mô tả luồng xử lý:</strong> Chủ sân đăng nhập với quyền Admin, mở Bảng điều khiển ca trực bốt sân. Màn hình gửi yêu cầu lấy danh sách toàn bộ các sân thi đấu kèm trạng thái vận hành hiện tại (Trống, Đang chơi, Chờ nhận sân, Bảo trì). Chủ sân có thể chủ động chuyển đổi trạng thái của từng sân (ví dụ: xác nhận khách đã đến check-in, đổi sân đột xuất cho khách hoặc khóa sân để vệ sinh thảm BWF định kỳ). Controller tiếp nhận thông điệp, kiểm tra quyền hạn hợp lệ và thực thi câu lệnh SQL <code>UPDATE</code> trạng thái sân, đồng thời ghi lại vết hành động vào nhật ký kiểm toán hệ thống (<code>activity_logs</code>).</p>
+
+<div class="figure-box" style="margin: 10px 0;">
+  <img src="__SEQ_CHUSAN__" alt="Sơ đồ tuần tự Quản lý & Cập nhật đơn đặt sân" style="max-height: 300px; width: auto; max-width: 100%;">
+  <div class="figure-caption">Hình 7: Sơ đồ tuần tự (Sequence Diagram) chức năng Quản lý & Cập nhật trạng thái đơn đặt sân Chủ sân</div>
+</div>
+
+<div class="page-break"></div>
+
+<h2>2.2. Sơ đồ Pert (PERT Chart) & Đường găng (Critical Path)</h2>
+
+<h3>2.2.1. Phương pháp luận mạng PERT và giải thuật CPM</h3>
+<p>Kỹ thuật thẩm định và đánh giá dự án (Program Evaluation and Review Technique - PERT) kết hợp phương pháp đường găng (Critical Path Method - CPM) là công cụ toán học kinh điển được áp dụng để lập kế hoạch tiến độ, xác định mối liên hệ phụ thuộc công nghệ giữa các đầu việc và tìm ra chuỗi công việc quyết định thời lượng tối thiểu hoàn thành đồ án.</p>
+<p>Các tham số thời gian chuẩn của mạng PERT được tính toán thông qua hai lượt quét đồ thị:
+<ul>
+  <li><strong>Thời điểm bắt đầu sớm (Early Start - ES) và Hoàn thành sớm (Early Finish - EF):</strong> Được tính toán thông qua lượt quét tiến (Forward Pass) từ nút khởi đầu đến nút kết thúc:
+    <div class="formula">ES(j) = max { EF(i) } = max { ES(i) + T(i) }, &emsp; EF(i) = ES(i) + T(i)</div>
+  </li>
+  <li><strong>Thời điểm bắt đầu muộn (Late Start - LS) và Hoàn thành muộn (Late Finish - LF):</strong> Được tính toán thông qua lượt quét lùi (Backward Pass) từ nút kết thúc về nút khởi đầu:
+    <div class="formula">LF(i) = min { LS(j) } = min { LF(j) - T(j) }, &emsp; LS(i) = LF(i) - T(i)</div>
+  </li>
+  <li><strong>Độ dự trữ thời gian an toàn (Slack / Total Float):</strong> Khoảng thời gian một công việc có thể trì hoãn mà không ảnh hưởng tới tiến độ chung:
+    <div class="formula">Slack = LS - ES = LF - EF = Tm(j) - Ts(i) - T(i, j)</div>
+    Những công việc có <strong>Slack = 0</strong> được định nghĩa là các <strong>Công việc găng (Critical Activities)</strong>. Tập hợp các công việc găng nối tiếp nhau từ điểm bắt đầu đến điểm kết thúc tạo thành <strong>Đường găng (Critical Path)</strong> của toàn bộ dự án.
+  </li>
+</ul>
+</p>
+
+<h3>2.2.2. Bảng phân rã công việc (WBS) và tính toán tham số thời gian</h3>
+<p>Toàn bộ phạm vi phát triển đồ án được phân rã thành 10 gói công việc chính (WBS). Dựa trên phân tích phụ thuộc công nghệ, các tham số thời gian ES, EF, LS, LF và Slack được tính toán chi tiết tại Bảng 1:</p>
+
+<div class="table-caption">Bảng 1: Bảng phân rã công việc (WBS) và tính toán tham số thời gian PERT / CPM</div>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 5%;">Mã</th>
+      <th style="width: 33%;">Tên công việc dự án</th>
+      <th style="width: 9%;">Tiên quyết</th>
+      <th style="width: 9%;">Thời gian (Ngày)</th>
+      <th style="width: 7%;">ES</th>
+      <th style="width: 7%;">EF</th>
+      <th style="width: 7%;">LS</th>
+      <th style="width: 7%;">LF</th>
+      <th style="width: 7%;">Slack</th>
+      <th style="width: 9%;">Găng</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center; font-weight: bold;">A</td>
+      <td>Khảo sát thực tế các cụm sân và thu thập yêu cầu người dùng</td>
+      <td style="text-align: center;">-</td>
+      <td style="text-align: center;">9</td>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center;">9</td>
+      <td style="text-align: center;">2</td>
+      <td style="text-align: center;">11</td>
+      <td style="text-align: center;">2</td>
+      <td style="text-align: center;">Không</td>
+    </tr>
+    <tr>
+      <td style="text-align: center; font-weight: bold;">B</td>
+      <td>Lập bảng đặc tả yêu cầu chức năng (FR) và phi chức năng (NFR)</td>
+      <td style="text-align: center;">A</td>
+      <td style="text-align: center;">8</td>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center;">8</td>
+      <td style="text-align: center;">7</td>
+      <td style="text-align: center;">15</td>
+      <td style="text-align: center;">7</td>
+      <td style="text-align: center;">Không</td>
+    </tr>
+    <tr style="background-color: #FEF2F2; font-weight: bold;">
+      <td style="text-align: center; color: #DC2626;">C</td>
+      <td style="color: #DC2626;">Thiết kế kiến trúc tổng thể và lược đồ CSDL quan hệ (ERD)</td>
+      <td style="text-align: center;">-</td>
+      <td style="text-align: center;">10</td>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center;">10</td>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center;">10</td>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center; color: #DC2626;">CÓ (Găng)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center; font-weight: bold;">D</td>
+      <td>Phác thảo Wireframe và xây dựng Prototype tương tác Figma</td>
+      <td style="text-align: center;">A</td>
+      <td style="text-align: center;">11</td>
+      <td style="text-align: center;">9</td>
+      <td style="text-align: center;">20</td>
+      <td style="text-align: center;">11</td>
+      <td style="text-align: center;">22</td>
+      <td style="text-align: center;">2</td>
+      <td style="text-align: center;">Không</td>
+    </tr>
+    <tr>
+      <td style="text-align: center; font-weight: bold;">E</td>
+      <td>Cài đặt khung dự án Frontend (Expo/React Native) & Theme Token</td>
+      <td style="text-align: center;">B, C'</td>
+      <td style="text-align: center;">7</td>
+      <td style="text-align: center;">10</td>
+      <td style="text-align: center;">17</td>
+      <td style="text-align: center;">15</td>
+      <td style="text-align: center;">22</td>
+      <td style="text-align: center;">5</td>
+      <td style="text-align: center;">Không</td>
+    </tr>
+    <tr style="background-color: #FEF2F2; font-weight: bold;">
+      <td style="text-align: center; color: #DC2626;">F</td>
+      <td style="color: #DC2626;">Xây dựng CSDL MySQL và lập trình DDL/DML script</td>
+      <td style="text-align: center;">C</td>
+      <td style="text-align: center;">6</td>
+      <td style="text-align: center;">10</td>
+      <td style="text-align: center;">16</td>
+      <td style="text-align: center;">10</td>
+      <td style="text-align: center;">16</td>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center; color: #DC2626;">CÓ (Găng)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center; font-weight: bold;">I</td>
+      <td>Lập trình các màn hình chức năng giao diện người dùng</td>
+      <td style="text-align: center;">E, D', A'</td>
+      <td style="text-align: center;">4</td>
+      <td style="text-align: center;">20</td>
+      <td style="text-align: center;">24</td>
+      <td style="text-align: center;">22</td>
+      <td style="text-align: center;">26</td>
+      <td style="text-align: center;">2</td>
+      <td style="text-align: center;">Không</td>
+    </tr>
+    <tr>
+      <td style="text-align: center; font-weight: bold;">H</td>
+      <td>Kiểm thử tích hợp hệ thống và kiểm thử an toàn bảo mật</td>
+      <td style="text-align: center;">I, D'', F'</td>
+      <td style="text-align: center;">5</td>
+      <td style="text-align: center;">24</td>
+      <td style="text-align: center;">29</td>
+      <td style="text-align: center;">26</td>
+      <td style="text-align: center;">31</td>
+      <td style="text-align: center;">2</td>
+      <td style="text-align: center;">Không</td>
+    </tr>
+    <tr style="background-color: #FEF2F2; font-weight: bold;">
+      <td style="text-align: center; color: #DC2626;">J</td>
+      <td style="color: #DC2626;">Xây dựng REST API Backend (Node.js/Express) kết nối CSDL</td>
+      <td style="text-align: center;">F</td>
+      <td style="text-align: center;">8</td>
+      <td style="text-align: center;">16</td>
+      <td style="text-align: center;">24</td>
+      <td style="text-align: center;">16</td>
+      <td style="text-align: center;">24</td>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center; color: #DC2626;">CÓ (Găng)</td>
+    </tr>
+    <tr style="background-color: #FEF2F2; font-weight: bold;">
+      <td style="text-align: center; color: #DC2626;">G</td>
+      <td style="color: #DC2626;">Tích hợp hệ thống, kiểm thử chấp nhận (UAT) & đóng gói</td>
+      <td style="text-align: center;">J</td>
+      <td style="text-align: center;">7</td>
+      <td style="text-align: center;">24</td>
+      <td style="text-align: center;">31</td>
+      <td style="text-align: center;">24</td>
+      <td style="text-align: center;">31</td>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center; color: #DC2626;">CÓ (Găng)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<h3>2.2.3. Sơ đồ mạng PERT học thuật và phân tích đường găng</h3>
+<p>Từ các tham số tính toán ở Bảng 1, sơ đồ mạng PERT/CPM được mô hình hóa trực quan dưới dạng đồ thị có hướng (Hình 5), trong đó các đỉnh tròn biểu thị các sự kiện (mốc hoàn thành) và các cung có hướng biểu thị các công việc:</p>
+<p>Các bước tính toán xác định sự kiện sớm và muộn:
+<ul>
+  <li>Thời gian sớm nhất của sự kiện: $T_s(0)=0; T_s(1)=9; T_s(2)=10; T_s(3)=10; T_s(4)=20; T_s(5)=20; T_s(6)=16; T_s(7)=24; T_s(8)=24; T_s(9)=31$ ngày.</li>
+  <li>Thời gian muộn nhất của sự kiện: $T_m(9)=31; T_m(8)=24; T_m(7)=26; T_m(6)=16; T_m(5)=22; T_m(4)=22; T_m(3)=10; T_m(2)=15; T_m(1)=11; T_m(0)=0$.</li>
+  <li>Các sự kiện có độ dự trữ $R(i) = T_m(i) - T_s(i) = 0$ là: <strong>0 &rarr; 3 &rarr; 6 &rarr; 8 &rarr; 9</strong>.</li>
+</ul>
+</p>
+<p>&rArr; <strong>Đường găng của dự án (Critical Path):</strong> <strong>C &rarr; F &rarr; J &rarr; G</strong></p>
+<div class="formula">
+  Tổng thời lượng thực hiện dự án = T(C) + T(F) + T(J) + T(G) = 10 + 6 + 8 + 7 = 31 ngày.
+</div>
+
+<div class="figure-box">
+  <img src="__PERT_CHART__" alt="Sơ đồ mạng PERT học thuật">
+  <div class="figure-caption">Hình 8: Sơ đồ mạng PERT học thuật và xác định Đường găng (Critical Path)</div>
+</div>
+
+<h3>2.2.4. Ý nghĩa quản trị tiến độ và kiểm soát rủi ro dự án</h3>
+<p>Việc áp dụng sơ đồ mạng PERT/CPM mang lại giá trị thực tiễn rất lớn trong việc điều phối nguồn lực phát triển phần mềm. Nhóm sinh viên nhận diện rõ ràng rằng chuỗi công việc Thiết kế CSDL (C) &rarr; Lập trình CSDL MySQL (F) &rarr; Xây dựng REST API Backend (J) &rarr; Tích hợp đóng gói (G) là trục xương sống tuyệt đối không được phép chậm trễ dù chỉ một ngày.</p>
+<p>Ngược lại, các công việc nằm ngoài đường găng như Khảo sát (A), Đặc tả (B) hay Thiết kế Wireframe (D) đều có độ dự trữ thời gian an toàn (Slack từ 2 đến 7 ngày). Do đó, nhóm có thể linh hoạt điều chuyển nhân sự để tập trung chi viện cho các công việc găng khi xảy ra các sự cố kỹ thuật ngoài dự kiến.</p>
+
+<div class="page-break"></div>
+
+<h2>2.3. Demo</h2>
+<p>Trong khuôn khổ môn học Công nghệ phần mềm, công tác thiết kế giao diện người dùng (UI/UX) đóng vai trò then chốt trong việc chuyển hóa các đặc tả ca sử dụng thành trải nghiệm tương tác trực quan. Hệ thống áp dụng quy chuẩn thiết kế gồm 3 bước bắt buộc kèm Kết quả thực hiện thực tế trên ứng dụng di động:</p>
+
+<h3>2.3.0. Tổng quan Bảng điều khiển & Khám phá cụm sân (Home & Map View)</h3>
+<p><strong>Ở bước 1 (Xác định mục tiêu và yêu cầu nghiệp vụ):</strong> Màn hình Trang chủ đóng vai trò là cổng giao tiếp đầu tiên, cung cấp bức tranh toàn cảnh về mạng lưới các cụm sân cầu lông, vị trí địa lý, giá thuê theo giờ và các sự kiện ưu đãi mới nhất.</p>
+<p><strong>Ở bước 2 (Phác thảo Wireframe sơ bộ):</strong> Nhóm tiến hành phác thảo cấu trúc khung xương (Wireframe Lo-Fi) định vị thanh tìm kiếm ở đỉnh trang, banner quảng bá trung tâm, danh sách card cụm sân và thanh điều hướng đáy (Bottom Navigation Tab).</p>
+
+<div class="figure-box">
+  <img src="__WF_HOME__" class="wireframe-screen" alt="Wireframe Trang chủ">
+  <div class="figure-caption">Hình 9: Phác thảo Wireframe sơ bộ Bảng điều khiển tổng quan Trang chủ</div>
+</div>
+
+<p><strong>Ở bước 3 (Thiết kế chi tiết và quy chuẩn tương tác):</strong> Giao diện áp dụng gam màu xanh thể thao chủ đạo (Emerald Green <code>#059669</code>) trên nền tối sang trọng (Dark Slate <code>#0F172A</code>). Bản đồ Map View tích hợp OpenStreetMap định vị trực quan vị trí 8 cụm sân cầu lông tại Đà Nẵng.</p>
+<p><strong>Về kết quả thực hiện thực tế trên hệ thống:</strong> Ứng dụng di động hiển thị mượt mà bản đồ vệ tinh với các marker đánh dấu vị trí sân, bán kính di chuyển và card tóm tắt giá sân khi người chơi chạm vào từng điểm ghim.</p>
+
+<div class="figure-box">
+  <img src="__DEMO_MAP__" class="phone-screen" alt="Giao diện Bản đồ định vị">
+  <div class="figure-caption">Hình 10: Kết quả thực hiện thực tế Giao diện Bản đồ định vị cụm sân</div>
+</div>
+
+<div class="page-break"></div>
+
+<h3>2.3.1. Giao diện chức năng Đăng ký</h3>
+<p><strong>Ở bước 1 (Xác định mục tiêu và yêu cầu):</strong> Chức năng hướng tới việc cung cấp biểu mẫu trực tuyến cho khách hàng mới gia nhập hệ thống. Yêu cầu nhập liệu tinh gọn gồm Họ tên, Số điện thoại (10 chữ số định danh duy nhất), Email và Mật khẩu từ 6 ký tự trở lên.</p>
+<p><strong>Ở bước 2 (Phác thảo Wireframe sơ bộ):</strong> Giao diện bố trí theo dạng thẻ trung tâm (Card form) với logo nhận diện phía trên, các ô nhập liệu bo góc mềm mại kèm icon định danh và nút bấm hành động lớn ở chân trang.</p>
+
+<div class="figure-box">
+  <img src="__WF_DANGKY__" class="wireframe-screen" alt="Wireframe Đăng ký">
+  <div class="figure-caption">Hình 11: Phác thảo Wireframe sơ bộ giao diện Đăng ký tài khoản</div>
+</div>
+
+<p><strong>Ở bước 3 (Thiết kế chi tiết và quy chuẩn tương tác):</strong> Cài đặt cơ chế kiểm tra hợp lệ tức thời (Real-time Validation) hiển thị cảnh báo viền đỏ khi email sai cú pháp hoặc mật khẩu quá ngắn trước khi gọi API máy chủ.</p>
+<p><strong>Về kết quả thực hiện thực tế trên hệ thống:</strong> Màn hình thực tế hiển thị sắc nét form tạo tài khoản thành viên với mã vùng điện thoại mặc định <code>+84</code>, nút ẩn/hiện mật khẩu và nút "Đăng ký tài khoản" màu xanh thể thao nổi bật.</p>
+
+<div class="figure-box">
+  <img src="__DEMO_DANGKY__" class="phone-screen" alt="Demo Đăng ký">
+  <div class="figure-caption">Hình 12: Kết quả thực hiện thực tế giao diện Đăng ký tài khoản di động</div>
+</div>
+
+<div class="page-break"></div>
+
+<h3>2.3.2. Giao diện chức năng Đăng nhập</h3>
+<p><strong>Ở bước 1 (Xác định mục tiêu và yêu cầu):</strong> Xây dựng cổng xác thực tập trung an toàn cho mọi vai trò (Khách hàng, Nhân viên thu ngân và Chủ sân). Cho phép đăng nhập linh hoạt bằng cả Số điện thoại hoặc Email, hỗ trợ ghi nhớ phiên đăng nhập.</p>
+<p><strong>Ở bước 2 (Phác thảo Wireframe sơ bộ):</strong> Thiết kế bố cục đơn cột cân đối. Phía trên là logo thương hiệu QT Sport, ở giữa là 2 trường nhập tài khoản và mật khẩu, phía dưới là liên kết Quên mật khẩu và nút Đăng nhập lớn.</p>
+
+<div class="figure-box">
+  <img src="__WF_DANGNHAP__" class="wireframe-screen" alt="Wireframe Đăng nhập">
+  <div class="figure-caption">Hình 13: Phác thảo Wireframe sơ bộ giao diện Đăng nhập hệ thống</div>
+</div>
+
+<p><strong>Ở bước 3 (Thiết kế chi tiết và quy chuẩn tương tác):</strong> Màn hình tích hợp khối phím tắt thử nghiệm nhanh dành cho Giảng viên và Hội đồng chấm (nút đăng nhập 1 chạm vai trò Super Admin và Khách VIP).</p>
+<p><strong>Về kết quả thực hiện thực tế trên hệ thống:</strong> Ứng dụng chạy mượt mà trên thiết bị di động, tự động giải mã JWT và chuyển hướng người dùng vào đúng phân hệ chức năng chỉ trong vòng 150ms.</p>
+
+<div class="figure-box">
+  <img src="__DEMO_DANGNHAP__" class="phone-screen" alt="Demo Đăng nhập">
+  <div class="figure-caption">Hình 14: Kết quả thực hiện thực tế giao diện Đăng nhập hệ thống đa vai trò</div>
+</div>
+
+<div class="page-break"></div>
+
+<h3>2.3.3. Giao diện chức năng Tự chọn 1: Chọn sân & Đặt lịch thi đấu kèm Thanh toán VietQR</h3>
+<p><strong>Ở bước 1 (Xác định mục tiêu và yêu cầu):</strong> Giải quyết bài toán then chốt của hệ thống: hiển thị trực quan tình trạng trống/bận của từng sân trong cụm theo thời gian thực từ 05:00 đến 23:00; tự động tính tổng tiền và sinh mã VietQR chuyển khoản ngân hàng chính xác tuyệt đối mà không cần nhập thủ công.</p>
+<p><strong>Ở bước 2 (Phác thảo Wireframe sơ bộ):</strong> Thiết kế gồm 2 màn hình liên tiếp: Màn hình chọn sân (Timeline Grid với các hàng là ca chơi, các cột là Sân 1, Sân 2...) và Màn hình thanh toán (tóm tắt hóa đơn, mã VietQR sắc nét và nút sao chép số tài khoản).</p>
+
+<div class="figure-box">
+  <img src="__WF_DATSAN__" class="wireframe-screen" alt="Wireframe Đặt sân">
+  <div class="figure-caption">Hình 15: Phác thảo Wireframe sơ bộ giao diện Đặt sân và Xác nhận thanh toán</div>
+</div>
+
+<p><strong>Ở bước 3 (Thiết kế chi tiết và quy chuẩn tương tác):</strong> Trạng thái sân được phân định bằng mã màu trực quan: Xanh lá (Sân trống), Cam (Đang chọn) và Đỏ (Đã có người đặt trước). Mã VietQR được sinh động theo chuẩn Napas247 nhúng sẵn mã đơn hàng đối soát tự động.</p>
+<p><strong>Về kết quả thực hiện thực tế trên hệ thống:</strong> Khách hàng thao tác chạm chọn ca thi đấu nhanh chóng, hệ thống khóa slot giữ chỗ tức thời và hiển thị hóa đơn thanh toán kèm mã QR ngân hàng rõ ràng.</p>
+
+<div class="figure-box">
+  <img src="__DEMO_DATSAN__" class="phone-screen" alt="Demo Chọn sân">
+  <div class="figure-caption">Hình 16: Kết quả thực hiện thực tế giao diện Chọn sân & Đặt lịch thi đấu</div>
+</div>
+
+<div class="page-break"></div>
+
+<div class="figure-box">
+  <img src="__DEMO_THANHTOAN__" class="phone-screen" alt="Demo Thanh toán VietQR">
+  <div class="figure-caption">Hình 17: Kết quả thực hiện thực tế giao diện Xác nhận và Thanh toán VietQR</div>
+</div>
+
+<div class="page-break"></div>
+
+<h3>2.3.4. Giao diện chức năng Tự chọn 2: Quản lý và theo dõi lịch đặt sân của khách hàng & chủ sân</h3>
+<p><strong>Ở bước 1 (Xác định mục tiêu và yêu cầu):</strong> Cung cấp trung tâm theo dõi lịch sử và trạng thái các lượt đặt sân. Khách hàng theo dõi được các trận đấu sắp diễn ra, mã vé điện tử QR để check-in tại quầy, còn chủ sân nắm bắt được công suất phục vụ của từng sân trong ngày.</p>
+<p><strong>Ở bước 2 (Phác thảo Wireframe sơ bộ):</strong> Giao diện thiết kế theo dạng danh sách thẻ (Card List), mỗi thẻ hiển thị rõ Tên cụm sân, Số sân, Ngày giờ thi đấu, Chi phí và Huy hiệu trạng thái đơn (Đã xác nhận, Đang chơi, Hoàn thành, Đã hủy).</p>
+
+<div class="figure-box">
+  <img src="__WF_QUANLY__" class="wireframe-screen" alt="Wireframe Quản lý lịch đặt sân">
+  <div class="figure-caption">Hình 18: Phác thảo Wireframe sơ bộ giao diện Quản lý lịch đặt sân</div>
+</div>
+
+<p><strong>Ở bước 3 (Thiết kế chi tiết và quy chuẩn tương tác):</strong> Tích hợp thanh lọc trạng thái (Tabs Filter: Tất cả, Sắp tới, Lịch sử) và nút tiện ích "Hủy đặt sân" hoặc "Chỉ đường đến sân" qua bản đồ Google Maps.</p>
+<p><strong>Về kết quả thực hiện thực tế trên hệ thống:</strong> Giao diện thực tế hiển thị danh sách các ca chơi đã đặt với thông tin chi tiết Sân 3 - Cơ sở Hoa Thiên Lý, thời gian 18:00 - 20:00, huy hiệu xác nhận xanh lá và nút tra cứu mã vé điện tử tiện lợi.</p>
+
+<div class="figure-box">
+  <img src="__DEMO_SANDADAT__" class="phone-screen" alt="Demo Sân đã đặt">
+  <div class="figure-caption">Hình 19: Kết quả thực hiện thực tế giao diện Quản lý lịch đặt sân đã đặt</div>
+</div>
+
+<div class="page-break"></div>
+
+<h2>2.4. Dữ liệu (Database)</h2>
+
+<h3>2.4.1. Giới thiệu tổng quan hệ CSDL quan hệ MySQL</h3>
+<p>Hệ thống sử dụng hệ quản trị cơ sở dữ liệu quan hệ <strong>MySQL 8.0</strong>. Mô hình cơ sở dữ liệu được chuẩn hóa ở dạng chuẩn 3 (Third Normal Form - 3NF) nhằm loại bỏ triệt để hiện tượng trùng lặp dữ liệu, đảm bảo tính nhất quán (Consistency) và toàn vẹn tham chiếu (Referential Integrity) giữa các thực thể cốt lõi trong toàn bộ hệ thống.</p>
+
+<h3>2.4.2. Thiết kế cấu trúc cơ sở dữ liệu (Sơ đồ ERD & Data Dictionary)</h3>
+<p>Lược đồ quan hệ thực thể (ERD) được thiết kế chi tiết trên MySQL Workbench, bao gồm 8 thực thể quan hệ chặt chẽ với nhau (Hình 17):</p>
+
+<div class="figure-box">
+  <img src="__ERD__" alt="Sơ đồ ERD hoàn chỉnh">
+  <div class="figure-caption">Hình 20: Sơ đồ cấu trúc Cơ sở dữ liệu quan hệ (ERD) toàn hệ thống đặt sân</div>
+</div>
+
+<p>Từ điển dữ liệu (Data Dictionary) chi tiết của 6 bảng nòng cốt trong hệ thống được định nghĩa quy chuẩn như sau:</p>
+
+<div class="table-caption">Bảng 2: Từ điển dữ liệu bảng users (Tài khoản người dùng)</div>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 15%;">Tên cột</th>
+      <th style="width: 18%;">Kiểu dữ liệu</th>
+      <th style="width: 10%;">Khóa</th>
+      <th style="width: 25%;">Ràng buộc (Constraint)</th>
+      <th style="width: 32%;">Diễn giải ý nghĩa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>id</code></td>
+      <td>VARCHAR(50)</td>
+      <td>PK</td>
+      <td>PRIMARY KEY, NOT NULL</td>
+      <td>Mã định danh duy nhất của người dùng</td>
+    </tr>
+    <tr>
+      <td><code>name</code></td>
+      <td>VARCHAR(100)</td>
+      <td>-</td>
+      <td>NOT NULL</td>
+      <td>Họ và tên đầy đủ của người dùng</td>
+    </tr>
+    <tr>
+      <td><code>email</code></td>
+      <td>VARCHAR(100)</td>
+      <td>-</td>
+      <td>UNIQUE, NULL</td>
+      <td>Địa chỉ thư điện tử người dùng</td>
+    </tr>
+    <tr>
+      <td><code>phone</code></td>
+      <td>VARCHAR(20)</td>
+      <td>-</td>
+      <td>UNIQUE, NOT NULL</td>
+      <td>Số điện thoại (dùng làm tài khoản đăng nhập chính)</td>
+    </tr>
+    <tr>
+      <td><code>password</code></td>
+      <td>VARCHAR(255)</td>
+      <td>-</td>
+      <td>NOT NULL</td>
+      <td>Mật khẩu tài khoản (đã băm Bcrypt an toàn)</td>
+    </tr>
+    <tr>
+      <td><code>role</code></td>
+      <td>VARCHAR(20)</td>
+      <td>-</td>
+      <td>DEFAULT 'customer'</td>
+      <td>Vai trò người dùng ('admin', 'staff', 'customer')</td>
+    </tr>
+    <tr>
+      <td><code>tier</code></td>
+      <td>VARCHAR(20)</td>
+      <td>-</td>
+      <td>DEFAULT 'Đồng'</td>
+      <td>Hạng thành viên ('Đồng', 'Bạc', 'Vàng', 'Kim Cương')</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<div class="table-caption">Bảng 3: Từ điển dữ liệu bảng clubs (Cụm sân cầu lông / Chi nhánh)</div>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 15%;">Tên cột</th>
+      <th style="width: 18%;">Kiểu dữ liệu</th>
+      <th style="width: 10%;">Khóa</th>
+      <th style="width: 25%;">Ràng buộc (Constraint)</th>
+      <th style="width: 32%;">Diễn giải ý nghĩa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>id</code></td>
+      <td>VARCHAR(50)</td>
+      <td>PK</td>
+      <td>PRIMARY KEY, NOT NULL</td>
+      <td>Mã định danh duy nhất của cụm sân</td>
+    </tr>
+    <tr>
+      <td><code>name</code></td>
+      <td>VARCHAR(150)</td>
+      <td>-</td>
+      <td>NOT NULL</td>
+      <td>Tên thương hiệu cụm sân cầu lông</td>
+    </tr>
+    <tr>
+      <td><code>address</code></td>
+      <td>VARCHAR(255)</td>
+      <td>-</td>
+      <td>NOT NULL</td>
+      <td>Địa chỉ thực tế của cơ sở sân</td>
+    </tr>
+    <tr>
+      <td><code>district</code></td>
+      <td>VARCHAR(100)</td>
+      <td>-</td>
+      <td>NULL</td>
+      <td>Quận / Huyện đặt cơ sở</td>
+    </tr>
+    <tr>
+      <td><code>city</code></td>
+      <td>VARCHAR(100)</td>
+      <td>-</td>
+      <td>DEFAULT 'Đà Nẵng'</td>
+      <td>Thành phố</td>
+    </tr>
+    <tr>
+      <td><code>phone</code></td>
+      <td>VARCHAR(20)</td>
+      <td>-</td>
+      <td>NULL</td>
+      <td>Số điện thoại hotline liên hệ bốt trực</td>
+    </tr>
+    <tr>
+      <td><code>price_range</code></td>
+      <td>VARCHAR(50)</td>
+      <td>-</td>
+      <td>NULL</td>
+      <td>Khung giá tham khảo theo giờ</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="table-caption">Bảng 4: Từ điển dữ liệu bảng courts (Danh mục sân cầu lông)</div>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 15%;">Tên cột</th>
+      <th style="width: 18%;">Kiểu dữ liệu</th>
+      <th style="width: 10%;">Khóa</th>
+      <th style="width: 25%;">Ràng buộc (Constraint)</th>
+      <th style="width: 32%;">Diễn giải ý nghĩa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>id</code></td>
+      <td>VARCHAR(50)</td>
+      <td>PK</td>
+      <td>PRIMARY KEY, NOT NULL</td>
+      <td>Mã định danh duy nhất của sân thi đấu</td>
+    </tr>
+    <tr>
+      <td><code>club_id</code></td>
+      <td>VARCHAR(50)</td>
+      <td>FK</td>
+      <td>REFERENCES clubs(id)</td>
+      <td>Mã cụm sân mà sân trực thuộc</td>
+    </tr>
+    <tr>
+      <td><code>name</code></td>
+      <td>VARCHAR(100)</td>
+      <td>-</td>
+      <td>NOT NULL</td>
+      <td>Tên sân (Sân 1, Sân 2, Sân VIP...)</td>
+    </tr>
+    <tr>
+      <td><code>type</code></td>
+      <td>VARCHAR(50)</td>
+      <td>-</td>
+      <td>DEFAULT 'Thảm BWF'</td>
+      <td>Loại mặt sân (Thảm Yonex BWF, Thảm PVC)</td>
+    </tr>
+    <tr>
+      <td><code>price</code></td>
+      <td>DECIMAL(10,2)</td>
+      <td>-</td>
+      <td>NOT NULL, DEFAULT 80000</td>
+      <td>Đơn giá thuê sân cơ bản trên 1 giờ</td>
+    </tr>
+    <tr>
+      <td><code>status</code></td>
+      <td>VARCHAR(20)</td>
+      <td>-</td>
+      <td>DEFAULT 'available'</td>
+      <td>Trạng thái vận hành ('available', 'in_use', 'maintenance')</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<div class="table-caption">Bảng 5: Từ điển dữ liệu bảng bookings (Đơn đặt sân)</div>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 15%;">Tên cột</th>
+      <th style="width: 18%;">Kiểu dữ liệu</th>
+      <th style="width: 10%;">Khóa</th>
+      <th style="width: 25%;">Ràng buộc (Constraint)</th>
+      <th style="width: 32%;">Diễn giải ý nghĩa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>id</code></td>
+      <td>VARCHAR(50)</td>
+      <td>PK</td>
+      <td>PRIMARY KEY, NOT NULL</td>
+      <td>Mã đơn đặt sân duy nhất</td>
+    </tr>
+    <tr>
+      <td><code>user_id</code></td>
+      <td>VARCHAR(50)</td>
+      <td>FK</td>
+      <td>REFERENCES users(id)</td>
+      <td>Mã khách hàng thực hiện đặt sân</td>
+    </tr>
+    <tr>
+      <td><code>court_id</code></td>
+      <td>VARCHAR(50)</td>
+      <td>FK</td>
+      <td>REFERENCES courts(id)</td>
+      <td>Mã sân được khách hàng lựa chọn thuê</td>
+    </tr>
+    <tr>
+      <td><code>booking_date</code></td>
+      <td>VARCHAR(30)</td>
+      <td>-</td>
+      <td>NOT NULL</td>
+      <td>Ngày đăng ký thi đấu</td>
+    </tr>
+    <tr>
+      <td><code>slot_time</code></td>
+      <td>VARCHAR(50)</td>
+      <td>-</td>
+      <td>NOT NULL</td>
+      <td>Khung giờ thi đấu (ví dụ: '18:00 - 20:00')</td>
+    </tr>
+    <tr>
+      <td><code>grand_total</code></td>
+      <td>DECIMAL(10,2)</td>
+      <td>-</td>
+      <td>NOT NULL</td>
+      <td>Tổng tiền thanh toán cuối cùng (Sân + Dịch vụ)</td>
+    </tr>
+    <tr>
+      <td><code>payment_status</code></td>
+      <td>VARCHAR(20)</td>
+      <td>-</td>
+      <td>DEFAULT 'paid'</td>
+      <td>Trạng thái thanh toán ('paid', 'pending')</td>
+    </tr>
+    <tr>
+      <td><code>status</code></td>
+      <td>VARCHAR(20)</td>
+      <td>-</td>
+      <td>DEFAULT 'confirmed'</td>
+      <td>Trạng thái đơn ('confirmed', 'completed', 'cancelled')</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="table-caption">Bảng 6: Từ điển dữ liệu bảng services (Danh mục sản phẩm, nước uống & phụ kiện)</div>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 15%;">Tên cột</th>
+      <th style="width: 18%;">Kiểu dữ liệu</th>
+      <th style="width: 10%;">Khóa</th>
+      <th style="width: 25%;">Ràng buộc (Constraint)</th>
+      <th style="width: 32%;">Diễn giải ý nghĩa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>id</code></td>
+      <td>VARCHAR(50)</td>
+      <td>PK</td>
+      <td>PRIMARY KEY, NOT NULL</td>
+      <td>Mã định danh mặt hàng dịch vụ</td>
+    </tr>
+    <tr>
+      <td><code>name</code></td>
+      <td>VARCHAR(100)</td>
+      <td>-</td>
+      <td>NOT NULL</td>
+      <td>Tên sản phẩm (Nước khoáng, Cầu lông, Quấn cán)</td>
+    </tr>
+    <tr>
+      <td><code>category</code></td>
+      <td>VARCHAR(50)</td>
+      <td>-</td>
+      <td>NOT NULL</td>
+      <td>Phân loại mặt hàng ('drink', 'shuttlecock', 'gear')</td>
+    </tr>
+    <tr>
+      <td><code>price</code></td>
+      <td>DECIMAL(10,2)</td>
+      <td>-</td>
+      <td>NOT NULL</td>
+      <td>Đơn giá bán lẻ tại quầy</td>
+    </tr>
+    <tr>
+      <td><code>stock</code></td>
+      <td>INT</td>
+      <td>-</td>
+      <td>DEFAULT 0</td>
+      <td>Số lượng tồn kho khả dụng</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="table-caption">Bảng 7: Từ điển dữ liệu bảng booking_services (Chi tiết dịch vụ đi kèm đơn đặt)</div>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 15%;">Tên cột</th>
+      <th style="width: 18%;">Kiểu dữ liệu</th>
+      <th style="width: 10%;">Khóa</th>
+      <th style="width: 25%;">Ràng buộc (Constraint)</th>
+      <th style="width: 32%;">Diễn giải ý nghĩa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>id</code></td>
+      <td>INT AUTO_INCREMENT</td>
+      <td>PK</td>
+      <td>PRIMARY KEY</td>
+      <td>Mã bản ghi chi tiết dịch vụ</td>
+    </tr>
+    <tr>
+      <td><code>booking_id</code></td>
+      <td>VARCHAR(50)</td>
+      <td>FK</td>
+      <td>REFERENCES bookings(id)</td>
+      <td>Mã đơn đặt sân tương ứng</td>
+    </tr>
+    <tr>
+      <td><code>service_id</code></td>
+      <td>VARCHAR(50)</td>
+      <td>FK</td>
+      <td>REFERENCES services(id)</td>
+      <td>Mã dịch vụ / sản phẩm đã mua</td>
+    </tr>
+    <tr>
+      <td><code>quantity</code></td>
+      <td>INT</td>
+      <td>-</td>
+      <td>NOT NULL, DEFAULT 1</td>
+      <td>Số lượng sản phẩm khách hàng yêu cầu</td>
+    </tr>
+    <tr>
+      <td><code>total_price</code></td>
+      <td>DECIMAL(10,2)</td>
+      <td>-</td>
+      <td>NOT NULL</td>
+      <td>Thành tiền (Số lượng x Đơn giá)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<h3>2.4.3. Các tập dữ liệu thực nghiệm trong hệ thống</h3>
+<p>Dưới đây là các bảng dữ liệu mẫu thực tế đã được nạp (seed data) vào cơ sở dữ liệu MySQL nhằm phục vụ quá trình chạy thử nghiệm và đánh giá hệ thống:</p>
+
+<div class="table-caption">Bảng 8: Tập dữ liệu thực nghiệm bảng users</div>
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>phone</th>
+      <th>email</th>
+      <th>role</th>
+      <th>tier</th>
+      <th>status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center;">u1</td>
+      <td>Trần Quốc Trung</td>
+      <td>0905591379</td>
+      <td>admin@court.vn</td>
+      <td style="text-align: center; font-weight: bold;">admin</td>
+      <td style="text-align: center;">Kim Cương</td>
+      <td style="text-align: center;">active</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">u2</td>
+      <td>Nguyễn Văn An</td>
+      <td>0912345678</td>
+      <td>an.nguyen@gmail.com</td>
+      <td style="text-align: center;">customer</td>
+      <td style="text-align: center;">Vàng</td>
+      <td style="text-align: center;">active</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">u3</td>
+      <td>Lê Thị Bích</td>
+      <td>0987654321</td>
+      <td>bich.le@gmail.com</td>
+      <td style="text-align: center;">customer</td>
+      <td style="text-align: center;">Bạc</td>
+      <td style="text-align: center;">active</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">u4</td>
+      <td>Phạm Quốc Cường</td>
+      <td>0933445566</td>
+      <td>cuong.pham@gmail.com</td>
+      <td style="text-align: center;">customer</td>
+      <td style="text-align: center;">Đồng</td>
+      <td style="text-align: center;">active</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">u5</td>
+      <td>Hoàng Minh Tuấn</td>
+      <td>0977889900</td>
+      <td>tuan.hoang@court.vn</td>
+      <td style="text-align: center; font-weight: bold;">staff</td>
+      <td style="text-align: center;">Đồng</td>
+      <td style="text-align: center;">active</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="table-caption">Bảng 9: Tập dữ liệu thực nghiệm bảng clubs</div>
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>address</th>
+      <th>district</th>
+      <th>city</th>
+      <th>price_range</th>
+      <th>rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center;">c1</td>
+      <td>QT Sport - Cơ sở 1 (Hoa Thiên Lý)</td>
+      <td>207 Quách Thị Trang, Hòa Xuân</td>
+      <td>Cẩm Lệ</td>
+      <td>Đà Nẵng</td>
+      <td>60.000 - 120.000đ/h</td>
+      <td style="text-align: center;">4.9</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">c2</td>
+      <td>QT Sport - Cơ sở 2 (Kỳ Đồng)</td>
+      <td>93 Kỳ Đồng, Thanh Khê Đông</td>
+      <td>Thanh Khê</td>
+      <td>Đà Nẵng</td>
+      <td>50.000 - 100.000đ/h</td>
+      <td style="text-align: center;">4.8</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">c3</td>
+      <td>QT Sport - Cơ sở 3 (Sơn Trà Pro)</td>
+      <td>120 Ngô Quyền, An Hải Bắc</td>
+      <td>Sơn Trà</td>
+      <td>Đà Nẵng</td>
+      <td>70.000 - 130.000đ/h</td>
+      <td style="text-align: center;">5.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">c4</td>
+      <td>QT Sport - Cơ sở 4 (ECO Center Q7)</td>
+      <td>45 Huỳnh Tấn Phát, Tân Thuận</td>
+      <td>Quận 7</td>
+      <td>TP.HCM</td>
+      <td>70.000 - 140.000đ/h</td>
+      <td style="text-align: center;">4.9</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">c5</td>
+      <td>QT Sport - Cơ sở 5 (Sky Club)</td>
+      <td>18D Cộng Hòa, Phường 4</td>
+      <td>Tân Bình</td>
+      <td>TP.HCM</td>
+      <td>65.000 - 130.000đ/h</td>
+      <td style="text-align: center;">4.7</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<div class="table-caption">Bảng 10: Tập dữ liệu thực nghiệm bảng courts</div>
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>club_id</th>
+      <th>name</th>
+      <th>type</th>
+      <th>price</th>
+      <th>status</th>
+      <th>current_slot</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center;">1</td>
+      <td style="text-align: center;">c1</td>
+      <td>Sân 1 - Cơ sở 1 (Hoa Thiên Lý)</td>
+      <td>Thảm Yonex BWF</td>
+      <td>80.000đ</td>
+      <td style="text-align: center; color: green; font-weight: bold;">available</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">2</td>
+      <td style="text-align: center;">c1</td>
+      <td>Sân 2 - Cơ sở 1 (Hoa Thiên Lý)</td>
+      <td>Thảm Yonex BWF</td>
+      <td>80.000đ</td>
+      <td style="text-align: center; color: green; font-weight: bold;">available</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">3</td>
+      <td style="text-align: center;">c1</td>
+      <td>Sân 3 - Cơ sở 1 (Hoa Thiên Lý)</td>
+      <td>Thảm Yonex BWF</td>
+      <td>80.000đ</td>
+      <td style="text-align: center; color: orange; font-weight: bold;">in_use</td>
+      <td>18:00 - 20:00</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">5</td>
+      <td style="text-align: center;">c1</td>
+      <td>Sân 5 - Cơ sở 1 (VIP Thảm Đỏ)</td>
+      <td>Thảm Victor Pro VIP</td>
+      <td>120.000đ</td>
+      <td style="text-align: center; color: green; font-weight: bold;">available</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">8</td>
+      <td style="text-align: center;">c1</td>
+      <td>Sân 8 - Cơ sở 1 (Bảo dưỡng)</td>
+      <td>Thảm Yonex BWF</td>
+      <td>80.000đ</td>
+      <td style="text-align: center; color: red; font-weight: bold;">maintenance</td>
+      <td>Cả ngày</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="table-caption">Bảng 11: Tập dữ liệu thực nghiệm bảng bookings</div>
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>user_name</th>
+      <th>court_id</th>
+      <th>booking_date</th>
+      <th>slot_time</th>
+      <th>grand_total</th>
+      <th>status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center;">bk001</td>
+      <td>Nguyễn Văn An</td>
+      <td style="text-align: center;">3</td>
+      <td>12/11/2026</td>
+      <td>18:00 - 20:00</td>
+      <td>160.000đ</td>
+      <td style="text-align: center; color: green; font-weight: bold;">confirmed</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">bk002</td>
+      <td>Lê Thị Bích</td>
+      <td style="text-align: center;">6</td>
+      <td>12/11/2026</td>
+      <td>17:00 - 19:00</td>
+      <td>180.000đ</td>
+      <td style="text-align: center; color: green; font-weight: bold;">confirmed</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">bk003</td>
+      <td>Phạm Quốc Cường</td>
+      <td style="text-align: center;">1</td>
+      <td>13/11/2026</td>
+      <td>06:00 - 08:00</td>
+      <td>160.000đ</td>
+      <td style="text-align: center; color: blue; font-weight: bold;">completed</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="table-caption">Bảng 12: Tập dữ liệu thực nghiệm bảng services</div>
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>category</th>
+      <th>price</th>
+      <th>unit</th>
+      <th>stock</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center;">srv1</td>
+      <td>Nước khoáng Aquafina 500ml</td>
+      <td>drink</td>
+      <td>10.000đ</td>
+      <td>chai</td>
+      <td>150</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">srv2</td>
+      <td>Nước bù khoáng thể thao Pocari Sweat</td>
+      <td>drink</td>
+      <td>20.000đ</td>
+      <td>chai</td>
+      <td>80</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">srv3</td>
+      <td>Quả cầu lông Hải Yến S90</td>
+      <td>shuttlecock</td>
+      <td>25.000đ</td>
+      <td>quả</td>
+      <td>200</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">srv4</td>
+      <td>Quấn cán vợt Yonex chính hãng</td>
+      <td>gear</td>
+      <td>35.000đ</td>
+      <td>cái</td>
+      <td>45</td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

@@ -160,25 +160,28 @@ async function addCustomer(req, res) {
     return res.status(400).json({ success: false, message: 'Họ tên là bắt buộc' });
   }
 
+  const cleanPhone = phone && phone.trim() ? phone.trim() : null;
+  const cleanEmail = email && email.trim() ? email.trim() : (cleanPhone ? `${cleanPhone}@court.vn` : `${Date.now()}@court.vn`);
+
   const newUser = db.addUser({
-    name,
-    email: email || `${Date.now()}@court.vn`,
-    phone: phone || '',
+    name: name.trim(),
+    email: cleanEmail,
+    phone: cleanPhone || '',
     password: password || '123456',
     role: role || 'customer',
     tier: tier || 'Đồng',
     status: 'active',
   });
 
-  // Writes records to MySQL database
+  // Ghi vào MySQL database
   try {
     await pool.query(
       'INSERT INTO users (id, name, email, phone, password, role, status, joined_date, tier, total_spent, bookings_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [
         newUser.id,
         newUser.name,
-        newUser.email,
-        newUser.phone,
+        cleanEmail,
+        cleanPhone,
         newUser.password,
         newUser.role,
         newUser.status,
@@ -188,6 +191,7 @@ async function addCustomer(req, res) {
         0,
       ]
     );
+    console.log(`[MySQL Success] ✅ Admin thêm khách hàng mới: ${newUser.name} vào MySQL.`);
   } catch (err) {
     console.warn(`[MySQL Add Customer Warning]: ${err.message}`);
   }

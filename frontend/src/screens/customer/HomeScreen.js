@@ -33,19 +33,41 @@ export function HomeScreen({ user, navigate, clubs = CLUBS, bookings = [], favor
             style={st.avatarGreen}
             resizeMode="contain"
           />
-          <View style={{ marginLeft: 10 }}>
+          <View style={{ marginLeft: 10, flexShrink: 1 }}>
             <Text style={st.dateText}>QT SPORT · {dateStr}</Text>
-            <Text style={st.userNameTop}>{user?.name || 'Khách hàng'}</Text>
+            <Text style={st.userNameTop} numberOfLines={1}>
+              {user?.name || 'Chào mừng bạn!'}
+            </Text>
           </View>
         </View>
-        <View style={st.topHeaderRight}>
-          <TouchableOpacity style={st.iconBtn} onPress={() => navigate('mapTab')}>
-            <Text style={{ fontSize: 18 }}>📍</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={st.iconBtn} onPress={() => navigate('myBookings')}>
-            <Text style={{ fontSize: 18 }}>🔔</Text>
-          </TouchableOpacity>
-        </View>
+
+        {user ? (
+          <View style={st.topHeaderRight}>
+            <TouchableOpacity style={st.iconBtn} onPress={() => navigate('mapTab')}>
+              <Text style={{ fontSize: 18 }}>📍</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={st.iconBtn} onPress={() => navigate('myBookings')}>
+              <Text style={{ fontSize: 18 }}>🔔</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={st.authHeaderBtns}>
+            <TouchableOpacity
+              style={st.registerHeaderBtn}
+              onPress={() => navigate('register')}
+              activeOpacity={0.8}
+            >
+              <Text style={st.registerHeaderBtnText}>Đăng ký</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={st.loginHeaderBtn}
+              onPress={() => navigate('login')}
+              activeOpacity={0.85}
+            >
+              <Text style={st.loginHeaderBtnText}>Đăng nhập</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
 
       {/* Search Bar */}
@@ -188,10 +210,48 @@ const st = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingVertical: 12,
   },
-  topHeaderLeft: { flexDirection: 'row', alignItems: 'center' },
+  topHeaderLeft: { flexDirection: 'row', alignItems: 'center', flex: 1, marginRight: 8 },
   topHeaderRight: { flexDirection: 'row', gap: 8 },
+  authHeaderBtns: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  registerHeaderBtn: {
+    paddingHorizontal: 11,
+    paddingVertical: 6.5,
+    borderRadius: 18,
+    backgroundColor: 'rgba(255, 255, 255, 0.18)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.7)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  registerHeaderBtnText: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  loginHeaderBtn: {
+    paddingHorizontal: 13,
+    paddingVertical: 7,
+    borderRadius: 18,
+    backgroundColor: '#ffffff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  loginHeaderBtnText: {
+    color: '#15803d',
+    fontSize: 12,
+    fontWeight: '800',
+  },
   avatarGreen: {
     width: 42,
     height: 42,

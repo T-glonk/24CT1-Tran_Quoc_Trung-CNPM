@@ -2,19 +2,58 @@
   "meta": {
     "version": "1.0.0",
     "appName": "Alobo Badminton Court Booking & Management",
-    "lastSaved": "2026-10-02T09:23:24.803Z",
+    "lastSaved": "2026-11-12T12:18:30.461Z",
     "tablesCount": 7,
     "recordsCount": {
-      "users": 13,
+      "users": 16,
       "courts": 52,
       "clubs": 8,
-      "bookings": 11,
+      "bookings": 15,
       "services": 11,
-      "transactions": 14,
-      "logs": 21
+      "transactions": 18,
+      "logs": 34
     }
   },
   "users": [
+    {
+      "id": "user_1791517418366",
+      "joinedDate": "9/10/2026",
+      "totalSpent": 0,
+      "bookingsCount": 0,
+      "tier": "Đồng",
+      "status": "active",
+      "name": "quoctrung09_10",
+      "email": "quoctrung0910@gmail.com",
+      "phone": "0987665544",
+      "password": "123123",
+      "role": "customer"
+    },
+    {
+      "id": "user_1791510260357",
+      "joinedDate": "9/10/2026",
+      "totalSpent": 0,
+      "bookingsCount": 0,
+      "tier": "Đồng",
+      "status": "active",
+      "name": "qtrung09/10",
+      "email": "qtrung0910@gmail.com",
+      "phone": "0988888811",
+      "password": "111111",
+      "role": "customer"
+    },
+    {
+      "id": "user_1791509057367",
+      "joinedDate": "9/10/2026",
+      "totalSpent": 0,
+      "bookingsCount": 0,
+      "tier": "Đồng",
+      "status": "active",
+      "name": "khachs09_10",
+      "email": "khachs0910@gmail.com",
+      "phone": "0911111122",
+      "password": "123123",
+      "role": "customer"
+    },
     {
       "id": "user_1790931357128",
       "joinedDate": "2/10/2026",
@@ -1138,6 +1177,160 @@
   ],
   "bookings": [
     {
+      "id": "BK-3210",
+      "status": "confirmed",
+      "paymentStatus": "paid",
+      "createdAt": "17:15:53 12/11/2026",
+      "court": {
+        "id": "5",
+        "clubId": "c1",
+        "name": "Sân 5 (VIP)",
+        "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+        "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+        "district": "Cẩm Lệ",
+        "price": 120000,
+        "type": "Thảm Victor Pro VIP Khán Đài",
+        "status": "available",
+        "currentGuest": null,
+        "currentSlot": null,
+        "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+      },
+      "courtId": "5",
+      "userId": "user_1790911793504",
+      "userName": "An0210",
+      "userPhone": "0988776655",
+      "date": "28/08/2026",
+      "slot": "8:00-9:00",
+      "hoursCount": 1,
+      "totalPrice": 120000,
+      "servicesAdded": [],
+      "grandTotal": 120000,
+      "paymentMethod": "Chuyển khoản QR",
+      "note": ""
+    },
+    {
+      "id": "BK-8351",
+      "status": "confirmed",
+      "paymentStatus": "paid",
+      "createdAt": "08:10:38 12/11/2026",
+      "court": {
+        "id": "3",
+        "clubId": "c1",
+        "name": "Sân 3",
+        "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+        "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+        "district": "Cẩm Lệ",
+        "price": 80000,
+        "type": "Thảm Yonex Tiêu chuẩn BWF",
+        "status": "in_use",
+        "currentGuest": "Nguyễn Văn An (0912345678)",
+        "currentSlot": "18:00 - 20:00",
+        "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+      },
+      "courtId": "3",
+      "userId": "user_1790911793504",
+      "userName": "An0210",
+      "userPhone": "0988776655",
+      "date": "28/08/2026",
+      "slot": "9:00-10:00",
+      "hoursCount": 1,
+      "totalPrice": 80000,
+      "servicesAdded": [],
+      "grandTotal": 80000,
+      "paymentMethod": "Chuyển khoản QR",
+      "note": ""
+    },
+    {
+      "id": "BK-8591",
+      "status": "confirmed",
+      "paymentStatus": "paid",
+      "createdAt": "08:30:28 9/10/2026",
+      "court": {
+        "id": "4",
+        "clubId": "c1",
+        "name": "Sân 4",
+        "clubName": "QT Sport - Cơ sở 1: Sân Hoa Thiên Lý",
+        "location": "207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng",
+        "district": "Cẩm Lệ",
+        "price": 80000,
+        "type": "Thảm Yonex Tiêu chuẩn BWF",
+        "status": "available",
+        "currentGuest": null,
+        "currentSlot": null,
+        "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400&q=80"
+      },
+      "courtId": "4",
+      "userId": "user_1791509057367",
+      "userName": "khachs09_10",
+      "userPhone": "0911111122",
+      "date": "29/08/2026",
+      "slot": "14:00-15:00, 15:00-16:00",
+      "hoursCount": 2,
+      "totalPrice": 160000,
+      "servicesAdded": [
+        {
+          "id": "srv3",
+          "name": "Ống cầu lông Hải Yến S90 (12 quả)",
+          "qty": 1,
+          "price": 240000
+        },
+        {
+          "id": "srv4",
+          "name": "Thuê vợt Yonex Astrox 88D Pro",
+          "qty": 1,
+          "price": 30000
+        }
+      ],
+      "grandTotal": 430000,
+      "paymentMethod": "Chuyển khoản QR",
+      "note": ""
+    },
+    {
+      "id": "BK-1518",
+      "status": "confirmed",
+      "paymentStatus": "paid",
+      "createdAt": "08:25:41 9/10/2026",
+      "court": {
+        "id": "c2_1",
+        "clubId": "c2",
+        "name": "Sân 1",
+        "clubName": "QT Sport - Cơ sở 2: Sân Kỳ Đồng",
+        "location": "93 Kỳ Đồng, Thanh Khê Đông, Thanh Khê, Đà Nẵng",
+        "district": "Thanh Khê",
+        "price": 60000,
+        "type": "Thảm PVC Chống Trơn",
+        "status": "available",
+        "currentGuest": null,
+        "currentSlot": null,
+        "image": "https://images.unsplash.com/photo-1599474924187-334a4ae5bd3c?w=400&q=80"
+      },
+      "courtId": "c2_1",
+      "userId": "user_1791509057367",
+      "userName": "khachs09_10",
+      "userPhone": "0911111122",
+      "date": "28/08/2026",
+      "slot": "9:00-10:00, 10:00-11:00",
+      "hoursCount": 2,
+      "totalPrice": 120000,
+      "servicesAdded": [
+        {
+          "id": "srv1",
+          "name": "Nước điện giải Revive chanh muối",
+          "qty": 2,
+          "price": 15000
+        },
+        {
+          "id": "srv2",
+          "name": "Nước thể thao Pocari Sweat",
+          "qty": 2,
+          "price": 20000
+        }
+      ],
+      "grandTotal": 190000,
+      "paymentMethod": "Chuyển khoản QR",
+      "note": ""
+    },
+    {
       "id": "BK-0045",
       "status": "confirmed",
       "paymentStatus": "paid",
@@ -1641,6 +1834,46 @@
   ],
   "transactions": [
     {
+      "id": "TXN-3415",
+      "time": "17:15:53 12/11/2026",
+      "status": "completed",
+      "bookingId": "BK-3210",
+      "customerName": "An0210",
+      "amount": 120000,
+      "method": "Chuyển khoản QR",
+      "ref": "ONLINE-APP"
+    },
+    {
+      "id": "TXN-8557",
+      "time": "08:10:38 12/11/2026",
+      "status": "completed",
+      "bookingId": "BK-8351",
+      "customerName": "An0210",
+      "amount": 80000,
+      "method": "Chuyển khoản QR",
+      "ref": "ONLINE-APP"
+    },
+    {
+      "id": "TXN-8594",
+      "time": "08:30:28 9/10/2026",
+      "status": "completed",
+      "bookingId": "BK-8591",
+      "customerName": "khachs09_10",
+      "amount": 430000,
+      "method": "Chuyển khoản QR",
+      "ref": "ONLINE-APP"
+    },
+    {
+      "id": "TXN-1520",
+      "time": "08:25:41 9/10/2026",
+      "status": "completed",
+      "bookingId": "BK-1518",
+      "customerName": "khachs09_10",
+      "amount": 190000,
+      "method": "Chuyển khoản QR",
+      "ref": "ONLINE-APP"
+    },
+    {
       "id": "TXN-4783",
       "time": "16:23:24 2/10/2026",
       "status": "completed",
@@ -1779,6 +2012,110 @@
     }
   ],
   "logs": [
+    {
+      "id": "L-1794485910460",
+      "time": "Vừa xong",
+      "action": "Đăng nhập hệ thống",
+      "detail": "An0210 (customer) đã đăng nhập",
+      "user": "An0210",
+      "type": "security"
+    },
+    {
+      "id": "L-1794478553584",
+      "time": "Vừa xong",
+      "action": "Tạo đơn đặt sân",
+      "detail": "Đơn mới BK-3210 cho An0210 (Sân 5 (VIP))",
+      "user": "An0210",
+      "type": "booking"
+    },
+    {
+      "id": "L-1794478196120",
+      "time": "Vừa xong",
+      "action": "Đăng nhập hệ thống",
+      "detail": "An0210 (customer) đã đăng nhập",
+      "user": "An0210",
+      "type": "security"
+    },
+    {
+      "id": "L-1794445838712",
+      "time": "Vừa xong",
+      "action": "Tạo đơn đặt sân",
+      "detail": "Đơn mới BK-8351 cho An0210 (Sân 3)",
+      "user": "An0210",
+      "type": "booking"
+    },
+    {
+      "id": "L-1794445593869",
+      "time": "Vừa xong",
+      "action": "Đăng nhập hệ thống",
+      "detail": "An0210 (customer) đã đăng nhập",
+      "user": "An0210",
+      "type": "security"
+    },
+    {
+      "id": "L-1793280876205",
+      "time": "Vừa xong",
+      "action": "Đăng nhập hệ thống",
+      "detail": "h0210 (customer) đã đăng nhập",
+      "user": "h0210",
+      "type": "security"
+    },
+    {
+      "id": "L-1791517418509",
+      "time": "Vừa xong",
+      "action": "Đăng ký tài khoản",
+      "detail": "Khách hàng mới quoctrung09_10 đăng ký tài khoản",
+      "user": "quoctrung09_10",
+      "type": "security"
+    },
+    {
+      "id": "L-1791510547886",
+      "time": "Vừa xong",
+      "action": "Đăng nhập hệ thống",
+      "detail": "qtrung09/10 (customer) đã đăng nhập",
+      "user": "qtrung09/10",
+      "type": "security"
+    },
+    {
+      "id": "L-1791510439027",
+      "time": "Vừa xong",
+      "action": "Đăng nhập hệ thống",
+      "detail": "Trần Quốc Trung (Super Admin) (admin) đã đăng nhập",
+      "user": "Trần Quốc Trung (Super Admin)",
+      "type": "security"
+    },
+    {
+      "id": "L-1791510260528",
+      "time": "Vừa xong",
+      "action": "Đăng ký tài khoản",
+      "detail": "Khách hàng mới qtrung09/10 đăng ký tài khoản",
+      "user": "qtrung09/10",
+      "type": "security"
+    },
+    {
+      "id": "L-1791509428596",
+      "time": "Vừa xong",
+      "action": "Tạo đơn đặt sân",
+      "detail": "Đơn mới BK-8591 cho khachs09_10 (Sân 4)",
+      "user": "khachs09_10",
+      "type": "booking"
+    },
+    {
+      "id": "L-1791509141525",
+      "time": "Vừa xong",
+      "action": "Tạo đơn đặt sân",
+      "detail": "Đơn mới BK-1518 cho khachs09_10 (Sân 1)",
+      "user": "khachs09_10",
+      "type": "booking"
+    },
+    {
+      "id": "L-1791509057593",
+      "time": "Vừa xong",
+      "action": "Đăng ký tài khoản",
+      "detail": "Khách hàng mới khachs09_10 đăng ký tài khoản",
+      "user": "khachs09_10",
+      "type": "security"
+    },
     {
       "id": "L-1790933004803",
       "time": "Vừa xong",

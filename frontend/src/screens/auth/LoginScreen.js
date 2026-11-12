@@ -20,33 +20,28 @@ import { authApi } from '../../api/authApi';
 import { INITIAL_USERS } from '../../constants/initialData';
 
 export function LoginScreen({ navigate, onLogin }) {
-  const [tab, setTab] = useState('phone'); // 'phone' | 'email'
   const [phone, setPhone] = useState('0905591379');
-  const [email, setEmail] = useState('trung05082005tqt@gmail.com');
   const [password, setPassword] = useState('123456');
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const fillQuickUser = (role) => {
     if (role === 'admin') {
-      setEmail('admin@court.vn');
-      setPhone('0905 591 379');
+      setPhone('0905591379');
       setPassword('123456');
     } else if (role === 'manager') {
-      setEmail('manager@court.vn');
-      setPhone('0912 345 678');
+      setPhone('0912345678');
       setPassword('123456');
     } else {
-      setEmail('trung05082005tqt@gmail.com');
       setPhone('0905591379');
       setPassword('123456');
     }
   };
 
   const handleLogin = async () => {
-    const account = tab === 'phone' ? phone.trim() : email.trim();
-    if (!account) {
-      Alert.alert('Lỗi', `Vui lòng nhập ${tab === 'phone' ? 'số điện thoại' : 'email'}`);
+    const cleanPhone = phone.trim().replace(/\s/g, '');
+    if (!cleanPhone) {
+      Alert.alert('Lỗi', 'Vui lòng nhập số điện thoại');
       return;
     }
     if (!password.trim()) {
@@ -59,9 +54,8 @@ export function LoginScreen({ navigate, onLogin }) {
     try {
       // 1. Try Backend API
       const res = await authApi.login({
-        account,
-        email: tab === 'email' ? account : undefined,
-        phone: tab === 'phone' ? account : undefined,
+        account: cleanPhone,
+        phone: cleanPhone,
         password: password.trim(),
       });
 
@@ -81,8 +75,8 @@ export function LoginScreen({ navigate, onLogin }) {
     // 2. Offline fallback
     const user = INITIAL_USERS.find(
       (u) =>
-        (u.phone.replace(/\s/g, '') === account.replace(/\s/g, '') ||
-          u.email.toLowerCase() === account.toLowerCase()) &&
+        u.phone &&
+        u.phone.replace(/\s/g, '') === cleanPhone &&
         u.password === password.trim()
     );
 
@@ -95,7 +89,7 @@ export function LoginScreen({ navigate, onLogin }) {
       }
       onLogin(user);
     } else {
-      Alert.alert('Đăng nhập thất bại', 'Số điện thoại/Email hoặc mật khẩu không chính xác.');
+      Alert.alert('Đăng nhập thất bại', 'Số điện thoại hoặc mật khẩu không chính xác.');
     }
   };
 
@@ -119,39 +113,10 @@ export function LoginScreen({ navigate, onLogin }) {
           <Text style={st.badgeSub}>Đăng nhập ứng dụng đặt sân di động</Text>
         </View>
 
-        {/* Tab switcher */}
-        <View style={st.tabBar}>
-          <TouchableOpacity
-            style={[st.tabBtn, tab === 'phone' && st.tabBtnActive]}
-            onPress={() => setTab('phone')}
-          >
-            <Text style={[st.tabText, tab === 'phone' && st.tabTextActive]}>Số điện thoại</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[st.tabBtn, tab === 'email' && st.tabBtnActive]}
-            onPress={() => setTab('email')}
-          >
-            <Text style={[st.tabText, tab === 'email' && st.tabTextActive]}>Email / Tài khoản</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Inputs */}
-        <View style={{ marginTop: 16 }}>
-          {tab === 'phone' ? (
-            <>
-              <FieldLabel text="Số điện thoại" required />
-              <PhoneInput value={phone} onChangeText={setPhone} />
-            </>
-          ) : (
-            <>
-              <FieldLabel text="Địa chỉ Email" required />
-              <FormInput
-                value={email}
-                onChangeText={setEmail}
-                placeholder="example@court.vn"
-              />
-            </>
-          )}
+        {/* Form Inputs */}
+        <View style={{ marginTop: 8 }}>
+          <FieldLabel text="Số điện thoại" required />
+          <PhoneInput value={phone} onChangeText={setPhone} />
 
           <FieldLabel text="Mật khẩu" required />
           <FormInput
@@ -236,35 +201,6 @@ const st = StyleSheet.create({
     color: '#64748b',
     fontSize: 13,
     marginTop: 2,
-  },
-  tabBar: {
-    flexDirection: 'row',
-    backgroundColor: '#e2e8f0',
-    borderRadius: 12,
-    padding: 4,
-  },
-  tabBtn: {
-    flex: 1,
-    paddingVertical: 10,
-    alignItems: 'center',
-    borderRadius: 10,
-  },
-  tabBtnActive: {
-    backgroundColor: '#ffffff',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
-  },
-  tabText: {
-    color: '#64748b',
-    fontSize: 13,
-    fontWeight: '700',
-  },
-  tabTextActive: {
-    color: C.primaryDark,
-    fontWeight: '800',
   },
   submitBtn: {
     backgroundColor: C.primary,

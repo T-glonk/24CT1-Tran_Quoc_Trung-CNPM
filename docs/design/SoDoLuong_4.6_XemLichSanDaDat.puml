@@ -1,0 +1,58 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam defaultTextAlignment center
+skinparam roundCorner 14
+skinparam shadowing false
+left to right direction
+
+skinparam title {
+  FontSize 16
+  FontStyle bold
+  FontColor #0F172A
+}
+
+skinparam arrow {
+  Color #334155
+  FontColor #334155
+  FontSize 11
+  FontStyle bold
+}
+
+skinparam activity {
+  BackgroundColor #1E293B
+  BorderColor #0F172A
+  FontColor #FFFFFF
+  FontSize 11
+}
+
+skinparam diamond {
+  BackgroundColor #1E293B
+  BorderColor #0F172A
+  FontColor #FFFFFF
+  FontSize 11
+}
+
+title 4.6 THIẾT KẾ PHẦN MỀM - CHỨC NĂNG XEM LỊCH SỬ & HỦY ĐƠN ĐẶT SÂN (USER)
+
+start
+
+#0097A7:<b>Vào tab 'Lịch đặt'</b>\nBottom Navigation bar\nnavigate('myBookings');
+
+#1E293B:<b>Tải danh sách đơn đặt sân</b>\nGET /api/bookings?userId={userId}\nHiển thị danh sách các đơn đã đặt;
+
+#1E293B:<b>Xem chi tiết đơn đặt sân</b>\nNhấp chọn đơn đặt sân cụ thể\nĐiều hướng sang BookingDetailScreen;
+
+#1E293B:<b>Yêu cầu hủy đặt sân</b>\nKhách hàng nhấn nút 'HỦY ĐẶT SÂN'\nNhập lý do hủy vào popup xác nhận;
+
+#1E293B:<b>Gửi yêu cầu hủy đơn</b>\nNhấn 'Xác nhận hủy'\nPOST /api/bookings/:id/cancel;
+
+if (<b>Đơn đủ điều kiện hủy?</b>\nstatus IN ('pending', 'confirmed')\nvà trước giờ thi đấu quy định (>= 2h)) then (Đủ điều kiện)
+  #DCFCE7:<b><color:#166534>Hủy đơn thành công</color></b>\n<color:#166534>UPDATE bookings SET status = 'cancelled'\nGiải phóng slot sân về trạng thái khả dụng\nThông báo hủy thành công & Cập nhật giao diện</color>;
+  stop
+else (Không đủ điều kiện)
+  #FEE2E2:<b><color:#991B1B>Từ chối hủy đơn</color></b>\n<color:#991B1B>HTTP 400: Đơn đã sử dụng hoặc sát giờ chơi quy định\nHiển thị thông báo giải thích từ chối hủy</color>;
+  detach
+endif
+
+@enduml

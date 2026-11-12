@@ -41,6 +41,18 @@ yarn-error.*
 .vscode/
 .DS_Store
 *.log
+__pycache__/
+*.pyc
+
+# LaTeX build temp
+*.aux
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
 
 # dependencies
 node_modules/

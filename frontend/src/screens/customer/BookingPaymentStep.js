@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { COLORS as C } from '../../constants/theme';
 import { INITIAL_CLUBS } from '../../constants/initialData';
+import { getTodayDateStr } from '../../utils/dateUtils';
 
 export function BookingPaymentStep({
   user,
@@ -91,7 +92,7 @@ export function BookingPaymentStep({
               </View>
               <View style={st.payRow}>
                 <Text style={st.payRowLabel}>📅 Ngày chơi:</Text>
-                <Text style={st.payRowValue}>{orderInfo.selectedDate || '28/08/2026'}</Text>
+                <Text style={st.payRowValue}>{orderInfo.selectedDate || getTodayDateStr()}</Text>
               </View>
               <View style={st.payRow}>
                 <Text style={st.payRowLabel}>⏱️ Tổng thời lượng:</Text>

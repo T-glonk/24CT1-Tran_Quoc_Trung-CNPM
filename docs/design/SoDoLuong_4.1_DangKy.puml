@@ -1,0 +1,60 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam defaultTextAlignment center
+skinparam roundCorner 14
+skinparam shadowing false
+left to right direction
+
+skinparam title {
+  FontSize 16
+  FontStyle bold
+  FontColor #0F172A
+}
+
+skinparam arrow {
+  Color #334155
+  FontColor #334155
+  FontSize 11
+  FontStyle bold
+}
+
+skinparam activity {
+  BackgroundColor #1E293B
+  BorderColor #0F172A
+  FontColor #FFFFFF
+  FontSize 11
+}
+
+skinparam diamond {
+  BackgroundColor #1E293B
+  BorderColor #0F172A
+  FontColor #FFFFFF
+  FontSize 11
+}
+
+title 4.1 THIẾT KẾ PHẦN MỀM - CHỨC NĂNG ĐĂNG KÝ (KIỂM TRA DUY NHẤT SĐT VÀ EMAIL)
+
+start
+
+#0097A7:<b>Mở App QT Sport</b>\nKhởi động ứng dụng di động\nClient: React Native / Expo;
+
+#1E293B:<b>Màn hình chào đón / Đăng nhập</b>\nWelcomeScreen / LoginScreen\nHiển thị liên kết 'Đăng ký ngay';
+
+#1E293B:<b>Bấm Đăng ký</b>\nNhấn liên kết 'Đăng ký ngay'\nnavigate('register');
+
+#1E293B:<b>Mở trang đăng ký</b>\nRegisterScreen\nHiển thị Form tạo tài khoản;
+
+#1E293B:<b>Điền form đăng ký</b>\nHọ và tên, Số điện thoại (Bắt buộc)\nĐịa chỉ Email (Kiểm tra duy nhất)\nMật khẩu & Xác nhận mật khẩu;
+
+#1E293B:<b>Bấm Đăng ký</b>\nNhấn nút 'ĐĂNG KÝ TÀI KHOẢN'\nPOST /api/auth/register;
+
+if (<b>SĐT hoặc Email đã tồn tại?</b>\nSELECT id FROM users\nWHERE phone = ? OR email = ?\n(Kiểm tra duy nhất cả SĐT & Email)) then (Chưa tồn tại)
+  #DCFCE7:<b><color:#166534>Đăng ký thành công</color></b>\n<color:#166534>INSERT INTO users / Lưu tài khoản vào MySQL\nChuyển hướng đến Đăng nhập (LoginScreen)</color>;
+  stop
+else (Đã tồn tại)
+  #FEE2E2:<b><color:#991B1B>SĐT hoặc Email đã được đăng ký</color></b>\n<color:#991B1B>HTTP 409: Thông tin đã tồn tại trong hệ thống\nHiển thị cảnh báo, bắt buộc nhập lại</color>;
+  detach
+endif
+
+@enduml

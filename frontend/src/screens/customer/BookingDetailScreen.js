@@ -13,10 +13,10 @@ export function BookingDetailScreen({ booking, user, onBack, onCancel }) {
   const [tab, setTab] = useState('info'); // info | service | team
 
   const orderCode = booking.id ? (booking.id.startsWith('BK-') ? booking.id : `#${booking.id}`) : '#9684';
-  const courtPrice = booking.courtPrice || booking.court?.price || 80000;
-  const servicesTotal = booking.servicesTotal || 0;
-  const grandTotal = booking.grandTotal || booking.totalPrice || (courtPrice + servicesTotal);
-  const servicesList = booking.services || [];
+  const courtPrice = booking.courtPrice || booking.totalPrice || booking.court?.price || 80000;
+  const servicesList = booking.servicesAdded || booking.services || [];
+  const servicesTotal = booking.servicesTotal || servicesList.reduce((sum, s) => sum + (s.qty || s.quantity || 1) * (s.price || s.unit_price || 0), 0);
+  const grandTotal = booking.grandTotal || (courtPrice + servicesTotal);
 
   const clubTitle = booking.clubName || booking.court?.clubName || 'Cơ sở 1: Sân Hoa Thiên Lý';
   const courtTitle = booking.courtName || booking.court?.name || 'Sân 1';
@@ -153,17 +153,23 @@ export function BookingDetailScreen({ booking, user, onBack, onCancel }) {
                   <Text style={{ color: C.sub, fontSize: 14, marginTop: 10 }}>Không có dịch vụ đi kèm trong đơn này</Text>
                 </View>
               ) : (
-                servicesList.map((item, idx) => (
-                  <View key={item.id || idx} style={st.serviceItemRow}>
-                    <View style={{ flex: 1 }}>
-                      <Text style={st.serviceItemName}>{item.name}</Text>
-                      <Text style={st.serviceItemSub}>Số lượng: x{item.qty} · Đơn giá: {item.price.toLocaleString('vi-VN')} đ</Text>
+                servicesList.map((item, idx) => {
+                  const qty = Number(item.qty || item.quantity || 1);
+                  const price = Number(item.price || item.unit_price || item.unitPrice || 0);
+                  const totalPrice = Number(item.totalPrice || item.total_price || qty * price);
+
+                  return (
+                    <View key={item.id || idx} style={st.serviceItemRow}>
+                      <View style={{ flex: 1 }}>
+                        <Text style={st.serviceItemName}>{item.name || item.service_name || 'Dịch vụ'}</Text>
+                        <Text style={st.serviceItemSub}>Số lượng: x{qty} · Đơn giá: {price.toLocaleString('vi-VN')} đ</Text>
+                      </View>
+                      <Text style={st.serviceItemTotal}>
+                        {totalPrice.toLocaleString('vi-VN')} đ
+                      </Text>
                     </View>
-                    <Text style={st.serviceItemTotal}>
-                      {((item.qty || 1) * item.price).toLocaleString('vi-VN')} đ
-                    </Text>
-                  </View>
-                ))
+                  );
+                })
               )}
             </View>
           </View>

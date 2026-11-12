@@ -10,13 +10,14 @@ import {
 } from 'react-native';
 import { COLORS as C } from '../../constants/theme';
 import { INITIAL_CLUBS } from '../../constants/initialData';
+import { getTodayDateStr } from '../../utils/dateUtils';
 
 export function BookingConfirmStep({
   user,
   courts = [],
   activeClub = INITIAL_CLUBS[0],
   selected = [],
-  selectedDate = '28/08/2026',
+  selectedDate = getTodayDateStr(),
   onBack,
   onPay,
 }) {
@@ -24,12 +25,12 @@ export function BookingConfirmStep({
   const [phone, setPhone] = useState(user?.phone || '');
   const [note, setNote] = useState('');
 
-  // Danh mục tiện ích / dịch vụ đi kèm có thể mua thêm khi đặt sân
+  // Danh mục tiện ích / dịch vụ đi kèm có thể mua thêm khi đặt sân (khớp ID với database)
   const [services, setServices] = useState([
-    { id: 'srv1', name: 'Nước điện giải Revive chanh muối', price: 15000, qty: 0, icon: '🥤' },
-    { id: 'srv2', name: 'Nước thể thao Pocari Sweat', price: 20000, qty: 0, icon: '💧' },
-    { id: 'srv3', name: 'Ống cầu lông Hải Yến S90 (12 quả)', price: 240000, qty: 0, icon: '🏸' },
-    { id: 'srv4', name: 'Thuê vợt Yonex Astrox 88D Pro', price: 30000, qty: 0, icon: '🎾' },
+    { id: 's3', name: 'Nước điện giải Revive chanh muối', price: 15000, qty: 0, icon: '🥤' },
+    { id: 's2', name: 'Nước thể thao Pocari Sweat', price: 20000, qty: 0, icon: '💧' },
+    { id: 's4', name: 'Ống cầu lông Hải Yến S90 (12 quả)', price: 240000, qty: 0, icon: '🏸' },
+    { id: 's6', name: 'Thuê vợt Yonex Astrox 88D Pro', price: 30000, qty: 0, icon: '🎾' },
   ]);
 
   const updateServiceQty = (id, delta) => {

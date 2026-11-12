@@ -102,6 +102,12 @@ graph TD
 │   │   └── screens/                # Màn hình chức năng (Auth, Customer, Admin 11 Modules, Map)
 │   └── README.md
 │
+├── 📂 docs/                         # TÀI LIỆU, SƠ ĐỒ THIẾT KẾ & BÁO CÁO CNPM
+│   ├── design/                     # Sơ đồ luồng (Draw.io) & Bản vẽ SVG (Figma)
+│   ├── figma-plugin/               # Plugin tạo wireframe cho Figma
+│   ├── KhaoSatYeuCau.xlsx          # Bảng Excel khảo sát & ma trận yêu cầu
+│   └── generate_khaosat_excel.py   # Script sinh file khảo sát
+│
 ├── 📂 app/                         # Expo Router Entry Layer
 │   ├── _layout.js
 │   └── index.js

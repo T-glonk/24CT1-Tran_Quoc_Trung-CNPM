@@ -21,7 +21,7 @@ const AppContext = createContext();
 
 export function AppProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
-  const [authScreen, setAuthScreen] = useState('welcome');
+  const [authScreen, setAuthScreen] = useState(null);
   const [screen, setScreen] = useState('home');
 
   const [courts, setCourts] = useState(INITIAL_COURTS);
@@ -60,7 +60,14 @@ export function AppProvider({ children }) {
     loadData();
   }, []);
 
-  const navigate = (sc) => setScreen(sc);
+  const navigate = (sc) => {
+    if (sc === 'login' || sc === 'register' || sc === 'welcome') {
+      setAuthScreen(sc);
+    } else {
+      setAuthScreen(null);
+      setScreen(sc);
+    }
+  };
 
   const selectClubAndBook = (club) => {
     if (club) setSelectedClub(club);
@@ -70,12 +77,13 @@ export function AppProvider({ children }) {
   // ── Auth Actions ──
   const handleLogin = (user) => {
     setCurrentUser(user);
+    setAuthScreen(null);
     setScreen(user.role === 'admin' ? 'adminHome' : 'home');
   };
 
   const handleLogout = () => {
     setCurrentUser(null);
-    setAuthScreen('welcome');
+    setAuthScreen(null);
     setScreen('home');
   };
 

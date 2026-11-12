@@ -1,0 +1,61 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam defaultTextAlignment center
+skinparam roundCorner 14
+skinparam shadowing false
+left to right direction
+
+skinparam title {
+  FontSize 16
+  FontStyle bold
+  FontColor #0F172A
+}
+
+skinparam arrow {
+  Color #334155
+  FontColor #334155
+  FontSize 11
+  FontStyle bold
+}
+
+skinparam activity {
+  BackgroundColor #1E293B
+  BorderColor #0F172A
+  FontColor #FFFFFF
+  FontSize 11
+}
+
+skinparam diamond {
+  BackgroundColor #1E293B
+  BorderColor #0F172A
+  FontColor #FFFFFF
+  FontSize 11
+}
+
+title 4.4 THIẾT KẾ PHẦN MỀM - CHỨC NĂNG ĐẶT SÂN CẦU LÔNG (KHÁCH HÀNG)
+
+start
+
+#0097A7:<b>Màn hình chính User</b>\nHomeScreen (App QT Sport)\nXem danh sách các cụm sân & câu lạc bộ;
+
+#1E293B:<b>Chọn sân & Bấm 'Đặt sân ngay'</b>\nChọn cụm sân mong muốn\nĐiều hướng sang BookingScreen;
+
+#1E293B:<b>Chọn ngày & Khung giờ (Slot)</b>\nBookingGridStep\nChọn ngày thi đấu và các slot giờ trống (5:00 - 22:00);
+
+#1E293B:<b>Thêm dịch vụ & Tiện ích đi kèm</b>\nBookingConfirmStep\nChọn nước giải khát, thuê vợt, ống cầu thi đấu;
+
+#1E293B:<b>Xác nhận thông tin & Thanh toán</b>\nBookingPaymentStep\nChọn phương thức (QR MoMo / Chuyển khoản / Tiền mặt);
+
+#1E293B:<b>Gửi yêu cầu đặt sân</b>\nNhấn nút 'XÁC NHẬN THANH TOÁN'\nPOST /api/bookings;
+
+if (<b>Khung giờ sân còn trống?</b>\nSELECT id FROM bookings\nWHERE court_id = ? AND date = ? AND slot = ?\n(Kiểm tra xung đột lịch đặt sân)) then (Còn trống)
+  #DCFCE7:<b><color:#166534>Đặt sân thành công</color></b>\n<color:#166534>INSERT INTO bookings, booking_services, transactions\nTrạng thái đơn: 'confirmed' / 'pending'\nĐiều hướng sang BookingDetailScreen</color>;
+  stop
+else (Đã bị trùng lịch)
+  #FEE2E2:<b><color:#991B1B>Khung giờ đã có người đặt</color></b>\n<color:#991B1B>HTTP 409: Slot thời gian vừa được giữ chỗ\nHiển thị thông báo, yêu cầu chọn khung giờ khác</color>;
+  detach
+endif
+
+@enduml
+

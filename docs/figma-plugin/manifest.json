@@ -1,0 +1,9 @@
+{
+  "name": "Tạo Wireframe Trang Chủ User - QT Sport",
+  "id": "qtsport-wireframe-importer-24ct1",
+  "api": "1.0.0",
+  "main": "code.js",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "editorType": ["figma"]
+}

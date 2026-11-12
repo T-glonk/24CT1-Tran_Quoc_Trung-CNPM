@@ -19,7 +19,8 @@ export const GOOGLE_MAPS_API_KEY =
 
 let WebView = null;
 try {
-  WebView = require('react-native-webview').WebView;
+  const rnw = require('react-native-webview');
+  WebView = rnw.WebView || rnw.default || rnw;
 } catch (e) {}
 
 function getMapHTML(clubs, selectedClubId) {
@@ -104,10 +105,9 @@ function getMapHTML(clubs, selectedClubId) {
             attributionControl: true
           }).setView([16.0350, 108.2100], 13);
           
-          L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+          L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
             maxZoom: 19,
-            subdomains: 'abcd',
-            attribution: '&copy; OpenStreetMap'
+            attribution: 'Tiles &copy; Esri'
           }).addTo(leafletMap);
 
           const userIcon = L.divIcon({

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,12 @@ import {
 } from 'react-native';
 import { COLORS as C } from '../../constants/theme';
 import { HOURS, INITIAL_BOOKED, INITIAL_CLUBS } from '../../constants/initialData';
+import {
+  generateBookingDays,
+  isPastSlot,
+  getMonthYearDisplay,
+  getTodayDateStr,
+} from '../../utils/dateUtils';
 
 export function BookingGridStep({
   user,
@@ -22,19 +28,17 @@ export function BookingGridStep({
   const [activeClub, setActiveClub] = useState(selectedClub || clubs[0] || INITIAL_CLUBS[0]);
   const [bookedSlots, setBookedSlots] = useState(INITIAL_BOOKED);
   const [selected, setSelected] = useState([]);
-  const [selectedDate, setSelectedDate] = useState('28/08/2026');
+  
+  // Khởi tạo dải ngày động thời gian thực (30 ngày tới bắt đầu từ hôm nay)
+  const [daysList] = useState(() => generateBookingDays(30));
+  const [selectedDate, setSelectedDate] = useState(() => getTodayDateStr());
+  
+  // Ref để cuộn ngang thanh chọn ngày
+  const dateScrollRef = useRef(null);
 
-  const DATE_OPTIONS = [
-    { label: 'Hôm nay', date: '28/08/2026', day: 'Thứ 4' },
-    { label: 'Ngày mai', date: '29/08/2026', day: 'Thứ 5' },
-    { label: '30/08', date: '30/08/2026', day: 'Thứ 6' },
-    { label: '31/08', date: '31/08/2026', day: 'Thứ 7' },
-    { label: '01/09', date: '01/09/2026', day: 'CN' },
-  ];
-
-  // Lọc chính xác danh sách các sân THUỘC RIÊNG CƠ SỞ ĐƯỢC CHỌN (Không gộp chung các cơ sở khác)
+  // Lọc chính xác danh sách các sân THUỘC RIÊNG CƠ SỞ ĐƯỢC CHỌN
   const facilityCourts = courts.filter((c) => c.clubId === activeClub.id);
-  const displayCourts = facilityCourts.length > 0 ? facilityCourts : courts.slice(0, activeClub.totalCourts || 6);
+  const displayCourts = facilityCourts.length > 0 ? facilityCourts : courts.slice(0, activeClub.totalCourts || 8);
 
   const handleSwitchClub = (club) => {
     setActiveClub(club);
@@ -46,11 +50,28 @@ export function BookingGridStep({
   const isSelected = (cid, h) => selected.some((s) => s.courtId === cid && s.hour === h);
 
   const toggleSlot = (cid, h, court) => {
-    if (isBooked(cid, h)) return;
-    if (court.status === 'maintenance') {
-      Alert.alert('Thông báo', `${court.name} đang trong thời gian bảo dưỡng kỹ thuật.`);
+    // 1. Kiểm tra nếu slot đã trôi qua thời gian thực tế
+    if (isPastSlot(selectedDate, h)) {
+      Alert.alert(
+        'Khung giờ đã qua',
+        `Khung giờ ${h}:00 - ${h + 1}:00 ngày ${selectedDate} đã trôi qua so với thời gian hiện tại. Vui lòng chọn khung giờ khác.`
+      );
       return;
     }
+
+    // 2. Kiểm tra nếu slot đã có người đặt
+    if (isBooked(cid, h)) {
+      Alert.alert('Đã được đặt', `Khung giờ này đã có khách hàng đặt trước.`);
+      return;
+    }
+
+    // 3. Kiểm tra nếu sân đang bảo trì
+    if (court.status === 'maintenance') {
+      Alert.alert('Bảo trì', `${court.name} đang trong thời gian bảo dưỡng kỹ thuật định kỳ.`);
+      return;
+    }
+
+    // Chọn / Bỏ chọn slot
     setSelected((prev) => {
       const exists = prev.find((s) => s.courtId === cid && s.hour === h);
       return exists
@@ -67,178 +88,230 @@ export function BookingGridStep({
 
   const handleNext = () => {
     if (selected.length === 0) {
-      Alert.alert('Chưa chọn giờ', 'Vui lòng nhấn vào ô khung giờ còn trống để đặt sân');
+      Alert.alert('Chưa chọn giờ', 'Vui lòng nhấn vào ô khung giờ còn trống màu trắng để đặt sân');
       return;
     }
     onNext(selected, bookedSlots, selectedDate, setBookedSlots, activeClub);
   };
 
-  // Helper rút gọn tên sân (vd: "Sân 1", "Sân 2", "Sân 5 VIP")
-  const getShortCourtName = (fullCourt, index) => {
-    if (!fullCourt) return `Sân ${index + 1}`;
-    const name = fullCourt.name || '';
-    if (name.includes('Sân 1')) return 'Sân 1';
-    if (name.includes('Sân 2')) return 'Sân 2';
-    if (name.includes('Sân 3')) return 'Sân 3';
-    if (name.includes('Sân 4')) return 'Sân 4';
-    if (name.includes('Sân 5')) return name.includes('VIP') ? 'Sân 5 (VIP)' : 'Sân 5';
-    if (name.includes('Sân 6')) return 'Sân 6';
-    if (name.includes('Sân 7')) return 'Sân 7';
-    if (name.includes('Sân 8')) return name.includes('Bảo dưỡng') ? 'Sân 8 (Bảo trì)' : 'Sân 8';
-    return `Sân ${index + 1}`;
+  // Nút điều hướng ngày sang trái / phải
+  const handleShiftDate = (direction) => {
+    const currentIndex = daysList.findIndex((d) => d.date === selectedDate);
+    if (currentIndex === -1) return;
+    
+    let targetIndex = currentIndex + direction;
+    if (targetIndex < 0) targetIndex = 0;
+    if (targetIndex >= daysList.length) targetIndex = daysList.length - 1;
+
+    const targetDay = daysList[targetIndex];
+    setSelectedDate(targetDay.date);
+    setSelected([]); // Reset slots khi đổi ngày
+
+    // Cuộn nhẹ dải ngày
+    if (dateScrollRef.current) {
+      dateScrollRef.current.scrollTo({
+        x: Math.max(0, targetIndex * 68 - 100),
+        animated: true,
+      });
+    }
   };
 
-  const CELL_W = 56;
+  // Helper hiển thị tên sân rút gọn giống mẫu: C.Lông 1, C.Lông 2, ...
+  const getShortCourtName = (fullCourt, index) => {
+    return `C.Lông ${index + 1}`;
+  };
+
+  const CELL_W = 58;
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#f8fafc' }}>
-      {/* Header */}
-      <View style={st.gridHeader}>
-        <TouchableOpacity onPress={onBack} style={st.backBtn}>
-          <Text style={{ color: '#fff', fontSize: 20 }}>←</Text>
-        </TouchableOpacity>
-        <View style={{ flex: 1, marginLeft: 8 }}>
-          <Text style={st.gridHeaderTitle}>ĐẶT SÂN THEO KHUNG GIỜ</Text>
-          <Text style={st.gridHeaderSub} numberOfLines={1}>{activeClub.name}</Text>
+    <View style={{ flex: 1, backgroundColor: '#f0fdf4' }}>
+      {/* ─── 1. HEADER XANH ĐẬM (THEO ẢNH MẪU) ─────────────────────────── */}
+      <View style={st.topHeaderSection}>
+        {/* Hàng 1: Nút Back + Tiêu đề */}
+        <View style={st.headerTitleRow}>
+          <TouchableOpacity onPress={onBack} style={st.backBtn} activeOpacity={0.7}>
+            <Text style={st.backBtnText}>‹</Text>
+          </TouchableOpacity>
+          <Text style={st.headerTitle} numberOfLines={1}>
+            ĐẶT LỊCH THEO SÂN - TRỰC QUAN
+          </Text>
         </View>
-      </View>
 
-      {/* 1. THANH CHỌN CƠ SỞ (FACILITY SWITCHER) */}
-      <View style={st.facilitySwitcherSection}>
-        <Text style={st.switcherLabel}>CHỌN CƠ SỞ SÂN THI ĐẤU:</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 12, gap: 8 }}>
-          {clubs.map((club, idx) => {
-            const isCurrent = activeClub.id === club.id;
-            return (
-              <TouchableOpacity
-                key={club.id}
-                style={[st.clubChip, isCurrent && st.clubChipActive]}
-                onPress={() => handleSwitchClub(club)}
-                activeOpacity={0.8}
-              >
-                <Text style={[st.clubChipIcon, isCurrent && { color: '#fff' }]}>🏸</Text>
-                <View>
-                  <Text style={[st.clubChipText, isCurrent && st.clubChipTextActive]}>
-                    Cơ sở {idx + 1}
-                  </Text>
-                  <Text style={[st.clubChipSub, isCurrent && { color: '#d1fae5' }]} numberOfLines={1}>
-                    {club.name.split(':')[1] ? club.name.split(':')[1].trim() : club.name}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
-      </View>
+        {/* Hàng 2: Chọn tháng / năm + Nút điều hướng < > */}
+        <View style={st.monthNavRow}>
+          <TouchableOpacity
+            style={st.monthPickerBtn}
+            onPress={() => Alert.alert('Thời gian thực', `Hệ thống đang đồng bộ theo thời gian thực tế: ${selectedDate}`)}
+            activeOpacity={0.8}
+          >
+            <Text style={st.monthPickerText}>
+              {getMonthYearDisplay(selectedDate)} ⌵
+            </Text>
+          </TouchableOpacity>
 
-      {/* 2. THÔNG TIN CƠ SỞ ĐANG CHỌN */}
-      <View style={st.currentFacilityCard}>
-        <View style={{ flex: 1 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-            <Text style={st.currentFacilityName}>{activeClub.name}</Text>
+          <View style={st.navArrowsGroup}>
+            <TouchableOpacity
+              style={st.arrowBtn}
+              onPress={() => handleShiftDate(-1)}
+              activeOpacity={0.7}
+            >
+              <Text style={st.arrowBtnText}>‹</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={st.arrowBtn}
+              onPress={() => handleShiftDate(1)}
+              activeOpacity={0.7}
+            >
+              <Text style={st.arrowBtnText}>›</Text>
+            </TouchableOpacity>
           </View>
-          <Text style={st.currentFacilityAddr} numberOfLines={1}>📍 {activeClub.address}</Text>
-          <Text style={st.currentFacilityPrice}>💰 Giá thuê: <Text style={{ fontWeight: '800', color: '#059669' }}>{activeClub.priceRange || '60.000đ - 120.000đ/h'}</Text></Text>
         </View>
-        <View style={st.facilityBadgeRight}>
-          <Text style={st.facilityCourtCount}>{displayCourts.length} SÂN</Text>
-          <Text style={st.facilityRating}>⭐ {activeClub.rating || 5.0}</Text>
-        </View>
-      </View>
 
-      {/* 3. CHỌN NGÀY THI ĐẤU */}
-      <View style={st.dateRowSection}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 12, gap: 8 }}>
-          {DATE_OPTIONS.map((item) => {
+        {/* Hàng 3: Dải chọn ngày (Thứ / Ngày-Tháng) dạng Pill */}
+        <ScrollView
+          ref={dateScrollRef}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={st.dateScrollContainer}
+        >
+          {daysList.map((item) => {
             const isSel = selectedDate === item.date;
             return (
               <TouchableOpacity
                 key={item.date}
-                style={[st.dateChip, isSel && st.dateChipActive]}
+                style={[st.datePill, isSel && st.datePillActive]}
                 onPress={() => {
                   setSelectedDate(item.date);
                   setSelected([]); // Reset slots khi đổi ngày
                 }}
+                activeOpacity={0.8}
               >
-                <Text style={[st.dateChipDay, isSel && { color: '#d1fae5' }]}>{item.day}</Text>
-                <Text style={[st.dateChipLabel, isSel && st.dateChipLabelActive]}>{item.label}</Text>
+                <Text style={[st.datePillDay, isSel && st.datePillDayActive]}>
+                  {item.day}
+                </Text>
+                <Text style={[st.datePillDate, isSel && st.datePillDateActive]}>
+                  {item.displayDate}
+                </Text>
               </TouchableOpacity>
             );
           })}
         </ScrollView>
-      </View>
 
-      {/* Legend Ribbon */}
-      <View style={st.legendRow}>
-        {[
-          ['#ffffff', 'Trống', '#cbd5e1'],
-          ['#059669', 'Đang chọn', '#059669'],
-          ['#fca5a5', 'Đã đặt', '#f87171'],
-          ['#e2e8f0', 'Bảo trì', '#94a3b8'],
-        ].map(([bg, label, border]) => (
-          <View key={label} style={st.legendItem}>
-            <View style={[st.legendDot, { backgroundColor: bg, borderColor: border }]} />
-            <Text style={st.legendText}>{label}</Text>
+        {/* Hàng 4: Chú thích trạng thái (Legend) */}
+        <View style={st.legendRow}>
+          <View style={st.legendItem}>
+            <View style={[st.legendBox, { backgroundColor: '#ffffff', borderColor: '#cbd5e1' }]} />
+            <Text style={st.legendText}>Trống</Text>
           </View>
-        ))}
+          <View style={st.legendItem}>
+            <View style={[st.legendBox, { backgroundColor: '#ef4444' }]} />
+            <Text style={st.legendText}>Đã đặt</Text>
+          </View>
+          <View style={st.legendItem}>
+            <View style={[st.legendBox, { backgroundColor: '#9ca3af' }]} />
+            <Text style={st.legendText}>Khoá</Text>
+          </View>
+          <View style={st.legendItem}>
+            <View style={[st.legendBox, { backgroundColor: '#c084fc', alignItems: 'center', justifyContent: 'center' }]}>
+              <Text style={{ color: '#fff', fontSize: 9, fontWeight: '900' }}>!</Text>
+            </View>
+            <Text style={st.legendText}>Sự kiện</Text>
+          </View>
+          {selected.length > 0 && (
+            <View style={st.legendItem}>
+              <View style={[st.legendBox, { backgroundColor: '#10b981' }]} />
+              <Text style={[st.legendText, { color: '#6ee7b7' }]}>Đang chọn</Text>
+            </View>
+          )}
+        </View>
+
+        {/* Hàng 5: Link xem giá */}
+        <TouchableOpacity
+          style={st.pricingLinkRow}
+          onPress={() =>
+            Alert.alert(
+              'Bảng giá thuê sân',
+              `${activeClub.name}\n• Khung giờ thường: 60.000đ - 80.000đ/h\n• Khung giờ vàng (17h-21h): 100.000đ - 120.000đ/h\n• Tiêu chuẩn: Thảm BWF, ánh sáng chống loá.`
+            )
+          }
+        >
+          <Text style={st.pricingLinkText}>Xem sân & bảng giá</Text>
+        </TouchableOpacity>
       </View>
 
-      {/* 4. BẢNG TRẠNG THÁI KHUNG GIỜ (CHỈ HIỆN SÂN CỦA CƠ SỞ ĐƯỢC CHỌN) */}
+      {/* ─── 2. GHI CHÚ ĐẶT LỊCH CỐ ĐỊNH ─────────────────────────────── */}
+      <View style={st.noticeBar}>
+        <Text style={st.noticeText}>
+          <Text style={st.noticeHighlight}>Lưu ý: </Text>
+          Nếu bạn cần đặt lịch cố định vui lòng liên hệ:{' '}
+          <Text style={st.noticePhone}>0936 157 135</Text> để được hỗ trợ
+        </Text>
+      </View>
+
+      {/* ─── 3. BẢNG KHUNG GIỜ THỜI GIAN THỰC (TIMELINE GRID) ───────── */}
       <ScrollView style={{ flex: 1 }} horizontal showsHorizontalScrollIndicator={true}>
-        <View style={{ paddingBottom: 90 }}>
-          {/* Hour header row */}
-          <View style={{ flexDirection: 'row', backgroundColor: '#e2e8f0', borderBottomWidth: 1, borderColor: '#cbd5e1' }}>
-            <View style={st.gridCourtLabelHeader}>
-              <Text style={st.gridCourtLabelHeaderText}>SỐ SÂN</Text>
+        <View style={{ paddingBottom: 110 }}>
+          {/* Hàng tiêu đề giờ (Header timeline xanh lơ nhạt) */}
+          <View style={st.gridTimelineHeader}>
+            <View style={st.gridCourtCorner}>
+              <Text style={st.gridCourtCornerText}>SÂN</Text>
             </View>
             {HOURS.map((h) => (
-              <View key={h} style={[st.gridHourCell, { width: CELL_W }]}>
-                <Text style={st.gridHourText}>{h}</Text>
+              <View key={h} style={[st.gridHourHeaderCell, { width: CELL_W }]}>
+                <Text style={st.gridHourHeaderText}>{h}</Text>
               </View>
             ))}
           </View>
 
-          {/* Court rows */}
+          {/* Các hàng sân thi đấu */}
           <ScrollView showsVerticalScrollIndicator={false}>
             {displayCourts.map((court, idx) => {
-              const courtShortTitle = getShortCourtName(court, idx);
+              const courtLabel = getShortCourtName(court, idx);
               const isMaintenance = court.status === 'maintenance';
 
               return (
-                <View key={court.id || idx} style={st.gridRow}>
-                  {/* Cột Tên sân riêng biệt */}
-                  <View style={[st.gridCourtLabel, isMaintenance && { backgroundColor: '#f1f5f9' }]}>
-                    <Text style={st.gridCourtNumber}>{courtShortTitle}</Text>
-                    <Text style={st.gridCourtPriceTag}>
-                      {isMaintenance ? 'Bảo dưỡng' : `${((court.price || 80000) / 1000)}k/h`}
-                    </Text>
+                <View key={court.id || idx} style={st.courtRow}>
+                  {/* Cột tên sân nền xanh mint nhạt */}
+                  <View style={st.courtNameColumn}>
+                    <Text style={st.courtNameText}>{courtLabel}</Text>
                   </View>
 
                   {/* Các ô khung giờ */}
                   {HOURS.map((h, hIdx) => {
                     const hour = 5 + hIdx;
+                    const past = isPastSlot(selectedDate, hour);
                     const booked = isBooked(court.id, hour);
                     const sel = isSelected(court.id, hour);
+
+                    // Trạng thái ô:
+                    // 1. past: Màu xám khoá (đã qua thời gian thực)
+                    // 2. booked: Màu đỏ nhạt đã đặt
+                    // 3. sel: Màu xanh đang chọn
+                    // 4. maintenance: Màu xám bảo dưỡng
+                    // 5. trống: Màu trắng cho phép click
 
                     return (
                       <TouchableOpacity
                         key={h}
                         style={[
-                          st.gridCell,
+                          st.timeSlotCell,
                           { width: CELL_W },
-                          booked && st.gridCellBooked,
-                          sel && st.gridCellSelected,
-                          isMaintenance && st.gridCellMaintenance,
+                          past && st.timeSlotPast,
+                          booked && !past && st.timeSlotBooked,
+                          sel && st.timeSlotSelected,
+                          isMaintenance && st.timeSlotMaintenance,
                         ]}
                         onPress={() => toggleSlot(court.id, hour, court)}
-                        activeOpacity={booked || isMaintenance ? 1 : 0.7}
+                        activeOpacity={past || booked || isMaintenance ? 0.9 : 0.6}
                       >
                         {sel ? (
-                          <Text style={{ color: '#fff', fontSize: 13, fontWeight: '900' }}>✓</Text>
-                        ) : booked ? (
-                          <Text style={{ color: '#b91c1c', fontSize: 9, fontWeight: '700' }}>ĐÃ ĐẶT</Text>
+                          <Text style={st.selectedTick}>✓</Text>
+                        ) : booked && !past ? (
+                          <Text style={st.bookedText}>ĐÃ ĐẶT</Text>
+                        ) : past ? (
+                          <Text style={st.pastText}>✕</Text>
                         ) : isMaintenance ? (
-                          <Text style={{ color: '#94a3b8', fontSize: 9 }}>✕</Text>
+                          <Text style={st.maintenanceText}>Bảo trì</Text>
                         ) : null}
                       </TouchableOpacity>
                     );
@@ -250,27 +323,28 @@ export function BookingGridStep({
         </View>
       </ScrollView>
 
-      {/* Bottom Floating Bar */}
-      <View style={st.gridBottomBar}>
-        <View style={st.gridBottomInfo}>
-          <Text style={st.gridBottomFacilityText} numberOfLines={1}>
-            📍 {activeClub.name.split(':')[0] || 'QT Sport'} • {selectedDate}
+      {/* ─── 4. THANH ĐIỀU KHIỂN DƯỚI CÙNG & NÚT TIẾP THEO (VÀNG/CAM) ─── */}
+      <View style={st.bottomActionBar}>
+        <View style={st.bottomSummary}>
+          <Text style={st.bottomDateInfo}>
+            {selectedDate} • {activeClub.name.split(':')[0] || 'QT Sport'}
           </Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 2 }}>
-            <Text style={st.gridBottomText}>
-              Đã chọn: <Text style={st.gridBottomBold}>{totalHours} giờ</Text> ({selected.length} ô)
+          <View style={st.bottomPriceRow}>
+            <Text style={st.bottomCountText}>
+              Đã chọn: <Text style={st.bottomCountBold}>{totalHours} giờ</Text>
             </Text>
-            <Text style={st.gridBottomPrice}>
+            <Text style={st.bottomTotalPrice}>
               {totalPrice.toLocaleString('vi-VN')} đ
             </Text>
           </View>
         </View>
+
         <TouchableOpacity
-          style={[st.nextBtn, selected.length === 0 && { opacity: 0.5 }]}
+          style={[st.nextStepBtn, selected.length === 0 && st.nextStepBtnDisabled]}
           onPress={handleNext}
-          disabled={selected.length === 0}
+          activeOpacity={0.85}
         >
-          <Text style={st.nextBtnText}>TIẾP TỤC ĐẶT SÂN →</Text>
+          <Text style={st.nextStepBtnText}>TIẾP THEO</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -278,199 +352,328 @@ export function BookingGridStep({
 }
 
 const st = StyleSheet.create({
-  gridHeader: {
-    backgroundColor: '#065f46',
+  // ── 1. Top Header ──
+  topHeaderSection: {
+    backgroundColor: '#0a5c36',
+    paddingTop: 8,
+    paddingBottom: 10,
+    paddingHorizontal: 12,
+  },
+  headerTitleRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 14,
+    marginBottom: 8,
   },
   backBtn: {
-    padding: 6,
-    borderRadius: 8,
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    width: 32,
+    height: 32,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 8,
   },
-  gridHeaderTitle: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '900',
-    letterSpacing: 0.5,
+  backBtnText: {
+    color: '#ffffff',
+    fontSize: 26,
+    fontWeight: '300',
+    lineHeight: 28,
   },
-  gridHeaderSub: {
-    color: '#a7f3d0',
-    fontSize: 11,
-    marginTop: 2,
-  },
-  facilitySwitcherSection: {
-    backgroundColor: '#fff',
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderColor: '#e2e8f0',
-  },
-  switcherLabel: {
-    color: '#64748b',
-    fontSize: 10,
+  headerTitle: {
+    color: '#ffffff',
+    fontSize: 16,
     fontWeight: '800',
-    marginHorizontal: 14,
-    marginBottom: 6,
     letterSpacing: 0.5,
+    flex: 1,
   },
-  clubChip: {
+  monthNavRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+    paddingHorizontal: 4,
+  },
+  monthPickerBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f1f5f9',
-    borderRadius: 10,
-    paddingHorizontal: 12,
-    paddingVertical: 7,
-    borderWidth: 1,
-    borderColor: '#cbd5e1',
-    gap: 6,
   },
-  clubChipActive: {
-    backgroundColor: '#059669',
-    borderColor: '#047857',
+  monthPickerText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '700',
   },
-  clubChipIcon: { fontSize: 14 },
-  clubChipText: { color: '#334155', fontSize: 12, fontWeight: '800' },
-  clubChipTextActive: { color: '#fff' },
-  clubChipSub: { color: '#64748b', fontSize: 10, maxWidth: 120 },
-  currentFacilityCard: {
+  navArrowsGroup: {
     flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#ecfdf5',
-    marginHorizontal: 12,
-    marginTop: 8,
-    borderRadius: 12,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#a7f3d0',
+    gap: 8,
   },
-  currentFacilityName: { color: '#064e3b', fontSize: 13, fontWeight: '800' },
-  currentFacilityAddr: { color: '#047857', fontSize: 11, marginTop: 2 },
-  currentFacilityPrice: { color: '#374151', fontSize: 11, marginTop: 3 },
-  facilityBadgeRight: {
-    backgroundColor: '#fff',
+  arrowBtn: {
+    width: 28,
+    height: 28,
     borderRadius: 8,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
+    backgroundColor: 'rgba(255,255,255,0.18)',
+    justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#6ee7b7',
   },
-  facilityCourtCount: { color: '#059669', fontSize: 11, fontWeight: '900' },
-  facilityRating: { color: '#d97706', fontSize: 10, fontWeight: '700', marginTop: 2 },
-  dateRowSection: {
-    backgroundColor: '#fff',
-    paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderColor: '#e2e8f0',
-    marginTop: 8,
+  arrowBtnText: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: '700',
+    lineHeight: 20,
   },
-  dateChip: {
-    backgroundColor: '#f8fafc',
-    borderRadius: 8,
-    paddingHorizontal: 14,
+  dateScrollContainer: {
+    gap: 8,
+    paddingVertical: 2,
+  },
+  datePill: {
+    minWidth: 58,
     paddingVertical: 6,
+    paddingHorizontal: 8,
+    borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: 'rgba(255,255,255,0.4)',
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
   },
-  dateChipActive: {
-    backgroundColor: '#059669',
-    borderColor: '#059669',
+  datePillActive: {
+    backgroundColor: '#ffffff',
+    borderColor: '#ffffff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
+    elevation: 3,
   },
-  dateChipDay: { color: '#64748b', fontSize: 10, fontWeight: '600' },
-  dateChipLabel: { color: '#1e293b', fontSize: 12, fontWeight: '800' },
-  dateChipLabelActive: { color: '#fff' },
+  datePillDay: {
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: 11,
+    fontWeight: '600',
+    marginBottom: 2,
+  },
+  datePillDayActive: {
+    color: '#0a5c36',
+    fontWeight: '700',
+  },
+  datePillDate: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: '800',
+  },
+  datePillDateActive: {
+    color: '#0a5c36',
+    fontWeight: '900',
+  },
   legendRow: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    gap: 14,
+    marginTop: 10,
+    paddingHorizontal: 4,
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
+  legendBox: {
+    width: 14,
+    height: 14,
+    borderRadius: 3,
+  },
+  legendText: {
+    color: '#ffffff',
+    fontSize: 11,
+    fontWeight: '500',
+  },
+  pricingLinkRow: {
+    marginTop: 8,
+    paddingHorizontal: 4,
+  },
+  pricingLinkText: {
+    color: '#bef264',
+    fontSize: 12,
+    fontWeight: '700',
+    textDecorationLine: 'underline',
+  },
+
+  // ── 2. Notice Bar ──
+  noticeBar: {
+    backgroundColor: '#ecfdf5',
     paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderBottomWidth: 1,
+    borderColor: '#d1fae5',
+  },
+  noticeText: {
+    fontSize: 11,
+    color: '#334155',
+    lineHeight: 16,
+  },
+  noticeHighlight: {
+    color: '#ea580c',
+    fontWeight: '800',
+  },
+  noticePhone: {
+    color: '#0f766e',
+    fontWeight: '700',
+  },
+
+  // ── 3. Grid Table ──
+  gridTimelineHeader: {
+    flexDirection: 'row',
+    backgroundColor: '#e0f2fe',
+    borderBottomWidth: 1,
+    borderColor: '#bae6fd',
+  },
+  gridCourtCorner: {
+    width: 78,
+    paddingVertical: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#bae6fd',
+    borderRightWidth: 1,
+    borderColor: '#93c5fd',
+  },
+  gridCourtCornerText: {
+    color: '#0369a1',
+    fontSize: 11,
+    fontWeight: '800',
+  },
+  gridHourHeaderCell: {
+    paddingVertical: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRightWidth: 1,
+    borderColor: '#bae6fd',
+  },
+  gridHourHeaderText: {
+    color: '#0369a1',
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  courtRow: {
+    flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: '#e2e8f0',
   },
-  legendItem: { flexDirection: 'row', alignItems: 'center', gap: 5 },
-  legendDot: { width: 14, height: 14, borderRadius: 3, borderWidth: 1 },
-  legendText: { color: '#475569', fontSize: 11, fontWeight: '600' },
-  gridCourtLabelHeader: {
-    width: 95,
-    paddingVertical: 8,
-    paddingHorizontal: 6,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#cbd5e1',
-  },
-  gridCourtLabelHeaderText: { color: '#334155', fontSize: 10, fontWeight: '800' },
-  gridHourCell: {
-    paddingVertical: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderLeftWidth: 1,
-    borderColor: '#cbd5e1',
-  },
-  gridHourText: { color: '#1e293b', fontSize: 11, fontWeight: '800' },
-  gridRow: { flexDirection: 'row', borderBottomWidth: 1, borderColor: '#e2e8f0' },
-  gridCourtLabel: {
-    width: 95,
-    paddingVertical: 12,
-    paddingHorizontal: 6,
-    backgroundColor: '#fff',
-    borderRightWidth: 1,
-    borderColor: '#e2e8f0',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  gridCourtNumber: { color: '#0f172a', fontSize: 12, fontWeight: '800' },
-  gridCourtPriceTag: { color: '#059669', fontSize: 10, fontWeight: '700', marginTop: 2 },
-  gridCell: {
+  courtNameColumn: {
+    width: 78,
     height: 48,
-    backgroundColor: '#fff',
+    backgroundColor: '#d1fae5',
+    borderRightWidth: 1,
+    borderColor: '#a7f3d0',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  courtNameText: {
+    color: '#065f46',
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  timeSlotCell: {
+    height: 48,
+    backgroundColor: '#ffffff',
     borderRightWidth: 1,
     borderColor: '#e2e8f0',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  gridCellBooked: {
+  timeSlotPast: {
+    backgroundColor: '#e2e8f0',
+  },
+  timeSlotBooked: {
     backgroundColor: '#fee2e2',
   },
-  gridCellSelected: {
+  timeSlotSelected: {
     backgroundColor: '#059669',
   },
-  gridCellMaintenance: {
+  timeSlotMaintenance: {
     backgroundColor: '#f1f5f9',
   },
-  gridBottomBar: {
+  selectedTick: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '900',
+  },
+  bookedText: {
+    color: '#ef4444',
+    fontSize: 8,
+    fontWeight: '800',
+  },
+  pastText: {
+    color: '#94a3b8',
+    fontSize: 11,
+    fontWeight: '600',
+  },
+  maintenanceText: {
+    color: '#94a3b8',
+    fontSize: 8,
+  },
+
+  // ── 4. Bottom Floating Bar ──
+  bottomActionBar: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     borderTopWidth: 1,
     borderColor: '#e2e8f0',
-    padding: 12,
-    paddingBottom: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
+    paddingHorizontal: 14,
+    paddingTop: 10,
+    paddingBottom: 22,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -3 },
-    shadowOpacity: 0.08,
+    shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 8,
   },
-  gridBottomInfo: { flex: 1 },
-  gridBottomFacilityText: { color: '#64748b', fontSize: 11, fontWeight: '600' },
-  gridBottomText: { color: '#334155', fontSize: 12 },
-  gridBottomBold: { fontWeight: '800', color: '#0f172a' },
-  gridBottomPrice: { color: '#059669', fontSize: 16, fontWeight: '900' },
-  nextBtn: {
-    backgroundColor: '#059669',
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+  bottomSummary: {
+    marginBottom: 8,
+  },
+  bottomDateInfo: {
+    color: '#64748b',
+    fontSize: 11,
+    fontWeight: '600',
+  },
+  bottomPriceRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 2,
+  },
+  bottomCountText: {
+    color: '#334155',
+    fontSize: 12,
+  },
+  bottomCountBold: {
+    fontWeight: '800',
+    color: '#0f172a',
+  },
+  bottomTotalPrice: {
+    color: '#059669',
+    fontSize: 16,
+    fontWeight: '900',
+  },
+  nextStepBtn: {
+    backgroundColor: '#eab308',
+    borderRadius: 14,
+    paddingVertical: 14,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#ca8a04',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 4,
   },
-  nextBtnText: { color: '#fff', fontSize: 13, fontWeight: '900', letterSpacing: 0.5 },
+  nextStepBtnDisabled: {
+    backgroundColor: '#fde047',
+    opacity: 0.65,
+  },
+  nextStepBtnText: {
+    color: '#ffffff',
+    fontSize: 15,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
 });

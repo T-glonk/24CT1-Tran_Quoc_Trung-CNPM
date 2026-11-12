@@ -72,11 +72,12 @@ export function AppNavigator() {
   } = useApp();
 
   // ── 1. AUTH FLOW ──
-  if (!currentUser) {
+  if (!currentUser && authScreen) {
     if (authScreen === 'welcome') {
       return (
         <SafeAreaView style={st.root}>
           <StatusBar style="light" />
+          <Header title="Chào mừng" onBack={() => setAuthScreen(null)} />
           <WelcomeScreen navigate={setAuthScreen} />
         </SafeAreaView>
       );
@@ -85,7 +86,7 @@ export function AppNavigator() {
       return (
         <SafeAreaView style={st.root}>
           <StatusBar style="light" />
-          <Header title="Đăng nhập" onBack={() => setAuthScreen('welcome')} />
+          <Header title="Đăng nhập" onBack={() => setAuthScreen(null)} />
           <LoginScreen navigate={setAuthScreen} onLogin={handleLogin} />
         </SafeAreaView>
       );
@@ -94,7 +95,7 @@ export function AppNavigator() {
       return (
         <SafeAreaView style={st.root}>
           <StatusBar style="light" />
-          <Header title="Tạo tài khoản" onBack={() => setAuthScreen('login')} />
+          <Header title="Tạo tài khoản" onBack={() => setAuthScreen(null)} />
           <RegisterScreen navigate={setAuthScreen} onLogin={handleLogin} />
         </SafeAreaView>
       );
@@ -102,7 +103,7 @@ export function AppNavigator() {
   }
 
   // ── 2. MAIN APPLICATION ──
-  const isAdmin = currentUser.role === 'admin';
+  const isAdmin = currentUser?.role === 'admin';
 
   const renderAdminHeader = (title) => (
     <View style={st.adminSubHeader}>
@@ -303,9 +304,11 @@ export function AppNavigator() {
           <HomeScreen
             user={currentUser}
             navigate={navigate}
+            clubs={clubs}
             bookings={bookings}
             favorites={favorites}
             onToggleFavorite={handleToggleFavorite}
+            onSelectClub={selectClubAndBook}
           />
         );
     }

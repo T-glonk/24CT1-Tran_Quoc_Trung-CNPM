@@ -132,9 +132,10 @@ class DatabaseStore {
   getUserByEmailOrPhone(query) {
     if (!query) return null;
     const q = query.toString().trim().toLowerCase();
+    const clean = q.replace(/\s+/g, '');
     return this.users.find(u =>
       (u.email && u.email.toLowerCase() === q) ||
-      (u.phone && u.phone.trim() === q)
+      (u.phone && (u.phone.trim().toLowerCase() === q || u.phone.replace(/\s+/g, '') === clean))
     );
   }
   addUser(user) {

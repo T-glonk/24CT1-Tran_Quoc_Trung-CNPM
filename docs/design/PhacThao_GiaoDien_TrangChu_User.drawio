@@ -1,0 +1,234 @@
+<mxfile host="app.diagrams.net" agent="Antigravity">
+  <diagram name="TrangChu_User_Wireframe" id="wireframe_home_user">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1150" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TIÊU ĐỀ BẢN VẼ PHÁC THẢO -->
+        <mxCell id="title_main" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#000000;" value="BẢN PHÁC THẢO BỐ CỤC (WIREFRAME) - TRANG CHỦ USER APP BOOKING SÂN CẦU LÔNG" vertex="1">
+          <mxGeometry height="25" width="800" x="50" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="title_sub" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=2;fontColor=#555555;" value="Dự Án ALOBO SPORT / QT SPORT (24CT1 - Trần Quốc Trung) - Khung Mobile chuẩn Wireframe (Không màu sắc, không dùng icon)" vertex="1">
+          <mxGeometry height="20" width="800" x="50" y="45" as="geometry" />
+        </mxCell>
+
+        <!-- KHUNG THIẾT BỊ DI ĐỘNG (SMARTPHONE FRAME) -->
+        <mxCell id="phone_frame" parent="1" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2.5;" value="" vertex="1">
+          <mxGeometry height="870" width="410" x="50" y="75" as="geometry" />
+        </mxCell>
+
+        <!-- STATUS BAR (GIỜ 8:35, CAMERA ĐỤC LỖ, 5G, PIN) -->
+        <mxCell id="status_time" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontStyle=1;fontColor=#333333;" value="8:35 &amp;nbsp; [Cài đặt] [Khiên]" vertex="1">
+          <mxGeometry height="22" width="130" x="65" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="camera_punch" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="12" width="12" x="249" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="status_icons" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=10;fontColor=#333333;" value="[5G] [Pin]" vertex="1">
+          <mxGeometry height="22" width="100" x="350" y="80" as="geometry" />
+        </mxCell>
+
+        <!-- PHẦN 1: HEADER (AVATAR + QT SPORT · Thứ năm, 29/10/2026 + h0210 + 2 NÚT) -->
+        <mxCell id="header_box" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="58" width="380" x="65" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="avatar_box" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;fontSize=9;align=center;" value="[Avatar/&lt;br&gt;Vợt cầu]" vertex="1">
+          <mxGeometry height="42" width="42" x="75" y="113" as="geometry" />
+        </mxCell>
+        <mxCell id="user_text" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;span style=&quot;font-size:10px;color:#555555;&quot;&gt;QT SPORT · Thứ năm, 29/10/2026&lt;/span&gt;&lt;br&gt;&lt;b style=&quot;font-size:13px;&quot;&gt;h0210&lt;/b&gt;" vertex="1">
+          <mxGeometry height="42" width="200" x="125" y="113" as="geometry" />
+        </mxCell>
+        <mxCell id="btn_location_pin" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;align=center;" value="[Ghim]" vertex="1">
+          <mxGeometry height="32" width="32" x="350" y="118" as="geometry" />
+        </mxCell>
+        <mxCell id="btn_settings_bell" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;align=center;" value="[Chuông]" vertex="1">
+          <mxGeometry height="32" width="32" x="395" y="118" as="geometry" />
+        </mxCell>
+
+        <!-- PHẦN 2: SEARCH ROW (Ô TÌM KIẾM + NÚT TIA SÉT) -->
+        <mxCell id="search_input" parent="1" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;fontSize=10.5;fontColor=#555555;align=left;spacingLeft=12;" value="[Ô nhập: Tìm theo cơ sở, quận, tên sân...]" vertex="1">
+          <mxGeometry height="36" width="325" x="65" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="btn_lightning" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;fontSize=10;align=center;fontStyle=1;" value="[Lọc]" vertex="1">
+          <mxGeometry height="36" width="36" x="402" y="170" as="geometry" />
+        </mxCell>
+
+        <!-- PHẦN 3: 4 NÚT TÁC VỤ NHANH (QUICK ACTIONS) -->
+        <mxCell id="quick_nav_box" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="48" width="380" x="65" y="214" as="geometry" />
+        </mxCell>
+        <mxCell id="qa_item1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9.5;fontStyle=1;" value="[Đặt sân nhanh]" vertex="1">
+          <mxGeometry height="40" width="92" x="68" y="218" as="geometry" />
+        </mxCell>
+        <mxCell id="qa_item2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9.5;fontStyle=1;" value="[Bản đồ sân]" vertex="1">
+          <mxGeometry height="40" width="90" x="162" y="218" as="geometry" />
+        </mxCell>
+        <mxCell id="qa_item3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9.5;fontStyle=1;" value="[Lịch của tôi]" vertex="1">
+          <mxGeometry height="40" width="90" x="254" y="218" as="geometry" />
+        </mxCell>
+        <mxCell id="qa_item4" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9.5;fontStyle=1;" value="[Yêu thích]" vertex="1">
+          <mxGeometry height="40" width="90" x="348" y="218" as="geometry" />
+        </mxCell>
+
+        <!-- PHẦN 4: HERO BANNER (ALOBO SPORT - HỆ THỐNG QT SPORT CƠ SỞ 1 - 8) -->
+        <mxCell id="banner_box" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" value="" vertex="1">
+          <mxGeometry height="92" width="380" x="65" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="banner_tag" parent="1" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=8.5;fontStyle=1;align=center;" value="[HỆ THỐNG SÂN CHUẨN THI ĐẤU]" vertex="1">
+          <mxGeometry height="18" width="180" x="75" y="278" as="geometry" />
+        </mxCell>
+        <mxCell id="banner_brand" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b style=&quot;font-size:13px;&quot;&gt;ALOBO SPORT&lt;/b&gt;&lt;br&gt;&lt;b style=&quot;font-size:11px;&quot;&gt;HỆ THỐNG QT SPORT (CƠ SỞ 1 - 8)&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9.5px;color:#444444;&quot;&gt;Thảm BWF tiêu chuẩn quốc tế · Đặt lịch linh hoạt 24/7&lt;/span&gt;" vertex="1">
+          <mxGeometry height="48" width="360" x="75" y="298" as="geometry" />
+        </mxCell>
+
+        <!-- PHẦN 5: BẢN ĐỒ SÂN CẦU LÔNG (MINI MAP WIDGET) -->
+        <mxCell id="map_box" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" value="" vertex="1">
+          <mxGeometry height="160" width="380" x="65" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="map_title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;" value="&lt;b style=&quot;font-size:11px;&quot;&gt;[Bản Đồ Sân Cầu Lông]&lt;/b&gt;" vertex="1">
+          <mxGeometry height="24" width="160" x="75" y="374" as="geometry" />
+        </mxCell>
+        <mxCell id="map_btn_expand" parent="1" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;align=center;" value="[Mở toàn màn hình ↗]" vertex="1">
+          <mxGeometry height="20" width="130" x="305" y="376" as="geometry" />
+        </mxCell>
+        <mxCell id="map_view_area" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#000000;strokeWidth=1;fontSize=9.5;align=center;verticalAlign=middle;" value="[ X - BẢN ĐỒ SƠ ĐỒ MINI ]&lt;br&gt;[Ghim]: Đà Nẵng · 8 CLB Cầu Lông Tiêu Chuẩn&lt;br&gt;&lt;br&gt;&lt;b&gt;[ Nút: Chạm để xem bản đồ tương tác ]&lt;/b&gt;" vertex="1">
+          <mxGeometry height="82" width="360" x="75" y="402" as="geometry" />
+        </mxCell>
+        <mxCell id="map_selected_club" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=9;fontColor:#333333;" value="[Ghim]: QT Sport - Cơ sở 1: Sân Hoa Thiên Lý&lt;br&gt;&lt;span style=&quot;font-size:8.5px;color:#666666;&quot;&gt;207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng&lt;/span&gt;" vertex="1">
+          <mxGeometry height="34" width="360" x="75" y="490" as="geometry" />
+        </mxCell>
+
+        <!-- PHẦN 6: DANH SÁCH CÂU LẠC BỘ (HỆ THỐNG CƠ SỞ QT SPORT) -->
+        <mxCell id="section_clubs_title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;" value="&lt;b style=&quot;font-size:12px;&quot;&gt;Hệ Thống Cơ Sở QT Sport (8)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="22" width="220" x="65" y="538" as="geometry" />
+        </mxCell>
+        <mxCell id="section_clubs_more" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=10;fontStyle=1;" value="[Xem tất cả →]" vertex="1">
+          <mxGeometry height="22" width="110" x="335" y="538" as="geometry" />
+        </mxCell>
+
+        <!-- THẺ CƠ SỞ: QT SPORT - CƠ SỞ 1: SÂN HOA THIÊN LÝ -->
+        <mxCell id="club_card1" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;" value="" vertex="1">
+          <mxGeometry height="130" width="380" x="65" y="565" as="geometry" />
+        </mxCell>
+        <mxCell id="club1_img" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#000000;strokeWidth=1;fontSize=9;align=center;verticalAlign=middle;" value="[ X ]&lt;br&gt;&lt;br&gt;[ẢNH SÂN]&lt;br&gt;Vợt cầu" vertex="1">
+          <mxGeometry height="112" width="80" x="74" y="574" as="geometry" />
+        </mxCell>
+        <mxCell id="club1_tag1" parent="1" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=8.5;align=center;" value="[Chuẩn BWF]" vertex="1">
+          <mxGeometry height="18" width="68" x="162" y="574" as="geometry" />
+        </mxCell>
+        <mxCell id="club1_tag2" parent="1" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=8.5;align=center;" value="[Đơn ngày]" vertex="1">
+          <mxGeometry height="18" width="58" x="234" y="574" as="geometry" />
+        </mxCell>
+        <mxCell id="club1_tag3" parent="1" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=8.5;align=center;" value="[Sự kiện]" vertex="1">
+          <mxGeometry height="18" width="50" x="296" y="574" as="geometry" />
+        </mxCell>
+        <mxCell id="club1_fav" parent="1" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=8.5;align=center;" value="[Yêu thích]" vertex="1">
+          <mxGeometry height="18" width="60" x="375" y="574" as="geometry" />
+        </mxCell>
+        <mxCell id="club1_info" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b style=&quot;font-size:11px;&quot;&gt;QT Sport - Cơ sở 1: Sân Hoa Thiên Lý&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#444444;&quot;&gt;Đ/c: 207 Quách Thị Trang, Hòa Xuân, Cẩm Lệ, Đà Nẵng&lt;br&gt;Giờ: 05:00 - 23:00 &amp;nbsp;|&amp;nbsp; Đánh giá: 4.9 (156)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="42" width="270" x="162" y="598" as="geometry" />
+        </mxCell>
+        <mxCell id="club1_btn_book" parent="1" style="rounded=1;arcSize=15;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=10;fontStyle=1;align=center;" value="[ ĐẶT SÂN ]" vertex="1">
+          <mxGeometry height="28" width="270" x="162" y="652" as="geometry" />
+        </mxCell>
+
+        <!-- THẺ CƠ SỞ 2 (PHẦN CUỐN XUỐNG DƯỚI) -->
+        <mxCell id="club_card2" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;" value="" vertex="1">
+          <mxGeometry height="65" width="380" x="65" y="705" as="geometry" />
+        </mxCell>
+        <mxCell id="club2_img" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#000000;strokeWidth=1;fontSize=8.5;align=center;verticalAlign=middle;" value="[ X - ẢNH ]" vertex="1">
+          <mxGeometry height="50" width="80" x="74" y="712" as="geometry" />
+        </mxCell>
+        <mxCell id="club2_info" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b style=&quot;font-size:10.5px;&quot;&gt;QT Sport - Cơ sở 2: Sân Hải Châu&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#444444;&quot;&gt;Đ/c: 45 Nguyễn Tri Phương, Hải Châu, Đà Nẵng...&lt;/span&gt;" vertex="1">
+          <mxGeometry height="35" width="270" x="162" y="718" as="geometry" />
+        </mxCell>
+
+        <!-- PHẦN 7: THANH ĐIỀU HƯỚNG ĐÁY (BOTTOM NAVIGATION BAR) -->
+        <mxCell id="tab_bar_box" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" value="" vertex="1">
+          <mxGeometry height="65" width="410" x="50" y="805" as="geometry" />
+        </mxCell>
+        <mxCell id="tab_home" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9.5;" value="&lt;b&gt;[Trang chủ]&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:8px;&quot;&gt;● (Đang chọn)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="45" width="75" x="55" y="812" as="geometry" />
+        </mxCell>
+        <mxCell id="tab_map" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9.5;" value="[Bản đồ]" vertex="1">
+          <mxGeometry height="45" width="65" x="135" y="812" as="geometry" />
+        </mxCell>
+        <mxCell id="tab_explore_circle" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2;fontSize=9;fontStyle=1;align=center;" value="[Khám phá&lt;br&gt;/ Đặt lịch]" vertex="1">
+          <mxGeometry height="68" width="68" x="221" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="tab_featured" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9.5;" value="[Nổi bật]" vertex="1">
+          <mxGeometry height="45" width="65" x="305" y="812" as="geometry" />
+        </mxCell>
+        <mxCell id="tab_account" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9.5;" value="[Tài khoản]" vertex="1">
+          <mxGeometry height="45" width="75" x="375" y="812" as="geometry" />
+        </mxCell>
+
+        <!-- VẠCH ĐIỀU HƯỚNG DƯỚI ĐÁY (HOME INDICATOR) -->
+        <mxCell id="home_indicator" parent="1" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="4" width="130" x="190" y="930" as="geometry" />
+        </mxCell>
+
+        <!-- BẢNG CHÚ THÍCH CÁC THÀNH PHẦN (WIREFRAME ANNOTATIONS) -->
+        <mxCell id="legend_box" parent="1" style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" value="" vertex="1">
+          <mxGeometry height="870" width="460" x="490" y="75" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontColor=#000000;" value="&lt;b style=&quot;font-size:13.5px;&quot;&gt;BẢNG MÔ TẢ BỐ CỤC THEO ĐÚNG GIAO DIỆN APP ĐỀ TÀI&lt;/b&gt;" vertex="1">
+          <mxGeometry height="25" width="430" x="510" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="ann_1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=10.5;" value="&lt;b&gt;1. Khung hiển thị thiết bị:&lt;/b&gt;&lt;br&gt;Tỉ lệ màn hình smartphone hiện đại, có notch camera đục lỗ chính giữa, giờ hệ thống 8:35, icon trạng thái sóng 5G và pin." vertex="1">
+          <mxGeometry height="45" width="420" x="510" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="ann_2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=10.5;" value="&lt;b&gt;2. Phần Header (Đầu trang):&lt;/b&gt;&lt;br&gt;• Avatar tròn nhận diện thương hiệu.&lt;br&gt;• Dòng ngày: QT SPORT · Thứ năm, 29/10/2026.&lt;br&gt;• Tên tài khoản người dùng: &lt;b&gt;h0210&lt;/b&gt;.&lt;br&gt;• 2 nút chức năng: [Ghim định vị] và [Cài đặt / Chuông thông báo]." vertex="1">
+          <mxGeometry height="70" width="420" x="510" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="ann_3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=10.5;" value="&lt;b&gt;3. Ô Tìm kiếm &amp;amp; Nút Lọc nhanh:&lt;/b&gt;&lt;br&gt;• Ô nhập liệu bo góc: &lt;i&gt;Tìm theo cơ sở, quận, tên sân...&lt;/i&gt;&lt;br&gt;• Nút tròn bên phải: Phím tắt mở bộ lọc nâng cao." vertex="1">
+          <mxGeometry height="50" width="420" x="510" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="ann_4" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=10.5;" value="&lt;b&gt;4. Thanh 4 tác vụ nhanh (Quick Actions):&lt;/b&gt;&lt;br&gt;• [Đặt sân nhanh]: Vào trực tiếp luồng chọn sân &amp;amp; giờ.&lt;br&gt;• [Bản đồ sân]: Xem vị trí phân bố các cụm sân trên bản đồ.&lt;br&gt;• [Lịch của tôi]: Xem danh sách đơn đặt sân &amp;amp; mã QR.&lt;br&gt;• [Yêu thích]: Xem các câu lạc bộ đã lưu." vertex="1">
+          <mxGeometry height="75" width="420" x="510" y="305" as="geometry" />
+        </mxCell>
+        <mxCell id="ann_5" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=10.5;" value="&lt;b&gt;5. Banner nổi bật (Hero Card):&lt;/b&gt;&lt;br&gt;• Tag: [HỆ THỐNG SÂN CHUẨN THI ĐẤU].&lt;br&gt;• Tiêu đề lớn: &lt;b&gt;ALOBO SPORT - HỆ THỐNG QT SPORT (CƠ SỞ 1 - 8)&lt;/b&gt;.&lt;br&gt;• Cam kết: Thảm BWF tiêu chuẩn quốc tế · Đặt lịch linh hoạt 24/7." vertex="1">
+          <mxGeometry height="60" width="420" x="510" y="385" as="geometry" />
+        </mxCell>
+        <mxCell id="ann_6" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=10.5;" value="&lt;b&gt;6. Widget Bản đồ sân cầu lông:&lt;/b&gt;&lt;br&gt;• Nút [Mở toàn màn hình ↗] phóng to bản đồ.&lt;br&gt;• Khung bản đồ mini: Đà Nẵng · 8 CLB Cầu Lông Tiêu Chuẩn.&lt;br&gt;• Ghim chi tiết: QT Sport - Cơ sở 1: Sân Hoa Thiên Lý (207 Quách Thị Trang, Cẩm Lệ)." vertex="1">
+          <mxGeometry height="65" width="420" x="510" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="ann_7" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=10.5;" value="&lt;b&gt;7. Danh sách cơ sở sân (Club List):&lt;/b&gt;&lt;br&gt;• Tiêu đề: Hệ Thống Cơ Sở QT Sport (8) + [Xem tất cả →].&lt;br&gt;• Thẻ cơ sở 1: &lt;b&gt;QT Sport - Cơ sở 1: Sân Hoa Thiên Lý&lt;/b&gt;.&lt;br&gt;  + Khung ảnh [ X ] bên trái.&lt;br&gt;  + Nhãn phân loại: [Chuẩn BWF], [Đơn ngày], [Sự kiện].&lt;br&gt;  + Nút [Yêu thích] lưu sân.&lt;br&gt;  + Giờ mở cửa: 05:00 - 23:00 | Đánh giá sao: 4.9 (156).&lt;br&gt;  + Nút bấm tương tác chính: &lt;b&gt;[ ĐẶT SÂN ]&lt;/b&gt;." vertex="1">
+          <mxGeometry height="110" width="420" x="510" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="ann_8" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=10.5;" value="&lt;b&gt;8. Thanh điều hướng đáy (Bottom Tab Bar):&lt;/b&gt;&lt;br&gt;• [Trang chủ]: Tab đang đứng (có chấm active).&lt;br&gt;• [Bản đồ]: Chuyển sang tìm kiếm sân theo địa lý.&lt;br&gt;• [Khám phá / Đặt lịch]: Nút tròn nổi bật ở vị trí trung tâm.&lt;br&gt;• [Nổi bật]: Xem các giải đấu, tin tức &amp;amp; ưu đãi.&lt;br&gt;• [Tài khoản]: Quản lý hồ sơ hội viên cá nhân." vertex="1">
+          <mxGeometry height="95" width="420" x="510" y="635" as="geometry" />
+        </mxCell>
+
+        <!-- ĐƯỜNG KẺ MŨI TÊN CHỈ DẪN -->
+        <mxCell id="arr_h" parent="1" style="endArrow=classic;html=1;strokeColor=#888888;dashed=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" target="ann_2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="445" y="134" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arr_b" parent="1" style="endArrow=classic;html=1;strokeColor=#888888;dashed=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" target="ann_5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="445" y="316" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arr_m" parent="1" style="endArrow=classic;html=1;strokeColor=#888888;dashed=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" target="ann_6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="445" y="450" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arr_c" parent="1" style="endArrow=classic;html=1;strokeColor=#888888;dashed=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" target="ann_7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="445" y="630" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arr_t" parent="1" style="endArrow=classic;html=1;strokeColor=#888888;dashed=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" target="ann_8">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="445" y="837" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

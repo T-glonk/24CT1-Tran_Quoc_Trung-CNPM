@@ -1,0 +1,363 @@
+<svg width="1650" height="2680" viewBox="0 0 1650 2680" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- TIÊU ĐỀ SƠ ĐỒ BƯỚC 4 -->
+  <rect x="30" y="20" width="1590" height="50" rx="8" fill="#1E293B"/>
+  <text x="50" y="52" font-family="Inter, sans-serif" font-size="20" font-weight="700" fill="#FFFFFF">BƯỚC 4: PROTOTYPE – BẢN MẪU TƯƠNG TÁC (APP BOOKING SÂN CẦU LÔNG - QT SPORT / ALOBO SPORT)</text>
+  <text x="1230" y="52" font-family="Inter, sans-serif" font-size="13" fill="#94A3B8">24CT1 - Trần Quốc Trung</text>
+
+  <!-- ========================================================================= -->
+  <!-- 1. MÀN HÌNH 1: TRANG CHỦ USER (HomeScreen) - TỌA ĐỘ (X: 620, Y: 920)      -->
+  <!-- ========================================================================= -->
+  <g id="Scr01_HomeScreen">
+    <rect x="620" y="880" width="390" height="30" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="635" y="900" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1D4ED8">[MÀN HÌNH CHÍNH]: TRANG CHỦ (HomeScreen)</text>
+    <rect x="620" y="920" width="390" height="844" rx="40" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
+
+    <!-- Status Bar -->
+    <text x="644" y="944" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">8:35 [Cài đặt] [Khiên]</text>
+    <circle cx="815" cy="939" r="7" fill="#0F172A"/>
+    <text x="940" y="944" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">[5G] [Pin]</text>
+
+    <!-- Header -->
+    <rect x="636" y="962" width="358" height="54" rx="8" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <circle cx="657" cy="989" r="19" fill="#F3F4F6" stroke="#374151" stroke-width="1"/>
+    <text x="643" y="993" font-family="Inter, sans-serif" font-size="8" font-weight="700" fill="#4B5563">[Avatar]</text>
+    <text x="684" y="980" font-family="Inter, sans-serif" font-size="9" fill="#4B5563">QT SPORT · Thứ năm, 29/10/2026</text>
+    <text x="684" y="998" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#0F172A">h0210</text>
+    <circle cx="915" cy="989" r="15" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="903" y="992" font-family="Inter, sans-serif" font-size="8" font-weight="700" fill="#0F172A">[Ghim]</text>
+    <circle cx="957" cy="989" r="15" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="942" y="992" font-family="Inter, sans-serif" font-size="7" font-weight="700" fill="#0F172A">[Chuông]</text>
+
+    <!-- Search -->
+    <rect x="636" y="1024" width="308" height="38" rx="19" fill="#FFFFFF" stroke="#374151" stroke-width="1.2"/>
+    <text x="648" y="1048" font-family="Inter, sans-serif" font-size="10.5" fill="#6B7280">[ Ô nhập: Tìm theo cơ sở, quận, tên sân... ]</text>
+    <circle cx="975" cy="1043" r="19" fill="#FFFFFF" stroke="#374151" stroke-width="1.2"/>
+    <text x="965" y="1046" font-family="Inter, sans-serif" font-size="9.5" font-weight="700" fill="#0F172A">[Lọc]</text>
+
+    <!-- 4 Quick Actions -->
+    <rect x="636" y="1070" width="84" height="44" rx="8" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="640" y="1096" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#0F172A">[Đặt sân nhanh]</text>
+    <rect x="726" y="1070" width="84" height="44" rx="8" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="739" y="1096" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#0F172A">[Bản đồ sân]</text>
+    <rect x="816" y="1070" width="86" height="44" rx="8" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="830" y="1096" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#0F172A">[Lịch của tôi]</text>
+    <rect x="908" y="1070" width="86" height="44" rx="8" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="929" y="1096" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#0F172A">[Yêu thích]</text>
+
+    <!-- Banner -->
+    <rect x="636" y="1124" width="358" height="86" rx="12" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+    <rect x="646" y="1132" width="180" height="18" rx="9" fill="#F3F4F6" stroke="#374151" stroke-width="1"/>
+    <text x="653" y="1145" font-family="Inter, sans-serif" font-size="8.5" font-weight="700" fill="#0F172A">[HỆ THỐNG SÂN CHUẨN THI ĐẤU]</text>
+    <text x="646" y="1166" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#0F172A">ALOBO SPORT</text>
+    <text x="646" y="1182" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#0F172A">HỆ THỐNG QT SPORT (CƠ SỞ 1 - 8)</text>
+    <text x="646" y="1198" font-family="Inter, sans-serif" font-size="9" fill="#4B5563">Thảm BWF tiêu chuẩn quốc tế · Đặt lịch linh hoạt 24/7</text>
+
+    <!-- Mini Map -->
+    <rect x="636" y="1218" width="358" height="152" rx="12" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+    <text x="646" y="1238" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">[Bản Đồ Sân Cầu Lông]</text>
+    <rect x="868" y="1224" width="116" height="20" rx="10" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="874" y="1238" font-family="Inter, sans-serif" font-size="8.5" font-weight="700" fill="#0F172A">[Mở toàn màn hình ↗]</text>
+    <rect x="646" y="1250" width="338" height="76" rx="6" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="760" y="1268" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0F172A">[ X - BẢN ĐỒ MINI ]</text>
+    <text x="728" y="1284" font-family="Inter, sans-serif" font-size="9" fill="#4B5563">Đà Nẵng · 8 CLB Cầu Lông Tiêu Chuẩn</text>
+    <rect x="708" y="1292" width="214" height="22" rx="11" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="728" y="1306" font-family="Inter, sans-serif" font-size="8.5" font-weight="700" fill="#0F172A">[ Chạm để xem bản đồ tương tác ]</text>
+    <text x="646" y="1344" font-family="Inter, sans-serif" font-size="8.5" font-weight="700" fill="#0F172A">[Ghim]: QT Sport - Cơ sở 1: Sân Hoa Thiên Lý</text>
+    <text x="646" y="1357" font-family="Inter, sans-serif" font-size="8" fill="#4B5563">207 Quách Thị Trang, Cẩm Lệ, Đà Nẵng</text>
+
+    <!-- Clubs List -->
+    <text x="636" y="1392" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#0F172A">Hệ Thống Cơ Sở QT Sport (8)</text>
+    <text x="916" y="1392" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0F172A">[Xem tất cả →]</text>
+
+    <!-- Card 1 -->
+    <rect x="636" y="1402" width="358" height="126" rx="12" fill="#FFFFFF" stroke="#374151" stroke-width="1.2"/>
+    <rect x="644" y="1410" width="76" height="110" rx="6" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="676" y="1445" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#6B7280">[ X ]</text>
+    <text x="656" y="1465" font-family="Inter, sans-serif" font-size="8.5" font-weight="700" fill="#6B7280">[ẢNH SÂN]</text>
+    <text x="728" y="1428" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#0F172A">QT Sport - Cơ sở 1: Sân Hoa Thiên Lý</text>
+    <text x="728" y="1445" font-family="Inter, sans-serif" font-size="8.5" fill="#4B5563">207 Quách Thị Trang, Cẩm Lệ, Đà Nẵng</text>
+    <text x="728" y="1460" font-family="Inter, sans-serif" font-size="8.5" fill="#4B5563">Giờ: 05:00 - 23:00  |  Đánh giá: 4.9 (156)</text>
+    <rect x="728" y="1476" width="258" height="28" rx="14" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+    <text x="830" y="1494" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0F172A">[ ĐẶT SÂN ]</text>
+
+    <!-- Bottom Nav -->
+    <rect x="620" y="1684" width="390" height="80" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+    <text x="644" y="1712" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#0F172A">[Trang chủ]</text>
+    <circle cx="668" cy="1723" r="2.5" fill="#0F172A"/>
+    <text x="716" y="1712" font-family="Inter, sans-serif" font-size="9" fill="#0F172A">[Bản đồ]</text>
+    <circle cx="815" cy="1695" r="28" fill="#FFFFFF" stroke="#0F172A" stroke-width="2"/>
+    <text x="795" y="1693" font-family="Inter, sans-serif" font-size="8" font-weight="700" fill="#0F172A">[Khám phá</text>
+    <text x="795" y="1704" font-family="Inter, sans-serif" font-size="8" font-weight="700" fill="#0F172A">/ Đặt lịch]</text>
+    <text x="888" y="1712" font-family="Inter, sans-serif" font-size="9" fill="#0F172A">[Nổi bật]</text>
+    <text x="948" y="1712" font-family="Inter, sans-serif" font-size="9" fill="#0F172A">[Tài khoản]</text>
+    <rect x="750" y="1752" width="130" height="4" rx="2" fill="#0F172A"/>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 2. MÀN HÌNH 2: ĐẶT SÂN & CHỌN LỊCH (BookingScreen) - TỌA ĐỘ (X: 1180, Y: 420)-->
+  <!-- ========================================================================= -->
+  <g id="Scr02_BookingScreen">
+    <rect x="1180" y="380" width="390" height="30" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="1195" y="400" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1D4ED8">[MÀN HÌNH 2]: ĐẶT SÂN &amp; CHỌN LỊCH (BookingScreen)</text>
+    <rect x="1180" y="420" width="390" height="844" rx="40" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
+
+    <text x="1204" y="444" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">8:35</text>
+    <circle cx="1375" cy="439" r="7" fill="#0F172A"/>
+    <text x="1500" y="444" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">[5G] [Pin]</text>
+
+    <!-- Nav -->
+    <rect x="1196" y="462" width="358" height="44" rx="8" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="1206" y="488" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">[← Quay lại]        Đặt Sân - Sân Hoa Thiên Lý</text>
+
+    <!-- Step 1 Date -->
+    <rect x="1196" y="516" width="358" height="64" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+    <text x="1206" y="538" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0F172A">1. Chọn ngày chơi:</text>
+    <rect x="1206" y="546" width="130" height="24" rx="6" fill="#0F172A"/>
+    <text x="1214" y="562" font-family="Inter, sans-serif" font-size="8.5" font-weight="700" fill="#FFFFFF">● Hôm nay (29/10)</text>
+    <rect x="1344" y="546" width="100" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="1352" y="562" font-family="Inter, sans-serif" font-size="8.5" fill="#4B5563">Thứ 6 (30/10)</text>
+    <rect x="1452" y="546" width="90" height="24" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="1460" y="562" font-family="Inter, sans-serif" font-size="8.5" fill="#4B5563">Thứ 7 (31/10)</text>
+
+    <!-- Step 2 Matrix -->
+    <rect x="1196" y="590" width="358" height="220" rx="8" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="1206" y="610" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#0F172A">2. Lưới chọn sân &amp; Khung giờ (Court Grid Matrix):</text>
+    <text x="1206" y="635" font-family="Inter, sans-serif" font-size="9" fill="#0F172A">• [Sân 1 - BWF]:   [17h-18h: Trống]   [18h-19h: ĐÃ ĐẶT]   [19h-20h: Trống]</text>
+    <rect x="1206" y="648" width="338" height="34" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="1214" y="668" font-family="Inter, sans-serif" font-size="9.5" font-weight="700" fill="#1D4ED8">• [Sân 2 - BWF]:   ★ [18h-19h: ĐANG CHỌN]   ★ [19h-20h: ĐANG CHỌN]</text>
+    <text x="1206" y="705" font-family="Inter, sans-serif" font-size="9" fill="#0F172A">• [Sân 3 - VIP]:     [17h-18h: Trống]   [18h-19h: Trống]   [19h-20h: ĐÃ ĐẶT]</text>
+    <text x="1206" y="730" font-family="Inter, sans-serif" font-size="9" fill="#0F172A">• [Sân 4 - Xanh]:   [17h-18h: Trống]   [18h-19h: Trống]   [19h-20h: Trống]</text>
+    <text x="1206" y="780" font-family="Inter, sans-serif" font-size="8.5" fill="#6B7280">Ghi chú: [Trắng: Trống]  |  [Xanh ★: Đang chọn]  |  [Xám: Đã có khách đặt]</text>
+
+    <!-- Summary Box -->
+    <rect x="1196" y="820" width="358" height="54" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+    <text x="1206" y="842" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0F172A">Đã chọn: Sân 2 (18:00 - 20:00 · 2 tiếng)</text>
+    <text x="1206" y="860" font-family="Inter, sans-serif" font-size="9.5" fill="#4B5563">Đơn giá: 80.000đ/giờ  •  Tạm tính tiền sân: 160.000 VNĐ</text>
+
+    <!-- Button Continue -->
+    <rect x="1196" y="884" width="358" height="44" rx="22" fill="#0F172A"/>
+    <text x="1285" y="911" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">[ TIẾP TỤC XÁC NHẬN → ]</text>
+    <rect x="1310" y="1250" width="130" height="4" rx="2" fill="#0F172A"/>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 3. MÀN HÌNH 3: XÁC NHẬN & THANH TOÁN (PaymentStep) - TỌA ĐỘ (X: 1180, Y: 1400)-->
+  <!-- ========================================================================= -->
+  <g id="Scr03_PaymentScreen">
+    <rect x="1180" y="1360" width="390" height="30" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="1195" y="1380" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1D4ED8">[MÀN HÌNH 3]: XÁC NHẬN &amp; THANH TOÁN (PaymentStep)</text>
+    <rect x="1180" y="1400" width="390" height="844" rx="40" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
+
+    <text x="1204" y="1424" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">8:35</text>
+    <circle cx="1375" cy="1419" r="7" fill="#0F172A"/>
+    <text x="1500" y="1424" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">[5G] [Pin]</text>
+
+    <!-- Nav -->
+    <rect x="1196" y="1442" width="358" height="44" rx="8" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="1206" y="1468" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">[← Quay lại]        Xác Nhận &amp; Thanh Toán</text>
+
+    <!-- Card 1 Summary -->
+    <rect x="1196" y="1496" width="358" height="96" rx="8" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="1206" y="1516" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#0F172A">Thông tin đơn đặt sân:</text>
+    <text x="1206" y="1534" font-family="Inter, sans-serif" font-size="9" fill="#374151">• Cơ sở: QT Sport - Cơ sở 1: Sân Hoa Thiên Lý</text>
+    <text x="1206" y="1550" font-family="Inter, sans-serif" font-size="9" fill="#374151">• Vị trí: Sân 2 (Chuẩn BWF)  |  Ngày: 29/10/2026</text>
+    <text x="1206" y="1566" font-family="Inter, sans-serif" font-size="9" fill="#374151">• Khung giờ: 18:00 - 20:00 (2 tiếng)  •  Tiền sân: 160.000đ</text>
+
+    <!-- Card 2 Services -->
+    <rect x="1196" y="1602" width="358" height="68" rx="8" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="1206" y="1622" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0F172A">Dịch vụ tiện ích chọn kèm:</text>
+    <text x="1206" y="1640" font-family="Inter, sans-serif" font-size="9" fill="#374151">[✓] Thuê vợt cầu lông Yonex (2 cây: +30.000 VNĐ)</text>
+    <text x="1206" y="1656" font-family="Inter, sans-serif" font-size="9" fill="#374151">[✓] Nước khoáng thể thao Revive (2 chai: +20.000 VNĐ)</text>
+
+    <!-- Card 3 Method -->
+    <rect x="1196" y="1680" width="358" height="70" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+    <text x="1206" y="1700" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0F172A">Phương thức thanh toán:</text>
+    <text x="1206" y="1718" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#0F172A">(•) Chuyển khoản VietQR / MoMo (Khuyên dùng - Xử lý ngay)</text>
+    <text x="1206" y="1734" font-family="Inter, sans-serif" font-size="9" fill="#4B5563">( ) Thanh toán tiền mặt tại quầy lễ tân khi nhận sân</text>
+
+    <!-- Card 4 Total -->
+    <rect x="1196" y="1760" width="358" height="56" rx="8" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+    <text x="1206" y="1782" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#0F172A">TỔNG THANH TOÁN: 189.000 VNĐ</text>
+    <text x="1206" y="1800" font-family="Inter, sans-serif" font-size="9" fill="#6B7280">(Đã áp dụng giảm giá Khách VIP h0210 -10% tổng hóa đơn)</text>
+
+    <!-- Button Confirm -->
+    <rect x="1196" y="1828" width="358" height="46" rx="23" fill="#16A34A"/>
+    <text x="1235" y="1856" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">[ HOÀN TẤT ĐẶT SÂN &amp; XUẤT VÉ QR ]</text>
+    <rect x="1310" y="2230" width="130" height="4" rx="2" fill="#0F172A"/>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 4. MÀN HÌNH 4: BẢN ĐỒ CƠ SỞ SÂN (MapScreen) - TỌA ĐỘ (X: 620, Y: 100)      -->
+  <!-- ========================================================================= -->
+  <g id="Scr04_MapScreen">
+    <rect x="620" y="60" width="390" height="30" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="635" y="80" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1D4ED8">[MÀN HÌNH 4]: BẢN ĐỒ CƠ SỞ SÂN (MapScreen)</text>
+    <rect x="620" y="100" width="390" height="740" rx="40" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
+
+    <text x="644" y="124" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">8:35</text>
+    <circle cx="815" cy="119" r="7" fill="#0F172A"/>
+    <text x="940" y="124" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">[5G] [Pin]</text>
+
+    <rect x="636" y="142" width="358" height="44" rx="8" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="646" y="168" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">[← Quay lại]        Bản Đồ Cụm Sân Cầu Lông TP.ĐN</text>
+
+    <!-- Map Area -->
+    <rect x="636" y="196" width="358" height="430" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+    <text x="690" y="240" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#0F172A">[ X - BẢN ĐỒ GOOGLE MAPS TOÀN MÀN HÌNH ]</text>
+    <text x="660" y="280" font-family="Inter, sans-serif" font-size="10" fill="#0F172A">📍 Ghim 1: QT Sport 1 - Sân Hoa Thiên Lý (Cách 1.2km) - [Đang chọn]</text>
+    <text x="660" y="310" font-family="Inter, sans-serif" font-size="10" fill="#4B5563">📍 Ghim 2: QT Sport 2 - Sân Hải Châu (Cách 3.4km)</text>
+    <text x="660" y="340" font-family="Inter, sans-serif" font-size="10" fill="#4B5563">📍 Ghim 3: QT Sport 3 - Sân Kỳ Đồng (Cách 4.1km)</text>
+    <text x="660" y="370" font-family="Inter, sans-serif" font-size="10" fill="#4B5563">📍 Ghim 4: QT Sport 4 - Sân Sơn Trà (Cách 5.0km)</text>
+
+    <!-- Floating Card -->
+    <rect x="646" y="640" width="338" height="120" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+    <text x="656" y="664" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#0F172A">📍 QT Sport - Cơ sở 1: Sân Hoa Thiên Lý (Cách 1.2km)</text>
+    <text x="656" y="682" font-family="Inter, sans-serif" font-size="9" fill="#4B5563">207 Quách Thị Trang, Cẩm Lệ • 6 sân thảm BWF • 80k-120k/h</text>
+    <rect x="656" y="700" width="150" height="32" rx="6" fill="#F3F4F6" stroke="#374151"/>
+    <text x="690" y="720" font-family="Inter, sans-serif" font-size="9.5" font-weight="700" fill="#0F172A">[ Chỉ đường ]</text>
+    <rect x="818" y="700" width="156" height="32" rx="6" fill="#0F172A"/>
+    <text x="840" y="720" font-family="Inter, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF">[ Đặt sân này ngay ]</text>
+    <rect x="750" y="826" width="130" height="4" rx="2" fill="#0F172A"/>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 5. MÀN HÌNH 5: LỊCH ĐẶT CỦA TÔI (MyBookingsScreen) - TỌA ĐỘ (X: 60, Y: 920) -->
+  <!-- ========================================================================= -->
+  <g id="Scr05_MyBookingsScreen">
+    <rect x="60" y="880" width="390" height="30" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="75" y="900" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1D4ED8">[MÀN HÌNH 5]: LỊCH ĐẶT CỦA TÔI (MyBookingsScreen)</text>
+    <rect x="60" y="920" width="390" height="844" rx="40" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
+
+    <text x="84" y="944" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">8:35</text>
+    <circle cx="255" cy="939" r="7" fill="#0F172A"/>
+    <text x="380" y="944" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">[5G] [Pin]</text>
+
+    <rect x="76" y="962" width="358" height="44" rx="8" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="86" y="988" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">[← Trang chủ]        Quản Lý Lịch Đặt Của Tôi</text>
+
+    <!-- Tabs filter -->
+    <rect x="76" y="1016" width="358" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+    <text x="88" y="1036" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#0F172A">[Tất cả]   [Đã duyệt (1) (Active)]   [Chờ duyệt (1)]   [Đã hủy]</text>
+
+    <!-- Order 1 -->
+    <rect x="76" y="1060" width="358" height="120" rx="10" fill="#FFFFFF" stroke="#16A34A" stroke-width="1.5"/>
+    <text x="88" y="1082" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#15803D">MÃ VÉ: BK-1029  •  [TRẠNG THÁI: ĐÃ DUYỆT ✓]</text>
+    <text x="88" y="1102" font-family="Inter, sans-serif" font-size="9" fill="#0F172A">Cơ sở: QT Sport 1 - Sân Hoa Thiên Lý  |  Sân số 2</text>
+    <text x="88" y="1118" font-family="Inter, sans-serif" font-size="9" fill="#0F172A">Hôm nay 29/10 (18:00 - 20:00)  •  Tổng tiền: 189.000đ (Đã trả QR)</text>
+    <rect x="88" y="1132" width="334" height="32" rx="6" fill="#0F172A"/>
+    <text x="160" y="1152" font-family="Inter, sans-serif" font-size="9.5" font-weight="700" fill="#FFFFFF">[ XEM MÃ QR CHECK-IN VÀO SÂN ]</text>
+
+    <!-- Order 2 -->
+    <rect x="76" y="1190" width="358" height="100" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+    <text x="88" y="1212" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#B45309">MÃ VÉ: BK-1024  •  [TRẠNG THÁI: CHỜ DUYỆT ⏳]</text>
+    <text x="88" y="1230" font-family="Inter, sans-serif" font-size="9" fill="#4B5563">Cơ sở: QT Sport 3 - Sân Kỳ Đồng (Sân số 4)</text>
+    <text x="88" y="1246" font-family="Inter, sans-serif" font-size="9" fill="#4B5563">Khung giờ: 19:00 - 21:00 Ngày mai 30/10</text>
+    <text x="88" y="1272" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#DC2626">[ Hủy đặt sân ]</text>
+    <text x="240" y="1272" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#2563EB">[ Liên hệ quản lý sân ]</text>
+    <rect x="190" y="1750" width="130" height="4" rx="2" fill="#0F172A"/>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 6. MÀN HÌNH 6: SÂN YÊU THÍCH (FavoritesScreen) - TỌA ĐỘ (X: 60, Y: 100)     -->
+  <!-- ========================================================================= -->
+  <g id="Scr06_FavoritesScreen">
+    <rect x="60" y="60" width="390" height="30" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="75" y="80" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1D4ED8">[MÀN HÌNH 6]: SÂN YÊU THÍCH (FavoritesScreen)</text>
+    <rect x="60" y="100" width="390" height="740" rx="40" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
+
+    <text x="84" y="124" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">8:35</text>
+    <circle cx="255" cy="119" r="7" fill="#0F172A"/>
+    <text x="380" y="124" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">[5G] [Pin]</text>
+
+    <rect x="76" y="142" width="358" height="44" rx="8" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="86" y="168" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">[← Quay lại]        Sân Yêu Thích Đã Lưu (2)</text>
+
+    <!-- Card 1 -->
+    <rect x="76" y="196" width="358" height="86" rx="10" fill="#FFFFFF" stroke="#374151" stroke-width="1.2"/>
+    <text x="86" y="218" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#0F172A">1. QT Sport 1 - Sân Hoa Thiên Lý  [Đã lưu ❤️]</text>
+    <text x="86" y="236" font-family="Inter, sans-serif" font-size="9" fill="#4B5563">207 Quách Thị Trang, Cẩm Lệ • 6 sân thảm BWF</text>
+    <rect x="86" y="246" width="130" height="26" rx="6" fill="#0F172A"/>
+    <text x="106" y="262" font-family="Inter, sans-serif" font-size="8.5" font-weight="700" fill="#FFFFFF">[ ĐẶT SÂN NGAY ]</text>
+    <text x="240" y="262" font-family="Inter, sans-serif" font-size="8.5" fill="#DC2626">[ Bỏ lưu yêu thích ]</text>
+
+    <!-- Card 2 -->
+    <rect x="76" y="292" width="358" height="86" rx="10" fill="#FFFFFF" stroke="#374151" stroke-width="1.2"/>
+    <text x="86" y="314" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#0F172A">2. QT Sport 2 - Sân Kỳ Đồng  [Đã lưu ❤️]</text>
+    <text x="86" y="332" font-family="Inter, sans-serif" font-size="9" fill="#4B5563">15 Kỳ Đồng, Thanh Khê • 8 sân thảm xanh BWF</text>
+    <rect x="86" y="342" width="130" height="26" rx="6" fill="#0F172A"/>
+    <text x="106" y="358" font-family="Inter, sans-serif" font-size="8.5" font-weight="700" fill="#FFFFFF">[ ĐẶT SÂN NGAY ]</text>
+    <text x="240" y="358" font-family="Inter, sans-serif" font-size="8.5" fill="#DC2626">[ Bỏ lưu yêu thích ]</text>
+    <rect x="190" y="826" width="130" height="4" rx="2" fill="#0F172A"/>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 7. MÀN HÌNH 7: TÀI KHOẢN HỘI VIÊN (AccountScreen) - TỌA ĐỘ (X: 620, Y: 1840) -->
+  <!-- ========================================================================= -->
+  <g id="Scr07_AccountScreen">
+    <rect x="620" y="1800" width="390" height="30" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="635" y="1820" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1D4ED8">[MÀN HÌNH 7]: TÀI KHOẢN HỘI VIÊN (AccountScreen)</text>
+    <rect x="620" y="1840" width="390" height="740" rx="40" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
+
+    <text x="644" y="1864" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">8:35</text>
+    <circle cx="815" cy="1859" r="7" fill="#0F172A"/>
+    <text x="940" y="1864" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">[5G] [Pin]</text>
+
+    <rect x="636" y="1882" width="358" height="44" rx="8" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="646" y="1908" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">[← Trang chủ]        Hồ Sơ &amp; Tài Khoản Hội Viên</text>
+
+    <!-- Profile box -->
+    <rect x="636" y="1936" width="358" height="76" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+    <text x="646" y="1958" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0F172A">[Avatar]  Trần Quốc Trung (Username: h0210)</text>
+    <text x="646" y="1976" font-family="Inter, sans-serif" font-size="9" fill="#15803D">Hạng thẻ: Hội viên VIP (Được giảm giá 10% mỗi lượt đặt)</text>
+    <text x="646" y="1994" font-family="Inter, sans-serif" font-size="9" fill="#4B5563">SĐT: 0905.xxx.xxx  •  Email: trung.tran@example.com</text>
+
+    <!-- Menu items -->
+    <rect x="636" y="2022" width="358" height="130" rx="8" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+    <text x="646" y="2046" font-family="Inter, sans-serif" font-size="9.5" fill="#0F172A">• [Chỉnh sửa thông tin cá nhân &amp; Cập nhật SĐT]</text>
+    <text x="646" y="2072" font-family="Inter, sans-serif" font-size="9.5" fill="#0F172A">• [Lịch sử giao dịch &amp; Tra cứu hóa đơn điện tử]</text>
+    <text x="646" y="2098" font-family="Inter, sans-serif" font-size="9.5" fill="#0F172A">• [Cài đặt thông báo đặt sân &amp; Bảo mật tài khoản]</text>
+    <text x="646" y="2124" font-family="Inter, sans-serif" font-size="9.5" fill="#0F172A">• [Chính sách điều khoản sử dụng &amp; Hotline hỗ trợ]</text>
+
+    <rect x="636" y="2162" width="358" height="42" rx="21" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="730" y="2188" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#DC2626">[ NÚT: ĐĂNG XUẤT TÀI KHOẢN ]</text>
+    <rect x="750" y="2566" width="130" height="4" rx="2" fill="#0F172A"/>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- CÁC ĐƯỜNG MŨI TÊN KẾT NỐI TƯƠNG TÁC (PROTOTYPE CONNECTORS)                -->
+  <!-- ========================================================================= -->
+  <!-- 1. HomeScreen [ĐẶT SÂN] -> BookingScreen -->
+  <path d="M 1010 1490 Q 1100 1490 1100 900 T 1180 900" stroke="#2563EB" stroke-width="3" fill="none" marker-end="url(#arrow_blue)"/>
+  <rect x="1035" y="1170" width="130" height="26" rx="6" fill="#FFFFFF" stroke="#2563EB" stroke-width="1"/>
+  <text x="1042" y="1187" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#1D4ED8">1. Bấm [ĐẶT SÂN] ➔</text>
+
+  <!-- 2. BookingScreen [TIẾP TỤC] -> PaymentScreen -->
+  <path d="M 1375 928 L 1375 1400" stroke="#2563EB" stroke-width="3" fill="none"/>
+  <rect x="1310" y="1140" width="130" height="26" rx="6" fill="#FFFFFF" stroke="#2563EB" stroke-width="1"/>
+  <text x="1320" y="1157" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#1D4ED8">2. Bấm [TIẾP TỤC] ➔</text>
+
+  <!-- 3. PaymentScreen [HOÀN TẤT] -> MyBookingsScreen -->
+  <path d="M 1180 1850 Q 800 2300 450 1700" stroke="#16A34A" stroke-width="3" stroke-dasharray="6 6" fill="none"/>
+  <rect x="680" y="2100" width="180" height="28" rx="6" fill="#FFFFFF" stroke="#16A34A" stroke-width="1"/>
+  <text x="690" y="2118" font-family="Inter, sans-serif" font-size="9.5" font-weight="700" fill="#15803D">3. [Xác nhận xong ➔ Vé QR]</text>
+
+  <!-- 4. HomeScreen [Bản đồ] -> MapScreen -->
+  <path d="M 815 920 L 815 840" stroke="#2563EB" stroke-width="3" fill="none"/>
+  <rect x="745" y="865" width="140" height="26" rx="6" fill="#FFFFFF" stroke="#2563EB" stroke-width="1"/>
+  <text x="755" y="882" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#1D4ED8">4. Bấm [Bản đồ sân] ➔</text>
+
+  <!-- 5. HomeScreen [Lịch của tôi] -> MyBookingsScreen -->
+  <path d="M 620 1092 L 450 1092" stroke="#2563EB" stroke-width="3" fill="none"/>
+  <rect x="475" y="1078" width="135" height="26" rx="6" fill="#FFFFFF" stroke="#2563EB" stroke-width="1"/>
+  <text x="483" y="1095" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#1D4ED8">5. Bấm [Lịch của tôi] ➔</text>
+
+  <!-- 6. HomeScreen [Yêu thích] -> FavoritesScreen -->
+  <path d="M 620 1070 Q 520 1070 520 600 T 450 600" stroke="#2563EB" stroke-width="3" fill="none"/>
+  <rect x="465" y="820" width="120" height="26" rx="6" fill="#FFFFFF" stroke="#2563EB" stroke-width="1"/>
+  <text x="475" y="837" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#1D4ED8">6. Bấm [Yêu thích] ➔</text>
+
+  <!-- 7. HomeScreen Tab [Tài khoản] -> AccountScreen -->
+  <path d="M 815 1764 L 815 1840" stroke="#2563EB" stroke-width="3" fill="none"/>
+  <rect x="745" y="1785" width="140" height="26" rx="6" fill="#FFFFFF" stroke="#2563EB" stroke-width="1"/>
+  <text x="752" y="1802" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#1D4ED8">7. Chạm [Tài khoản] ➔</text>
+</svg>

@@ -1,0 +1,76 @@
+% !TEX program = xelatex
+% =====================================================================
+%  BÁO CÁO MÔN HỌC CÔNG NGHỆ PHẦN MỀM (CNPM)
+%  Khoa Công nghệ Thông tin, Trường Đại học Kiến trúc Đà Nẵng
+%
+%  Build:  latexmk -xelatex do-an.tex
+%  Overleaf: Menu > Compiler > XeLaTeX, rồi bấm Recompile.
+% =====================================================================
+\documentclass[12pt, a4paper, oneside]{book}
+\input{styles/settings}
+
+% =====================================================================
+%  THÔNG TIN BÁO CÁO ĐỒ ÁN
+% =====================================================================
+% Loại báo cáo
+\crname{BÁO CÁO CÔNG NGHỆ PHẦN MỀM}
+% Học phần
+\cmonhoc{}
+% Tên đề tài
+\ctname{ỨNG DỤNG ĐẶT SÂN CẦU LÔNG TRỰC TUYẾN}
+% Họ tên sinh viên và mã số sinh viên
+\cstuname{Trần Quốc Trung}
+\cmssv{2351220096}
+% Lớp
+\clopsv{24CT1}
+% Ngành
+\csCouncil{Công nghệ thông tin}
+% Giảng viên hướng dẫn
+\csSupervise{ThS. Phạm Thị Dung}
+% Năm học
+\cttime{2025--2026}
+% Khoa quản lý
+\csdeptname{KHOA CÔNG NGHỆ THÔNG TIN}
+% Nơi thực hiện
+\csplace{Đà Nẵng}
+
+\begin{document}
+
+% Bìa trang trọng có khung kép
+\coverpage
+
+% ---------------------------------------------------------------------
+%  PHẦN ĐẦU: đánh số trang bằng số La Mã thường
+% ---------------------------------------------------------------------
+\frontmatter
+\dauPageStyle
+
+\input{chuong/00-loi-cam-doan}
+\input{chuong/00-loi-mo-dau}
+\input{chuong/00-tom-tat}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+% ---------------------------------------------------------------------
+%  THÂN BÁO CÁO: các chương theo yêu cầu đề cương
+% ---------------------------------------------------------------------
+\mainmatter
+\dauPageStyle
+
+\input{chuong/01-tong-quan-co-so-ly-thuyet}
+\input{chuong/02-thuc-nghiem}
+
+% ---------------------------------------------------------------------
+%  TÀI LIỆU THAM KHẢO VÀ PHỤ LỤC
+% ---------------------------------------------------------------------
+\backmatter
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Tài liệu tham khảo}
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}

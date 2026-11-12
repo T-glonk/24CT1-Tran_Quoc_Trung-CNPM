@@ -5,7 +5,8 @@ const { pool, query } = require('../config/mysql');
 // POST /api/auth/login - Đăng nhập tài khoản (Kiểm tra MySQL & Local Cache)
 async function login(req, res) {
   const { account, email, phone, password } = req.body;
-  const loginQuery = account || email || phone;
+  const loginQuery = (account || email || phone || '').trim();
+  const cleanPhone = loginQuery.replace(/\s+/g, '');
 
   if (!loginQuery || !password) {
     return res.status(400).json({ success: false, message: 'Vui lòng nhập đầy đủ thông tin tài khoản và mật khẩu' });
@@ -16,8 +17,8 @@ async function login(req, res) {
   // Reads records from MySQL pool
   try {
     const [rows] = await pool.query(
-      'SELECT id, name, email, phone, password, role, status, joined_date as joinedDate, tier, total_spent as totalSpent, bookings_count as bookingsCount FROM users WHERE email = ? OR phone = ? LIMIT 1',
-      [loginQuery, loginQuery]
+      'SELECT id, name, email, phone, password, role, status, joined_date as joinedDate, tier, total_spent as totalSpent, bookings_count as bookingsCount FROM users WHERE email = ? OR phone = ? OR REPLACE(phone, " ", "") = ? LIMIT 1',
+      [loginQuery, loginQuery, cleanPhone]
     );
     if (rows && rows.length > 0) {
       user = rows[0];
@@ -76,40 +77,71 @@ async function register(req, res) {
     return res.status(400).json({ success: false, message: 'Vui lòng điền đầy đủ Họ tên, Mật khẩu và Email/SĐT' });
   }
 
-  if (email && db.getUserByEmailOrPhone(email)) {
-    return res.status(409).json({ success: false, message: 'Email đã tồn tại trên hệ thống' });
-  }
+  const cleanName = name.trim();
+  const cleanPhone = phone && phone.trim() ? phone.trim().replace(/\s/g, '') : null;
+  const rawEmail = email && email.trim() ? email.trim().toLowerCase() : null;
+  const cleanEmail = rawEmail || (cleanPhone ? `${cleanPhone}@court.vn` : null);
+  const cleanPassword = password.trim();
 
-  if (phone && db.getUserByEmailOrPhone(phone)) {
-    return res.status(409).json({ success: false, message: 'Số điện thoại đã tồn tại trên hệ thống' });
+  // Kiểm tra trùng lặp trên MySQL
+  try {
+    const [existingUsers] = await pool.query(
+      'SELECT id, email, phone FROM users WHERE (email IS NOT NULL AND LOWER(email) = ?) OR (phone IS NOT NULL AND (phone = ? OR REPLACE(phone, " ", "") = ?)) LIMIT 1',
+      [cleanEmail, cleanPhone, cleanPhone]
+    );
+    if (existingUsers && existingUsers.length > 0) {
+      const existing = existingUsers[0];
+      const existingEmail = (existing.email || '').toLowerCase();
+      const existingPhone = (existing.phone || '').replace(/\s/g, '');
+      if (rawEmail && existingEmail === rawEmail) {
+        return res.status(409).json({ success: false, message: 'Địa chỉ Email này đã được đăng ký bởi tài khoản khác' });
+      }
+      if (cleanPhone && existingPhone === cleanPhone) {
+        return res.status(409).json({ success: false, message: 'Số điện thoại này đã tồn tại trên hệ thống' });
+      }
+      if (cleanEmail && existingEmail === cleanEmail) {
+        return res.status(409).json({ success: false, message: 'Email đã tồn tại trên hệ thống' });
+      }
+    }
+  } catch (err) {
+    // Fallback to local store check
+    if (rawEmail && db.getUserByEmailOrPhone(rawEmail)) {
+      return res.status(409).json({ success: false, message: 'Địa chỉ Email này đã được đăng ký bởi tài khoản khác' });
+    }
+    if (cleanPhone && db.getUserByEmailOrPhone(cleanPhone)) {
+      return res.status(409).json({ success: false, message: 'Số điện thoại này đã tồn tại trên hệ thống' });
+    }
   }
 
   const newUser = db.addUser({
-    name,
-    email: email || `${phone}@court.vn`,
-    phone: phone || '',
-    password,
+    name: cleanName,
+    email: cleanEmail || '',
+    phone: cleanPhone || '',
+    password: cleanPassword,
     role: 'customer',
+    tier: 'Đồng',
+    status: 'active',
   });
 
-  // Writes records to MySQL database
+  // Ghi dữ liệu vào MySQL database
   try {
     await pool.query(
       'INSERT INTO users (id, name, email, phone, password, role, status, joined_date, tier, total_spent, bookings_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [
         newUser.id,
         newUser.name,
-        newUser.email,
-        newUser.phone,
+        cleanEmail,
+        cleanPhone,
         newUser.password,
         newUser.role,
         newUser.status,
         newUser.joinedDate,
         newUser.tier,
-        newUser.totalSpent,
-        newUser.bookingsCount,
+        newUser.totalSpent || 0,
+        newUser.bookingsCount || 0,
       ]
     );
+    console.log(`[MySQL Success] ✅ Đã lưu khách hàng mới: ${newUser.name} (${newUser.id}) vào MySQL Database.`);
   } catch (err) {
     console.warn(`[MySQL Auth Warning]: ${err.message}`);
   }

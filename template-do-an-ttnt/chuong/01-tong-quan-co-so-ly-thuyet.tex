@@ -1,0 +1,76 @@
+% !TEX root = ../do-an.tex
+% =====================================================================
+%  CHƯƠNG 1 — TỔNG QUAN CƠ SỞ LÝ THUYẾT
+% =====================================================================
+\chapter{Tổng quan cơ sở lý thuyết}
+\label{ch:tong-quan-ly-thuyet}
+
+\begin{muctieu}
+Chương này tập trung trình bày tổng quan về nền tảng lý thuyết và công nghệ kỹ thuật được lựa chọn để triển khai dự án Ứng dụng Đặt sân Cầu lông Trực tuyến (AloboSport / QT Sport). Các nội dung bao gồm việc phân tích kiến trúc Framework đa nền tảng, hệ thống công cụ hỗ trợ quy trình phát triển phần mềm chuẩn mực, cùng ngôn ngữ lập trình và cấu trúc cây thư mục mã nguồn dự án.
+\end{muctieu}
+
+\section{Framework cài đặt}
+\label{sec:framework-cai-dat}
+
+\subsection{Tổng quan về React Native \& Expo}
+\subsubsection{Khái niệm và kiến trúc cốt lõi của React Native}
+React Native là một framework phát triển ứng dụng di động mã nguồn mở được Facebook giới thiệu vào năm 2015. Khác với các giải pháp ứng dụng lai (Hybrid App) chạy trên WebView vốn gặp nhiều hạn chế về hiệu năng đồ họa, React Native sử dụng kiến trúc cầu nối (Bridge) và kiến trúc mới (New Architecture -- Fabric Renderer \& TurboModules) cho phép render trực tiếp các thành phần giao diện gốc (Native UI Components) của cả Android và iOS từ một cơ sở mã nguồn JavaScript duy nhất.
+
+Kiến trúc React Native trong dự án được tối ưu hóa thông qua Expo SDK 52 kết hợp trình thông dịch Hermes Engine. Hermes được thiết kế đặc thù cho môi trường di động với cơ chế biên dịch trước mã bytecode (AOT Compilation), giúp giảm thiểu thời gian khởi động ứng dụng (Time-to-Interactive), tối ưu hóa dung lượng gói cài đặt APK và giải phóng đáng kể bộ nhớ RAM của thiết bị di động.
+
+\subsubsection{Các tính năng nổi bật của React Native \& Expo áp dụng trong đề tài}
+Trong quá trình phát triển ứng dụng đặt sân cầu lông trực tuyến, React Native và Expo mang lại các giải pháp công nghệ then chốt:
+\begin{itemize}
+    \item \textbf{Điều hướng màn hình mượt mà (React Navigation Stack \& Bottom Tabs):} Hệ thống tổ chức phân cấp các màn hình chức năng linh hoạt, hỗ trợ hiệu ứng chuyển cảnh tự nhiên theo tiêu chuẩn Material Design trên Android và Cupertino trên iOS.
+    \item \textbf{Quản lý trạng thái phiên làm việc toàn cục (React Context API):} Trạng thái đăng nhập của người dùng, giỏ hàng đặt sân, thông tin phân quyền và cơ chế đếm ngược giữ chỗ được đồng bộ nhất quán giữa các màn hình mà không cần truyền props phức tạp.
+    \item \textbf{Hỗ trợ định vị bản đồ và quét mã (Expo Location \& Vector Icons):} Tích hợp mượt mà cảm biến GPS để tính toán khoảng cách từ người dùng tới 8 cụm sân cầu lông tại Đà Nẵng.
+\end{itemize}
+
+\subsubsection{Đánh giá ưu điểm và nhược điểm của React Native trong dự án}
+\textbf{Ưu điểm:} Tốc độ phát triển cực nhanh nhờ cơ chế Fast Refresh cho phép lập trình viên quan sát tức thì mọi thay đổi giao diện mà không cần biên dịch lại từ đầu; tiết kiệm hơn 50\% chi phí và nhân lực khi duy trì một mã nguồn duy nhất cho cả hai nền tảng; hệ sinh thái thư viện khổng lồ được bảo chứng bởi cộng đồng toàn cầu.
+
+\textbf{Nhược điểm:} Đối với một số tác vụ xử lý đồ họa phức tạp hoặc đồng bộ dữ liệu nền ngầm, hiệu năng có thể chịu ảnh hưởng nhỏ so với mã nguồn thuần Native (Kotlin/Swift). Tuy nhiên, với bài toán đặt sân và thương mại điện tử dịch vụ, React Native hoàn toàn đáp ứng xuất sắc mọi chỉ số phản hồi dưới 200ms.
+
+\subsection{Framework Backend Node.js \& Express RESTful API}
+Hệ thống máy chủ dịch vụ của đề tài được xây dựng trên nền tảng \textbf{Node.js} và framework \textbf{Express.js}. Node.js hoạt động dựa trên mô hình hướng sự kiện không chặn (Event-Driven Non-blocking I/O) cùng động cơ V8 JavaScript hiệu năng cao. Kiến trúc này cho phép máy chủ xử lý mượt mà hàng trăm yêu cầu đặt sân, truy vấn lịch trống và cập nhật hóa đơn thanh toán đồng thời mà không bị nghẽn luồng (thread blocking).
+
+Express.js cung cấp kiến trúc Middleware linh hoạt để chuẩn hóa quy trình tiếp nhận và phản hồi dữ liệu:
+\begin{itemize}
+    \item \textbf{Middleware CORS:} Kiểm soát chặt chẽ quyền truy cập API từ các ứng dụng khách di động.
+    \item \textbf{Middleware Body-Parser:} Phân tích cú pháp các gói tin JSON gửi lên máy chủ với độ trễ cực thấp.
+    \item \textbf{Middleware Xác thực JWT (JSON Web Token):} Mã hóa và giải mã phiên làm việc của người dùng, bảo vệ các endpoint nhạy cảm như tạo đơn đặt, hủy lịch và quản lý doanh thu.
+\end{itemize}
+
+\section{Các Công cụ (Tools) hỗ trợ}
+\label{sec:cong-cu-ho-tro}
+
+Để đảm bảo quy trình công nghệ phần mềm được thực hiện một cách chuyên nghiệp, đúng tiến độ và đạt chuẩn chất lượng kỹ thuật của đồ án, nhóm nghiên cứu đã vận dụng đồng bộ 6 công cụ chuyên dụng:
+
+\subsection{Antigravity IDE - Môi trường phát triển tích hợp (IDE)}
+Trong đề tài này, \textbf{Antigravity IDE} kết hợp Visual Studio Code được lựa chọn làm môi trường lập trình và phát triển chính cho toàn bộ các phân hệ của dự án. Với các tính năng phân tích cú pháp mã nguồn theo thời gian thực, quản lý các tiến trình nền độc lập (Terminal Tasks), hỗ trợ gỡ lỗi đa luồng và khả năng quản lý không gian làm việc trực quan, công cụ giúp sinh viên kiểm soát toàn diện mã nguồn từ phía Backend đến ứng dụng Frontend.
+
+\subsection{Draw.io (diagrams.net) - Thiết kế mô hình hóa phần mềm}
+Draw.io là công cụ mô hình hóa trực quan được sử dụng để xây dựng toàn bộ hệ thống sơ đồ kiến trúc, sơ đồ luồng dữ liệu (Data Flow Diagram -- DFD) và sơ đồ tuần tự (Sequence Diagram) theo chuẩn UML 2.5 của đồ án. Draw.io cung cấp bộ thư viện ký hiệu chuẩn mực, cho phép phân tách rõ ràng ranh giới giữa tác nhân (Actor), giao diện (Boundary), bộ điều khiển (Controller) và thực thể cơ sở dữ liệu (Entity).
+
+\subsection{MySQL Workbench \& XAMPP - Quản trị CSDL quan hệ}
+Hệ quản trị cơ sở dữ liệu MySQL được vận hành và thiết kế thông qua hai công cụ bổ trợ đắc lực. \textbf{XAMPP} đóng vai trò là môi trường máy chủ lưu trữ cục bộ, khởi tạo dịch vụ MySQL Daemon ổn định. Trong khi đó, \textbf{MySQL Workbench} được sử dụng để thiết kế mô hình vật lý cơ sở dữ liệu (Physical Data Model), tự động hóa kỹ thuật tạo sơ đồ quan hệ thực thể (Reverse Engineering sang ERD) và thực thi các câu lệnh DDL/DML kiểm tra ràng buộc toàn vẹn khóa ngoại.
+
+\subsection{Postman - Nền tảng kiểm thử và thiết kế API}
+Postman được sử dụng làm môi trường kiểm thử độc lập cho toàn bộ các điểm cuối API của hệ thống trước khi tích hợp vào giao diện di động. Các bộ kiểm thử tự động (Test Scripts) được thiết lập để đánh giá tính đúng đắn của các mã trạng thái phản hồi HTTP (200 OK, 201 Created, 400 Bad Request, 401 Unauthorized, 409 Conflict), đảm bảo API vận hành ổn định ngay cả trong các trường hợp dữ liệu đầu vào không hợp lệ hoặc cố tình đặt trùng giờ.
+
+\subsection{Git \& GitHub - Quản lý phiên bản mã nguồn phân tán}
+Hệ thống quản lý phiên bản Git kết hợp dịch vụ lưu trữ đám mây GitHub đóng vai trò là xương sống quản trị mã nguồn. Toàn bộ lịch sử cam kết (commits), các nhánh phát triển tính năng (feature branches: \code{main}, \code{backend-api}, \code{frontend-ui}) và các yêu cầu tích hợp đều được ghi vết minh bạch, ngăn ngừa xung đột mã nguồn và hỗ trợ phục hồi phiên bản nhanh chóng khi phát sinh lỗi kỹ thuật.
+
+\subsection{Trello - Quản lý tiến độ dự án theo phương pháp Agile/Kanban}
+Công cụ Trello được áp dụng để trực quan hóa tiến độ công việc theo bảng Kanban. Toàn bộ danh mục đầu việc phân rã từ sơ đồ mạng PERT/CPM được chuyển hóa thành các thẻ công việc (Cards) gắn nhãn phụ thuộc, phân loại trực quan theo 4 cột trạng thái: \textit{To Do, In Progress, Code Review, Done}, giúp quản trị thời gian chặt chẽ và không bị trễ hạn các mốc giao nộp.
+
+\section{Ngôn ngữ lập trình \& Cấu trúc dự án}
+\label{sec:ngon-ngu-cau-truc}
+
+\subsection{Ngôn ngữ lập trình JavaScript \& SQL}
+\textbf{JavaScript (ES6+)} là ngôn ngữ lập trình chủ đạo được ứng dụng đồng nhất trên toàn bộ hệ thống từ client đến server (Full-stack JavaScript). Với các cú pháp hiện đại như Async/Await, Promise, Arrow Function, Destructuring Assignment và Object Spread, JavaScript mang lại khả năng xử lý bất đồng bộ mượt mà, giúp mã nguồn cô đọng và dễ bảo trì.
+
+\textbf{SQL (Structured Query Language)} được áp dụng để tương tác trực tiếp với cơ sở dữ liệu quan hệ MySQL. Các câu truy vấn được tối ưu hóa thông qua các chỉ mục (Index) đánh trên trường email, số điện thoại, mã sân và thời gian đặt, đảm bảo thời gian thực thi truy vấn tìm kiếm sân trống luôn dưới 10ms.
+
+\subsection{Cấu trúc thư mục dự án và môi trường cài đặt}
+Mã nguồn dự án được tổ chức khoa học theo nguyên lý phân tách mối quan tâm (Separation of Concerns), tách biệt hoàn toàn giữa ứng dụng di động Frontend, máy chủ dịch vụ Backend, tài liệu thiết kế và các sơ đồ kỹ thuật.

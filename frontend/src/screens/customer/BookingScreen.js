@@ -5,6 +5,7 @@ import { BookingGridStep } from './BookingGridStep';
 import { BookingConfirmStep } from './BookingConfirmStep';
 import { BookingPaymentStep } from './BookingPaymentStep';
 import { INITIAL_CLUBS } from '../../constants/initialData';
+import { getTodayDateStr } from '../../utils/dateUtils';
 
 export function BookingScreen({
   user,
@@ -18,7 +19,7 @@ export function BookingScreen({
   const [step, setStep] = useState('grid'); // grid | confirm | payment
   const [selected, setSelected] = useState([]);
   const [bookedSlotsRef, setBookedSlotsRef] = useState(null);
-  const [selectedDate, setSelectedDate] = useState('28/08/2026');
+  const [selectedDate, setSelectedDate] = useState(() => getTodayDateStr());
   const [orderInfo, setOrderInfo] = useState(null);
   const [activeFacility, setActiveFacility] = useState(selectedClub || clubs[0] || INITIAL_CLUBS[0]);
 
