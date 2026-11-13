@@ -7,11 +7,6 @@
   @page {
     size: A4 portrait;
     margin: 20mm 20mm 20mm 25mm; /* Top, Right, Bottom, Left chuẩn luận văn DAU */
-    @bottom-center {
-      content: counter(page);
-      font-family: 'Times New Roman', serif;
-      font-size: 10pt;
-    }
   }
 
   body {
@@ -347,88 +342,88 @@
 
 <h1 style="margin-top: 5px; margin-bottom: 12px; font-size: 16pt;">MỤC LỤC</h1>
 <div class="toc-container">
-  <div class="toc-item"><span class="toc-text" style="padding-left: 0px; font-weight: bold;">LỜI MỞ ĐẦU</span><span class="toc-dots"></span><span class="toc-page">4</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 0px; font-weight: bold;">CHƯƠNG 1: TỔNG QUAN CƠ SỞ LÝ THUYẾT</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">1.1. Framework cài đặt</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.1.1. Tổng quan về React Native & Expo</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.1.2. Framework Backend Node.js & Express RESTful API</span><span class="toc-dots"></span><span class="toc-page">7</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">1.2. Các Công cụ (Tools) hỗ trợ</span><span class="toc-dots"></span><span class="toc-page">7</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.1. Antigravity IDE - Môi trường phát triển tích hợp (IDE)</span><span class="toc-dots"></span><span class="toc-page">7</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.2. Draw.io (diagrams.net) - Thiết kế mô hình hóa phần mềm</span><span class="toc-dots"></span><span class="toc-page">7</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.3. MySQL Workbench & XAMPP - Quản trị CSDL quan hệ</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.4. Postman - Kiểm thử và thiết kế API</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.5. Git & GitHub - Quản lý phiên bản mã nguồn phân tán</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.6. Trello - Quản lý tiến độ dự án theo phương pháp Agile/Kanban</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">1.3. Ngôn ngữ lập trình & Cấu trúc dự án</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.3.1. Ngôn ngữ lập trình JavaScript & SQL</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.3.2. Cấu trúc thư mục dự án và môi trường cài đặt</span><span class="toc-dots"></span><span class="toc-page">9</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 0px; font-weight: bold;">CHƯƠNG 2: THỰC NGHIỆM</span><span class="toc-dots"></span><span class="toc-page">10</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">2.1. Sơ đồ tuần tự (Sequence Diagram) & Sơ đồ luồng (Flowchart)</span><span class="toc-dots"></span><span class="toc-page">10</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.1.1. Sơ đồ tuần tự và Sơ đồ luồng chức năng Đăng ký</span><span class="toc-dots"></span><span class="toc-page">11</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.1.2. Sơ đồ tuần tự và Sơ đồ luồng chức năng Đăng nhập</span><span class="toc-dots"></span><span class="toc-page">12</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.1.3. Sơ đồ tuần tự và Sơ đồ luồng chức năng Tự chọn 1: Đặt sân & Thanh toán VietQR</span><span class="toc-dots"></span><span class="toc-page">13</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.1.4. Sơ đồ tuần tự chức năng Tự chọn 2: Quản lý & Cập nhật đơn đặt sân Chủ sân</span><span class="toc-dots"></span><span class="toc-page">14</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">2.2. Sơ đồ Pert (PERT Chart) & Đường găng (Critical Path)</span><span class="toc-dots"></span><span class="toc-page">15</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.2.1. Phương pháp luận mạng PERT và giải thuật CPM</span><span class="toc-dots"></span><span class="toc-page">15</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.2.2. Bảng phân rã công việc (WBS) và tính toán tham số thời gian</span><span class="toc-dots"></span><span class="toc-page">15</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.2.3. Sơ đồ mạng PERT học thuật và phân tích đường găng</span><span class="toc-dots"></span><span class="toc-page">17</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.2.4. Ý nghĩa quản trị tiến độ và kiểm soát rủi ro dự án</span><span class="toc-dots"></span><span class="toc-page">17</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">2.3. Demo</span><span class="toc-dots"></span><span class="toc-page">19</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.0. Tổng quan Bảng điều khiển & Khám phá cụm sân (Home & Map View)</span><span class="toc-dots"></span><span class="toc-page">19</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.1. Giao diện chức năng Đăng ký</span><span class="toc-dots"></span><span class="toc-page">21</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.2. Giao diện chức năng Đăng nhập</span><span class="toc-dots"></span><span class="toc-page">23</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.3. Giao diện chức năng Tự chọn 1: Chọn sân & Đặt lịch thi đấu kèm Thanh toán VietQR</span><span class="toc-dots"></span><span class="toc-page">25</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.4. Giao diện chức năng Tự chọn 2: Quản lý và theo dõi lịch đặt sân của khách hàng & chủ sân</span><span class="toc-dots"></span><span class="toc-page">30</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.5. Truy vấn tổng số lượng người cho từng vai trò/role của đề tài</span><span class="toc-dots"></span><span class="toc-page">32</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.6. Truy vấn tổng doanh thu trong đề tài</span><span class="toc-dots"></span><span class="toc-page">34</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">2.4. Dữ liệu (Database)</span><span class="toc-dots"></span><span class="toc-page">36</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.4.1. Giới thiệu tổng quan hệ CSDL quan hệ MySQL</span><span class="toc-dots"></span><span class="toc-page">36</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.4.2. Thiết kế cấu trúc cơ sở dữ liệu (Sơ đồ ERD & Data Dictionary)</span><span class="toc-dots"></span><span class="toc-page">36</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.4.3. Các tập dữ liệu thực nghiệm trong hệ thống</span><span class="toc-dots"></span><span class="toc-page">42</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 0px; font-weight: bold;">LỜI MỞ ĐẦU</span><span class="toc-dots"></span><span class="toc-page">1</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 0px; font-weight: bold;">CHƯƠNG 1: TỔNG QUAN CƠ SỞ LÝ THUYẾT</span><span class="toc-dots"></span><span class="toc-page">2</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">1.1. Framework cài đặt</span><span class="toc-dots"></span><span class="toc-page">2</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.1.1. Tổng quan về React Native & Expo</span><span class="toc-dots"></span><span class="toc-page">2</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.1.2. Framework Backend Node.js & Express RESTful API</span><span class="toc-dots"></span><span class="toc-page">4</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">1.2. Các Công cụ (Tools) hỗ trợ</span><span class="toc-dots"></span><span class="toc-page">4</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.1. Antigravity IDE - Môi trường phát triển tích hợp (IDE)</span><span class="toc-dots"></span><span class="toc-page">4</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.2. Draw.io (diagrams.net) - Thiết kế mô hình hóa phần mềm</span><span class="toc-dots"></span><span class="toc-page">4</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.3. MySQL Workbench & XAMPP - Quản trị CSDL quan hệ</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.4. Postman - Kiểm thử và thiết kế API</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.5. Git & GitHub - Quản lý phiên bản mã nguồn phân tán</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.2.6. Trello - Quản lý tiến độ dự án theo phương pháp Agile/Kanban</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">1.3. Ngôn ngữ lập trình & Cấu trúc dự án</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.3.1. Ngôn ngữ lập trình JavaScript & SQL</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">1.3.2. Cấu trúc thư mục dự án và môi trường cài đặt</span><span class="toc-dots"></span><span class="toc-page">6</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 0px; font-weight: bold;">CHƯƠNG 2: THỰC NGHIỆM</span><span class="toc-dots"></span><span class="toc-page">7</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">2.1. Sơ đồ tuần tự (Sequence Diagram) & Sơ đồ luồng (Flowchart)</span><span class="toc-dots"></span><span class="toc-page">7</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.1.1. Sơ đồ tuần tự và Sơ đồ luồng chức năng Đăng ký</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.1.2. Sơ đồ tuần tự và Sơ đồ luồng chức năng Đăng nhập</span><span class="toc-dots"></span><span class="toc-page">9</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.1.3. Sơ đồ tuần tự và Sơ đồ luồng chức năng Tự chọn 1: Đặt sân & Thanh toán VietQR</span><span class="toc-dots"></span><span class="toc-page">10</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.1.4. Sơ đồ tuần tự chức năng Tự chọn 2: Quản lý & Cập nhật đơn đặt sân Chủ sân</span><span class="toc-dots"></span><span class="toc-page">11</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">2.2. Sơ đồ Pert (PERT Chart) & Đường găng (Critical Path)</span><span class="toc-dots"></span><span class="toc-page">12</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.2.1. Phương pháp luận mạng PERT và giải thuật CPM</span><span class="toc-dots"></span><span class="toc-page">12</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.2.2. Bảng phân rã công việc (WBS) và tính toán tham số thời gian</span><span class="toc-dots"></span><span class="toc-page">12</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.2.3. Sơ đồ mạng PERT học thuật và phân tích đường găng</span><span class="toc-dots"></span><span class="toc-page">14</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.2.4. Ý nghĩa quản trị tiến độ và kiểm soát rủi ro dự án</span><span class="toc-dots"></span><span class="toc-page">14</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">2.3. Demo</span><span class="toc-dots"></span><span class="toc-page">16</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.0. Tổng quan Bảng điều khiển & Khám phá cụm sân (Home & Map View)</span><span class="toc-dots"></span><span class="toc-page">16</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.1. Giao diện chức năng Đăng ký</span><span class="toc-dots"></span><span class="toc-page">18</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.2. Giao diện chức năng Đăng nhập</span><span class="toc-dots"></span><span class="toc-page">20</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.3. Giao diện chức năng Tự chọn 1: Chọn sân & Đặt lịch thi đấu kèm Thanh toán VietQR</span><span class="toc-dots"></span><span class="toc-page">22</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.4. Giao diện chức năng Tự chọn 2: Quản lý và theo dõi lịch đặt sân của khách hàng & chủ sân</span><span class="toc-dots"></span><span class="toc-page">25</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.5. Truy vấn tổng số lượng người cho từng vai trò/role của đề tài</span><span class="toc-dots"></span><span class="toc-page">27</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.6. Truy vấn tổng doanh thu trong đề tài</span><span class="toc-dots"></span><span class="toc-page">29</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">2.4. Dữ liệu (Database)</span><span class="toc-dots"></span><span class="toc-page">31</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.4.1. Giới thiệu tổng quan hệ CSDL quan hệ MySQL</span><span class="toc-dots"></span><span class="toc-page">31</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.4.2. Thiết kế cấu trúc cơ sở dữ liệu (Sơ đồ ERD & Data Dictionary)</span><span class="toc-dots"></span><span class="toc-page">31</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.4.3. Các tập dữ liệu thực nghiệm trong hệ thống</span><span class="toc-dots"></span><span class="toc-page">37</span></div>
 </div>
 
 <div class="page-break"></div>
 
 <h2 class="no-indent" style="text-align: center; color: #1E3A8A; margin-top: 10px; margin-bottom: 15px;">DANH MỤC HÌNH ẢNH</h2>
 <div class="toc-container">
-  <div class="toc-item"><span class="toc-text">Hình 1: Sơ đồ tuần tự (Sequence Diagram) chức năng Đăng ký tài khoản người dùng</span><span class="toc-dots"></span><span class="toc-page">11</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 2: Sơ đồ luồng (Flowchart) chức năng Đăng ký tài khoản</span><span class="toc-dots"></span><span class="toc-page">11</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 3: Sơ đồ tuần tự (Sequence Diagram) chức năng Đăng nhập hệ thống đa vai trò</span><span class="toc-dots"></span><span class="toc-page">12</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 4: Sơ đồ luồng (Flowchart) chức năng Đăng nhập hệ thống</span><span class="toc-dots"></span><span class="toc-page">12</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 5: Sơ đồ tuần tự (Sequence Diagram) chức năng Đặt sân & Thanh toán VietQR Người dùng</span><span class="toc-dots"></span><span class="toc-page">13</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 6: Sơ đồ luồng (Flowchart) chức năng Đặt sân & Thanh toán trực tuyến</span><span class="toc-dots"></span><span class="toc-page">13</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 7: Sơ đồ tuần tự (Sequence Diagram) chức năng Quản lý & Cập nhật trạng thái đơn đặt sân Chủ sân</span><span class="toc-dots"></span><span class="toc-page">14</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 8: Sơ đồ mạng PERT học thuật và xác định Đường găng (Critical Path)</span><span class="toc-dots"></span><span class="toc-page">17</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 9: Phác thảo Wireframe sơ bộ Bảng điều khiển tổng quan Trang chủ</span><span class="toc-dots"></span><span class="toc-page">19</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 10: Kết quả thực hiện thực tế Giao diện Bản đồ định vị cụm sân</span><span class="toc-dots"></span><span class="toc-page">20</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 11: Phác thảo Wireframe sơ bộ giao diện Đăng ký tài khoản</span><span class="toc-dots"></span><span class="toc-page">21</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 12: Kết quả thực hiện thực tế giao diện Đăng ký tài khoản di động</span><span class="toc-dots"></span><span class="toc-page">22</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 13: Phác thảo Wireframe sơ bộ giao diện Đăng nhập hệ thống</span><span class="toc-dots"></span><span class="toc-page">23</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 14: Kết quả thực hiện thực tế giao diện Đăng nhập hệ thống đa vai trò</span><span class="toc-dots"></span><span class="toc-page">24</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 15: Phác thảo Wireframe sơ bộ giao diện Đặt sân và Xác nhận thanh toán</span><span class="toc-dots"></span><span class="toc-page">25</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 16: Kết quả thực hiện thực tế giao diện Chọn sân & Đặt lịch thi đấu</span><span class="toc-dots"></span><span class="toc-page">26</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 17: Kết quả thực hiện thực tế giao diện Xác nhận và Thanh toán VietQR</span><span class="toc-dots"></span><span class="toc-page">27</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 18: Phác thảo Wireframe sơ bộ giao diện Quản lý lịch đặt sân</span><span class="toc-dots"></span><span class="toc-page">28</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 19: Kết quả thực hiện thực tế giao diện Quản lý lịch đặt sân đã đặt</span><span class="toc-dots"></span><span class="toc-page">30</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 20: Kết quả thực hiện câu lệnh SQL truy vấn tổng số lượng người theo từng vai trò trên MySQL Workbench</span><span class="toc-dots"></span><span class="toc-page">33</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 21: Kết quả thực hiện câu lệnh SQL truy vấn tổng doanh thu trong đề tài trên MySQL Workbench</span><span class="toc-dots"></span><span class="toc-page">35</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 22: Sơ đồ cấu trúc Cơ sở dữ liệu quan hệ (ERD) toàn hệ thống đặt sân</span><span class="toc-dots"></span><span class="toc-page">37</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 1: Sơ đồ tuần tự (Sequence Diagram) chức năng Đăng ký tài khoản người dùng</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 2: Sơ đồ luồng (Flowchart) chức năng Đăng ký tài khoản</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 3: Sơ đồ tuần tự (Sequence Diagram) chức năng Đăng nhập hệ thống đa vai trò</span><span class="toc-dots"></span><span class="toc-page">9</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 4: Sơ đồ luồng (Flowchart) chức năng Đăng nhập hệ thống</span><span class="toc-dots"></span><span class="toc-page">9</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 5: Sơ đồ tuần tự (Sequence Diagram) chức năng Đặt sân & Thanh toán VietQR Người dùng</span><span class="toc-dots"></span><span class="toc-page">10</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 6: Sơ đồ luồng (Flowchart) chức năng Đặt sân & Thanh toán trực tuyến</span><span class="toc-dots"></span><span class="toc-page">10</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 7: Sơ đồ tuần tự (Sequence Diagram) chức năng Quản lý & Cập nhật trạng thái đơn đặt sân Chủ sân</span><span class="toc-dots"></span><span class="toc-page">11</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 8: Sơ đồ mạng PERT học thuật và xác định Đường găng (Critical Path)</span><span class="toc-dots"></span><span class="toc-page">14</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 9: Phác thảo Wireframe sơ bộ Bảng điều khiển tổng quan Trang chủ</span><span class="toc-dots"></span><span class="toc-page">16</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 10: Kết quả thực hiện thực tế Giao diện Bản đồ định vị cụm sân</span><span class="toc-dots"></span><span class="toc-page">17</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 11: Phác thảo Wireframe sơ bộ giao diện Đăng ký tài khoản</span><span class="toc-dots"></span><span class="toc-page">18</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 12: Kết quả thực hiện thực tế giao diện Đăng ký tài khoản di động</span><span class="toc-dots"></span><span class="toc-page">19</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 13: Phác thảo Wireframe sơ bộ giao diện Đăng nhập hệ thống</span><span class="toc-dots"></span><span class="toc-page">20</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 14: Kết quả thực hiện thực tế giao diện Đăng nhập hệ thống đa vai trò</span><span class="toc-dots"></span><span class="toc-page">21</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 15: Phác thảo Wireframe sơ bộ giao diện Đặt sân và Xác nhận thanh toán</span><span class="toc-dots"></span><span class="toc-page">22</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 16: Kết quả thực hiện thực tế giao diện Chọn sân & Đặt lịch thi đấu</span><span class="toc-dots"></span><span class="toc-page">23</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 17: Kết quả thực hiện thực tế giao diện Xác nhận và Thanh toán VietQR</span><span class="toc-dots"></span><span class="toc-page">24</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 18: Phác thảo Wireframe sơ bộ giao diện Quản lý lịch đặt sân</span><span class="toc-dots"></span><span class="toc-page">25</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 19: Kết quả thực hiện thực tế giao diện Quản lý lịch đặt sân đã đặt</span><span class="toc-dots"></span><span class="toc-page">26</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 20: Kết quả thực hiện câu lệnh SQL truy vấn tổng số lượng người theo từng vai trò trên MySQL Workbench</span><span class="toc-dots"></span><span class="toc-page">28</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 21: Kết quả thực hiện câu lệnh SQL truy vấn tổng doanh thu trong đề tài trên MySQL Workbench</span><span class="toc-dots"></span><span class="toc-page">30</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 22: Sơ đồ cấu trúc Cơ sở dữ liệu quan hệ (ERD) toàn hệ thống đặt sân</span><span class="toc-dots"></span><span class="toc-page">32</span></div>
 </div>
 
 <h2 class="no-indent" style="text-align: center; color: #1E3A8A; margin-top: 25px; margin-bottom: 15px;">DANH MỤC BẢNG BIỂU</h2>
 <div class="toc-container">
-  <div class="toc-item"><span class="toc-text">Bảng 1: Bảng phân rã công việc (WBS) và tính toán tham số thời gian PERT / CPM</span><span class="toc-dots"></span><span class="toc-page">15</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 2: Từ điển dữ liệu bảng users (Tài khoản người dùng)</span><span class="toc-dots"></span><span class="toc-page">37</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 3: Từ điển dữ liệu bảng clubs (Cụm sân cầu lông / Chi nhánh)</span><span class="toc-dots"></span><span class="toc-page">39</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 4: Từ điển dữ liệu bảng courts (Danh mục sân cầu lông)</span><span class="toc-dots"></span><span class="toc-page">39</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 5: Từ điển dữ liệu bảng bookings (Đơn đặt sân)</span><span class="toc-dots"></span><span class="toc-page">40</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 6: Từ điển dữ liệu bảng services (Danh mục sản phẩm, nước uống & phụ kiện)</span><span class="toc-dots"></span><span class="toc-page">40</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 7: Từ điển dữ liệu bảng booking_services (Chi tiết dịch vụ đi kèm đơn đặt)</span><span class="toc-dots"></span><span class="toc-page">40</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 8: Tập dữ liệu thực nghiệm bảng users</span><span class="toc-dots"></span><span class="toc-page">42</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 9: Tập dữ liệu thực nghiệm bảng clubs</span><span class="toc-dots"></span><span class="toc-page">42</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 10: Tập dữ liệu thực nghiệm bảng courts</span><span class="toc-dots"></span><span class="toc-page">43</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 11: Tập dữ liệu thực nghiệm bảng bookings</span><span class="toc-dots"></span><span class="toc-page">43</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 12: Tập dữ liệu thực nghiệm bảng services</span><span class="toc-dots"></span><span class="toc-page">43</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 1: Bảng phân rã công việc (WBS) và tính toán tham số thời gian PERT / CPM</span><span class="toc-dots"></span><span class="toc-page">13</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 2: Từ điển dữ liệu bảng users (Tài khoản người dùng)</span><span class="toc-dots"></span><span class="toc-page">33</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 3: Từ điển dữ liệu bảng clubs (Cụm sân cầu lông / Chi nhánh)</span><span class="toc-dots"></span><span class="toc-page">34</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 4: Từ điển dữ liệu bảng courts (Danh mục sân cầu lông)</span><span class="toc-dots"></span><span class="toc-page">34</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 5: Từ điển dữ liệu bảng bookings (Đơn đặt sân)</span><span class="toc-dots"></span><span class="toc-page">35</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 6: Từ điển dữ liệu bảng services (Danh mục sản phẩm, nước uống & phụ kiện)</span><span class="toc-dots"></span><span class="toc-page">35</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 7: Từ điển dữ liệu bảng booking_services (Chi tiết dịch vụ đi kèm đơn đặt)</span><span class="toc-dots"></span><span class="toc-page">36</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 8: Tập dữ liệu thực nghiệm bảng users</span><span class="toc-dots"></span><span class="toc-page">37</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 9: Tập dữ liệu thực nghiệm bảng clubs</span><span class="toc-dots"></span><span class="toc-page">37</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 10: Tập dữ liệu thực nghiệm bảng courts</span><span class="toc-dots"></span><span class="toc-page">38</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 11: Tập dữ liệu thực nghiệm bảng bookings</span><span class="toc-dots"></span><span class="toc-page">38</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 12: Tập dữ liệu thực nghiệm bảng services</span><span class="toc-dots"></span><span class="toc-page">38</span></div>
 </div>
 
 <div class="page-break"></div>

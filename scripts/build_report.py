@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-import os, sys, base64, subprocess, shutil
+import os, sys, base64, subprocess, shutil, io
+from pypdf import PdfReader, PdfWriter
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
 
 # Xác định đường dẫn thư mục gốc dự án
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -62,26 +65,74 @@ with open(html_path, "w", encoding="utf-8") as f:
     f.write(template)
 print(f"Generated complete HTML report at: {html_path}")
 
-out_pdf_root = get_path("BaoCao_DoAn_CNPM_24CT1_TranQuocTrung.pdf")
-out_pdf_template = get_path("template-do-an-ttnt/do-an.pdf")
-
+raw_pdf_path = get_path("report_raw_temp.pdf")
 args = [
     r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
     "--headless",
     "--disable-gpu",
     "--no-pdf-header-footer",
-    f"--print-to-pdf={out_pdf_root}",
+    f"--print-to-pdf={raw_pdf_path}",
     html_path
 ]
 
-print("Compiling PDF with Edge Headless...")
+print("Compiling raw PDF with Edge Headless...")
 subprocess.run(args, check=True)
-print(f"Created: {out_pdf_root} (size: {os.path.getsize(out_pdf_root)} bytes)")
+print(f"Created raw PDF at: {raw_pdf_path}")
 
-try:
-    shutil.copy(out_pdf_root, out_pdf_template)
-    print(f"Copied to: {out_pdf_template}")
-except Exception as e:
-    print(f"Notice: Could not copy to {out_pdf_template}: {e}")
+# Stamping page numbers: Bắt đầu từ trang LỜI MỞ ĐẦU (trang index 5, tức trang 6 của PDF)
+print("Stamping page numbers starting from LỜI MỞ ĐẦU...")
+writer = PdfWriter(clone_from=raw_pdf_path)
+
+start_page_idx = -1
+for idx, page in enumerate(writer.pages):
+    text = page.extract_text() or ""
+    if "Trong bối cảnh đô thị hóa" in text:
+        start_page_idx = idx
+        break
+
+if start_page_idx == -1:
+    start_page_idx = 5 # Mặc định trang 6 (index 5)
+print(f"Detected 'LỜI MỞ ĐẦU' at PDF page index {start_page_idx} (Page {start_page_idx + 1}). This is numbered as Page 1.")
+
+width, height = float(A4[0]), float(A4[1])
+
+for idx in range(start_page_idx, len(writer.pages)):
+    page_num = idx - start_page_idx + 1
+    packet = io.BytesIO()
+    can = canvas.Canvas(packet, pagesize=A4)
+    can.setFont("Times-Roman", 10)
+    can.setFillColorRGB(0.1, 0.1, 0.1)
+    can.drawCentredString(width / 2.0, 28.35, str(page_num)) # 10mm from bottom
+    can.save()
+    
+    packet.seek(0)
+    overlay_pdf = PdfReader(packet)
+    writer.pages[idx].merge_page(overlay_pdf.pages[0])
+
+# Output paths
+out_pdfs = [
+    get_path("BaoCao_CNPM_24CT1_TranQuocTrung.pdf"),
+    get_path("BaoCao_DoAn_CNPM_24CT1_TranQuocTrung.pdf"),
+    get_path("template-do-an-ttnt/do-an.pdf")
+]
+
+primary_out = out_pdfs[0]
+with open(primary_out, "wb") as f:
+    writer.write(f)
+print(f"Created final PDF with custom page numbering: {primary_out} ({os.path.getsize(primary_out)} bytes)")
+
+for p in out_pdfs[1:]:
+    try:
+        shutil.copy(primary_out, p)
+        print(f"Copied to: {p}")
+    except Exception as e:
+        print(f"Notice: Could not copy to {p}: {e}")
+
+# Cleanup raw temp PDF
+if os.path.exists(raw_pdf_path):
+    try:
+        os.remove(raw_pdf_path)
+    except:
+        pass
 
 print("Report generation finished successfully!")
