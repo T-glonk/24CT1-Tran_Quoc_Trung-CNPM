@@ -33,7 +33,7 @@ replacements = {
     "__SEQ_DANGNHAP__": img_to_b64("template-do-an-ttnt/figs/seq_dangnhap.png"),
     "__SEQ_DATSAN__": img_to_b64("template-do-an-ttnt/figs/seq_datsan.png"),
     "__SEQ_CHUSAN__": img_to_b64("template-do-an-ttnt/figs/seq_chusan.png"),
-    "__PERT_CHART__": img_to_b64("template-do-an-ttnt/figs/pert_chart.png"),
+    "__PERT_CHART__": img_to_b64("HINH ANH/SƠ ĐỒ PERT/SO DO PERT.drawio.png"),
     "__WF_HOME__": img_to_b64("template-do-an-ttnt/figs/wireframe_home.jpg"),
     "__DEMO_MAP__": img_to_b64("template-do-an-ttnt/figs/demo_map_opt.jpg"),
     "__WF_DANGKY__": img_to_b64("template-do-an-ttnt/figs/wireframe_dangky.jpg"),
