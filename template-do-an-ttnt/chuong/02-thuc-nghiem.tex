@@ -316,6 +316,65 @@ Việc áp dụng sơ đồ mạng PERT/CPM mang lại giá trị thực tiễn 
 \label{fig:demo-sandadat}
 \end{figure}
 
+\subsection{Truy vấn tổng số lượng người cho từng vai trò/role của đề tài}
+\label{subsec:query-role}
+
+\textbf{Ở bước 1 (Xác định mục tiêu và yêu cầu nghiệp vụ):} Trong hệ sinh thái đặt sân cầu lông ALOBOSPORT / QT Sport, hệ thống phân quyền người dùng được chuẩn hóa thành 3 nhóm vai trò (Role):
+\begin{itemize}
+    \item \texttt{admin} (Quản trị viên hệ thống): Sở hữu đặc quyền cao nhất trong việc thiết lập hệ thống, quản lý chi nhánh cơ sở, phân bổ danh mục dịch vụ và giám sát toàn bộ luồng dữ liệu giao dịch.
+    \item \texttt{staff} (Nhân viên lễ tân / Quản lý sân): Trực tiếp điều hành các ca thi đấu tại quầy, thực hiện xác thực mã vé đặt sân (Check-in) cho khách hàng và hỗ trợ khách thanh toán tiền mặt trực tiếp.
+    \item \texttt{customer} (Khách hàng / Vận động viên phong trào): Người dùng ứng dụng di động tìm kiếm cụm sân, chọn khung giờ thi đấu, đặt sân trực tuyến và thanh toán quét mã VietQR.
+\end{itemize}
+Nghiệp vụ thống kê tổng số lượng người dùng theo từng vai trò giữ vai trò then chốt trong báo cáo quản trị, giúp ban quản lý đánh giá quy mô phát triển cộng đồng người chơi, kiểm soát chặt chẽ số lượng nhân sự vận hành và ngăn ngừa sự phát sinh bất thường của các tài khoản có đặc quyền quản trị.
+
+\textbf{Ở bước 2 (Xây dựng câu lệnh truy vấn SQL chuẩn hóa):} Để tổng hợp chính xác số lượng tài khoản theo từng nhóm vai trò, câu lệnh truy vấn sử dụng hàm tổng hợp \texttt{COUNT(*)} kết hợp với mệnh đề nhóm \texttt{GROUP BY role} trên bảng \texttt{users}:
+
+\begin{lstlisting}[language=SQL, caption={Câu lệnh SQL thống kê tổng số lượng người dùng theo từng vai trò}]
+SELECT role, COUNT(*) AS tong_so_nguoi
+FROM users
+GROUP BY role;
+\end{lstlisting}
+
+\textbf{Ở bước 3 (Kết quả thực thi thực tế trên MySQL Workbench):} Truy vấn được biên dịch và thực thi trực tiếp trên cơ sở dữ liệu quan hệ \texttt{alobo\_badminton} bằng công cụ MySQL Workbench. Kết quả trả về (Hình~\ref{fig:query-role}) phản ánh chính xác cấu trúc người dùng của hệ thống:
+\begin{itemize}
+    \item Vai trò \textbf{admin}: \textbf{1} người dùng (tài khoản Quản trị viên cấp cao bảo mật hệ thống).
+    \item Vai trò \textbf{staff}: \textbf{1} người dùng (tài khoản Nhân viên điều phối ca trực).
+    \item Vai trò \textbf{customer}: \textbf{6} người dùng (tập khách hàng thực tế tham gia trải nghiệm và đặt sân).
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth, keepaspectratio]{figs/query_role.jpg}
+\caption{Kết quả thực hiện câu lệnh SQL truy vấn tổng số lượng người theo từng vai trò trên MySQL Workbench.}
+\label{fig:query-role}
+\end{figure}
+
+\subsection{Truy vấn tổng doanh thu trong đề tài}
+\label{subsec:query-revenue}
+
+\textbf{Ở bước 1 (Xác định mục tiêu và yêu cầu nghiệp vụ):} Doanh thu là thước đo hiệu quả kinh doanh cốt lõi của chuỗi sân thi đấu. Trong mô hình ALOBOSPORT / QT Sport, nguồn thu bao gồm tiền thuê sân theo các khung giờ (sáng, chiều, giờ vàng buổi tối) và doanh thu từ các dịch vụ tiện ích bổ trợ kèm theo (nước giải khát, cầu thi đấu, thuê vợt). Để đảm bảo tính chính xác và minh bạch tuyệt đối theo chuẩn kế toán tài chính, hệ thống bắt buộc phải sàng lọc và chỉ tổng hợp các giao dịch có trạng thái hoàn tất thành công (\texttt{status = 'completed'}), loại trừ triệt để các đơn hàng đang chờ (\texttt{pending}) hoặc giao dịch bị hủy (\texttt{cancelled}).
+
+\textbf{Ở bước 2 (Xây dựng câu lệnh truy vấn SQL chuẩn hóa):} Câu lệnh truy vấn áp dụng hàm tính tổng \texttt{SUM(amount)} kèm theo mệnh đề điều kiện \texttt{WHERE status = 'completed'} trên bảng ghi nhận dòng tiền \texttt{transactions}:
+
+\begin{lstlisting}[language=SQL, caption={Câu lệnh SQL tính tổng doanh thu các đơn đặt sân đã hoàn tất}]
+SELECT SUM(amount) AS totalRevenue
+FROM transactions
+WHERE status = 'completed';
+\end{lstlisting}
+
+\textbf{Ở bước 3 (Kết quả thực thi thực tế trên MySQL Workbench):} Truy vấn được thực thi trên bảng \texttt{transactions} của cơ sở dữ liệu \texttt{alobo\_badminton} (Hình~\ref{fig:query-revenue}). Kết quả thu được khẳng định tính chính xác trong luồng hạch toán tài chính:
+\begin{itemize}
+    \item \textbf{Tổng doanh thu thực tế ghi nhận (totalRevenue):} \textbf{2.195.000 VNĐ} (Hai triệu một trăm chín mươi lăm nghìn đồng).
+    \item \textbf{Ý nghĩa quản trị và đối soát:} Con số này thể hiện toàn bộ số tiền thanh toán thực tế đã được chuyển thành công qua hệ thống cổng thanh toán chuyển khoản VietQR Napas247 cũng như thu trực tiếp tại quầy, cung cấp căn cứ số liệu vững chắc để chủ sân quản lý lợi nhuận và hoạch định chiến lược kinh doanh.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth, keepaspectratio]{figs/query_revenue.jpg}
+\caption{Kết quả thực hiện câu lệnh SQL truy vấn tổng doanh thu trong đề tài trên MySQL Workbench.}
+\label{fig:query-revenue}
+\end{figure}
+
 \section{Dữ liệu (Database)}
 \label{sec:database}
 

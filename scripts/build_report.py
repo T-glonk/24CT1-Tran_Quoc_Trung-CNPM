@@ -46,6 +46,8 @@ replacements = {
     "__DEMO_THANHTOAN__": img_to_b64("template-do-an-ttnt/figs/demo_thanhtoan.png"),
     "__WF_QUANLY__": img_to_b64("template-do-an-ttnt/figs/wireframe_quanly.jpg"),
     "__DEMO_SANDADAT__": img_to_b64("template-do-an-ttnt/figs/demo_sandadat.png"),
+    "__QUERY_ROLE__": img_to_b64("template-do-an-ttnt/figs/query_role.jpg"),
+    "__QUERY_REVENUE__": img_to_b64("template-do-an-ttnt/figs/query_revenue.jpg"),
     "__ERD__": img_to_b64("template-do-an-ttnt/figs/erd.png"),
 }
 

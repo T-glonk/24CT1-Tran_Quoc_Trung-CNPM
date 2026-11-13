@@ -378,11 +378,13 @@
   <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.1. Giao diện chức năng Đăng ký</span><span class="toc-dots"></span><span class="toc-page">21</span></div>
   <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.2. Giao diện chức năng Đăng nhập</span><span class="toc-dots"></span><span class="toc-page">23</span></div>
   <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.3. Giao diện chức năng Tự chọn 1: Chọn sân & Đặt lịch thi đấu kèm Thanh toán VietQR</span><span class="toc-dots"></span><span class="toc-page">25</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.4. Giao diện chức năng Tự chọn 2: Quản lý và theo dõi lịch đặt sân của khách hàng & chủ sân</span><span class="toc-dots"></span><span class="toc-page">28</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">2.4. Dữ liệu (Database)</span><span class="toc-dots"></span><span class="toc-page">30</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.4.1. Giới thiệu tổng quan hệ CSDL quan hệ MySQL</span><span class="toc-dots"></span><span class="toc-page">30</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.4.2. Thiết kế cấu trúc cơ sở dữ liệu (Sơ đồ ERD & Data Dictionary)</span><span class="toc-dots"></span><span class="toc-page">30</span></div>
-  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.4.3. Các tập dữ liệu thực nghiệm trong hệ thống</span><span class="toc-dots"></span><span class="toc-page">36</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.4. Giao diện chức năng Tự chọn 2: Quản lý và theo dõi lịch đặt sân của khách hàng & chủ sân</span><span class="toc-dots"></span><span class="toc-page">30</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.5. Truy vấn tổng số lượng người cho từng vai trò/role của đề tài</span><span class="toc-dots"></span><span class="toc-page">32</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.3.6. Truy vấn tổng doanh thu trong đề tài</span><span class="toc-dots"></span><span class="toc-page">34</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 20px;">2.4. Dữ liệu (Database)</span><span class="toc-dots"></span><span class="toc-page">36</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.4.1. Giới thiệu tổng quan hệ CSDL quan hệ MySQL</span><span class="toc-dots"></span><span class="toc-page">36</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.4.2. Thiết kế cấu trúc cơ sở dữ liệu (Sơ đồ ERD & Data Dictionary)</span><span class="toc-dots"></span><span class="toc-page">36</span></div>
+  <div class="toc-item"><span class="toc-text" style="padding-left: 40px;">2.4.3. Các tập dữ liệu thực nghiệm trong hệ thống</span><span class="toc-dots"></span><span class="toc-page">42</span></div>
 </div>
 
 <div class="page-break"></div>
@@ -407,24 +409,26 @@
   <div class="toc-item"><span class="toc-text">Hình 16: Kết quả thực hiện thực tế giao diện Chọn sân & Đặt lịch thi đấu</span><span class="toc-dots"></span><span class="toc-page">26</span></div>
   <div class="toc-item"><span class="toc-text">Hình 17: Kết quả thực hiện thực tế giao diện Xác nhận và Thanh toán VietQR</span><span class="toc-dots"></span><span class="toc-page">27</span></div>
   <div class="toc-item"><span class="toc-text">Hình 18: Phác thảo Wireframe sơ bộ giao diện Quản lý lịch đặt sân</span><span class="toc-dots"></span><span class="toc-page">28</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 19: Kết quả thực hiện thực tế giao diện Quản lý lịch đặt sân đã đặt</span><span class="toc-dots"></span><span class="toc-page">29</span></div>
-  <div class="toc-item"><span class="toc-text">Hình 20: Sơ đồ cấu trúc Cơ sở dữ liệu quan hệ (ERD) toàn hệ thống đặt sân</span><span class="toc-dots"></span><span class="toc-page">31</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 19: Kết quả thực hiện thực tế giao diện Quản lý lịch đặt sân đã đặt</span><span class="toc-dots"></span><span class="toc-page">30</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 20: Kết quả thực hiện câu lệnh SQL truy vấn tổng số lượng người theo từng vai trò trên MySQL Workbench</span><span class="toc-dots"></span><span class="toc-page">33</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 21: Kết quả thực hiện câu lệnh SQL truy vấn tổng doanh thu trong đề tài trên MySQL Workbench</span><span class="toc-dots"></span><span class="toc-page">35</span></div>
+  <div class="toc-item"><span class="toc-text">Hình 22: Sơ đồ cấu trúc Cơ sở dữ liệu quan hệ (ERD) toàn hệ thống đặt sân</span><span class="toc-dots"></span><span class="toc-page">37</span></div>
 </div>
 
 <h2 class="no-indent" style="text-align: center; color: #1E3A8A; margin-top: 25px; margin-bottom: 15px;">DANH MỤC BẢNG BIỂU</h2>
 <div class="toc-container">
   <div class="toc-item"><span class="toc-text">Bảng 1: Bảng phân rã công việc (WBS) và tính toán tham số thời gian PERT / CPM</span><span class="toc-dots"></span><span class="toc-page">15</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 2: Từ điển dữ liệu bảng users (Tài khoản người dùng)</span><span class="toc-dots"></span><span class="toc-page">31</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 3: Từ điển dữ liệu bảng clubs (Cụm sân cầu lông / Chi nhánh)</span><span class="toc-dots"></span><span class="toc-page">33</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 4: Từ điển dữ liệu bảng courts (Danh mục sân cầu lông)</span><span class="toc-dots"></span><span class="toc-page">33</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 5: Từ điển dữ liệu bảng bookings (Đơn đặt sân)</span><span class="toc-dots"></span><span class="toc-page">34</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 6: Từ điển dữ liệu bảng services (Danh mục sản phẩm, nước uống & phụ kiện)</span><span class="toc-dots"></span><span class="toc-page">34</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 7: Từ điển dữ liệu bảng booking_services (Chi tiết dịch vụ đi kèm đơn đặt)</span><span class="toc-dots"></span><span class="toc-page">34</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 8: Tập dữ liệu thực nghiệm bảng users</span><span class="toc-dots"></span><span class="toc-page">36</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 9: Tập dữ liệu thực nghiệm bảng clubs</span><span class="toc-dots"></span><span class="toc-page">36</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 10: Tập dữ liệu thực nghiệm bảng courts</span><span class="toc-dots"></span><span class="toc-page">37</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 11: Tập dữ liệu thực nghiệm bảng bookings</span><span class="toc-dots"></span><span class="toc-page">37</span></div>
-  <div class="toc-item"><span class="toc-text">Bảng 12: Tập dữ liệu thực nghiệm bảng services</span><span class="toc-dots"></span><span class="toc-page">37</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 2: Từ điển dữ liệu bảng users (Tài khoản người dùng)</span><span class="toc-dots"></span><span class="toc-page">37</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 3: Từ điển dữ liệu bảng clubs (Cụm sân cầu lông / Chi nhánh)</span><span class="toc-dots"></span><span class="toc-page">39</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 4: Từ điển dữ liệu bảng courts (Danh mục sân cầu lông)</span><span class="toc-dots"></span><span class="toc-page">39</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 5: Từ điển dữ liệu bảng bookings (Đơn đặt sân)</span><span class="toc-dots"></span><span class="toc-page">40</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 6: Từ điển dữ liệu bảng services (Danh mục sản phẩm, nước uống & phụ kiện)</span><span class="toc-dots"></span><span class="toc-page">40</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 7: Từ điển dữ liệu bảng booking_services (Chi tiết dịch vụ đi kèm đơn đặt)</span><span class="toc-dots"></span><span class="toc-page">40</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 8: Tập dữ liệu thực nghiệm bảng users</span><span class="toc-dots"></span><span class="toc-page">42</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 9: Tập dữ liệu thực nghiệm bảng clubs</span><span class="toc-dots"></span><span class="toc-page">42</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 10: Tập dữ liệu thực nghiệm bảng courts</span><span class="toc-dots"></span><span class="toc-page">43</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 11: Tập dữ liệu thực nghiệm bảng bookings</span><span class="toc-dots"></span><span class="toc-page">43</span></div>
+  <div class="toc-item"><span class="toc-text">Bảng 12: Tập dữ liệu thực nghiệm bảng services</span><span class="toc-dots"></span><span class="toc-page">43</span></div>
 </div>
 
 <div class="page-break"></div>
@@ -955,17 +959,72 @@ Song song với mô hình tương tác hướng đối tượng, sơ đồ luồ
 
 <div class="page-break"></div>
 
+<h3>2.3.5. Truy vấn tổng số lượng người cho từng vai trò/role của đề tài</h3>
+<p><strong>Ở bước 1 (Xác định mục tiêu và yêu cầu nghiệp vụ):</strong> Trong hệ sinh thái đặt sân cầu lông ALOBOSPORT / QT Sport, hệ thống phân quyền người dùng được chuẩn hóa thành 3 nhóm vai trò (Role):</p>
+<ul>
+  <li><code>admin</code> (Quản trị viên hệ thống): Sở hữu đặc quyền cao nhất trong việc thiết lập hệ thống, quản lý chi nhánh cơ sở, phân bổ danh mục dịch vụ và giám sát toàn bộ luồng dữ liệu giao dịch.</li>
+  <li><code>staff</code> (Nhân viên lễ tân / Quản lý sân): Trực tiếp điều hành các ca thi đấu tại quầy, thực hiện xác thực mã vé đặt sân (Check-in) cho khách hàng và hỗ trợ khách thanh toán tiền mặt trực tiếp.</li>
+  <li><code>customer</code> (Khách hàng / Vận động viên phong trào): Người dùng ứng dụng di động tìm kiếm cụm sân, chọn khung giờ thi đấu, đặt sân trực tuyến và thanh toán quét mã VietQR.</li>
+</ul>
+<p>Nghiệp vụ thống kê tổng số lượng người dùng theo từng vai trò giữ vai trò then chốt trong báo cáo quản trị, giúp ban quản lý đánh giá quy mô phát triển cộng đồng người chơi, kiểm soát chặt chẽ số lượng nhân sự vận hành và ngăn ngừa sự phát sinh bất thường của các tài khoản có đặc quyền quản trị.</p>
+
+<p><strong>Ở bước 2 (Xây dựng câu lệnh truy vấn SQL chuẩn hóa):</strong> Để tổng hợp chính xác số lượng tài khoản theo từng nhóm vai trò, câu lệnh truy vấn sử dụng hàm tổng hợp <code>COUNT(*)</code> kết hợp với mệnh đề nhóm <code>GROUP BY role</code> trên bảng <code>users</code>:</p>
+
+<pre style="background: #0f172a; color: #f8fafc; padding: 12px 18px; border-radius: 6px; font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5pt; line-height: 1.6; margin: 12px 0; border: 1px solid #1e293b;">
+<span style="color: #38bdf8; font-weight: bold;">SELECT</span> role, <span style="color: #38bdf8; font-weight: bold;">COUNT</span>(*) <span style="color: #38bdf8; font-weight: bold;">AS</span> tong_so_nguoi
+<span style="color: #38bdf8; font-weight: bold;">FROM</span> users
+<span style="color: #38bdf8; font-weight: bold;">GROUP BY</span> role;
+</pre>
+
+<p><strong>Ở bước 3 (Kết quả thực thi thực tế trên MySQL Workbench):</strong> Truy vấn được biên dịch và thực thi trực tiếp trên cơ sở dữ liệu quan hệ <code>alobo_badminton</code> bằng công cụ MySQL Workbench. Kết quả trả về (Hình 20) phản ánh chính xác cấu trúc người dùng của hệ thống:</p>
+<ul>
+  <li>Vai trò <strong>admin</strong>: <strong>1</strong> người dùng (tài khoản Quản trị viên cấp cao bảo mật hệ thống).</li>
+  <li>Vai trò <strong>staff</strong>: <strong>1</strong> người dùng (tài khoản Nhân viên điều phối ca trực).</li>
+  <li>Vai trò <strong>customer</strong>: <strong>6</strong> người dùng (tập khách hàng thực tế tham gia trải nghiệm và đặt sân).</li>
+</ul>
+
+<div class="figure-box" style="margin-top: 15px; margin-bottom: 15px;">
+  <img src="__QUERY_ROLE__" style="width: 100%; max-width: 680px; border: 1px solid #cbd5e1; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);" alt="Truy vấn tổng số lượng người theo vai trò">
+  <div class="figure-caption">Hình 20: Kết quả thực hiện câu lệnh SQL truy vấn tổng số lượng người theo từng vai trò trên MySQL Workbench</div>
+</div>
+
+<div class="page-break"></div>
+
+<h3>2.3.6. Truy vấn tổng doanh thu trong đề tài</h3>
+<p><strong>Ở bước 1 (Xác định mục tiêu và yêu cầu nghiệp vụ):</strong> Doanh thu là thước đo hiệu quả kinh doanh cốt lõi của chuỗi sân thi đấu. Trong mô hình ALOBOSPORT / QT Sport, nguồn thu bao gồm tiền thuê sân theo các khung giờ (sáng, chiều, giờ vàng buổi tối) và doanh thu từ các dịch vụ tiện ích bổ trợ kèm theo (nước giải khát, cầu thi đấu, thuê vợt). Để đảm bảo tính chính xác và minh bạch tuyệt đối theo chuẩn kế toán tài chính, hệ thống bắt buộc phải sàng lọc và chỉ tổng hợp các giao dịch có trạng thái hoàn tất thành công (<code>status = 'completed'</code>), loại trừ triệt để các đơn hàng đang chờ (<code>pending</code>) hoặc giao dịch bị hủy (<code>cancelled</code>).</p>
+
+<p><strong>Ở bước 2 (Xây dựng câu lệnh truy vấn SQL chuẩn hóa):</strong> Câu lệnh truy vấn áp dụng hàm tính tổng <code>SUM(amount)</code> kèm theo mệnh đề điều kiện <code>WHERE status = 'completed'</code> trên bảng ghi nhận dòng tiền <code>transactions</code>:</p>
+
+<pre style="background: #0f172a; color: #f8fafc; padding: 12px 18px; border-radius: 6px; font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5pt; line-height: 1.6; margin: 12px 0; border: 1px solid #1e293b;">
+<span style="color: #38bdf8; font-weight: bold;">SELECT</span> <span style="color: #38bdf8; font-weight: bold;">SUM</span>(amount) <span style="color: #38bdf8; font-weight: bold;">AS</span> totalRevenue
+<span style="color: #38bdf8; font-weight: bold;">FROM</span> transactions
+<span style="color: #38bdf8; font-weight: bold;">WHERE</span> status = <span style="color: #a5d6ff;">'completed'</span>;
+</pre>
+
+<p><strong>Ở bước 3 (Kết quả thực thi thực tế trên MySQL Workbench):</strong> Truy vấn được thực thi trên bảng <code>transactions</code> của cơ sở dữ liệu <code>alobo_badminton</code> (Hình 21). Kết quả thu được khẳng định tính chính xác trong luồng hạch toán tài chính:</p>
+<ul>
+  <li><strong>Tổng doanh thu thực tế ghi nhận (totalRevenue):</strong> <strong>2.195.000 VNĐ</strong> (Hai triệu một trăm chín mươi lăm nghìn đồng).</li>
+  <li><strong>Ý nghĩa quản trị và đối soát:</strong> Con số này thể hiện toàn bộ số tiền thanh toán thực tế đã được chuyển thành công qua hệ thống cổng thanh toán chuyển khoản VietQR Napas247 cũng như thu trực tiếp tại quầy, cung cấp căn cứ số liệu vững chắc để chủ sân quản lý lợi nhuận và hoạch định chiến lược kinh doanh.</li>
+</ul>
+
+<div class="figure-box" style="margin-top: 15px; margin-bottom: 15px;">
+  <img src="__QUERY_REVENUE__" style="width: 100%; max-width: 680px; border: 1px solid #cbd5e1; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);" alt="Truy vấn tổng doanh thu trong đề tài">
+  <div class="figure-caption">Hình 21: Kết quả thực hiện câu lệnh SQL truy vấn tổng doanh thu trong đề tài trên MySQL Workbench</div>
+</div>
+
+<div class="page-break"></div>
+
 <h2>2.4. Dữ liệu (Database)</h2>
 
 <h3>2.4.1. Giới thiệu tổng quan hệ CSDL quan hệ MySQL</h3>
 <p>Hệ thống sử dụng hệ quản trị cơ sở dữ liệu quan hệ <strong>MySQL 8.0</strong>. Mô hình cơ sở dữ liệu được chuẩn hóa ở dạng chuẩn 3 (Third Normal Form - 3NF) nhằm loại bỏ triệt để hiện tượng trùng lặp dữ liệu, đảm bảo tính nhất quán (Consistency) và toàn vẹn tham chiếu (Referential Integrity) giữa các thực thể cốt lõi trong toàn bộ hệ thống.</p>
 
 <h3>2.4.2. Thiết kế cấu trúc cơ sở dữ liệu (Sơ đồ ERD & Data Dictionary)</h3>
-<p>Lược đồ quan hệ thực thể (ERD) được thiết kế chi tiết trên MySQL Workbench, bao gồm 8 thực thể quan hệ chặt chẽ với nhau (Hình 17):</p>
+<p>Lược đồ quan hệ thực thể (ERD) được thiết kế chi tiết trên MySQL Workbench, bao gồm 8 thực thể quan hệ chặt chẽ với nhau (Hình 22):</p>
 
 <div class="figure-box">
   <img src="__ERD__" alt="Sơ đồ ERD hoàn chỉnh">
-  <div class="figure-caption">Hình 20: Sơ đồ cấu trúc Cơ sở dữ liệu quan hệ (ERD) toàn hệ thống đặt sân</div>
+  <div class="figure-caption">Hình 22: Sơ đồ cấu trúc Cơ sở dữ liệu quan hệ (ERD) toàn hệ thống đặt sân</div>
 </div>
 
 <p>Từ điển dữ liệu (Data Dictionary) chi tiết của 6 bảng nòng cốt trong hệ thống được định nghĩa quy chuẩn như sau:</p>
